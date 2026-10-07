@@ -3,6 +3,7 @@
 
 - 2027학년도 정시 기준, 2026-10-07 조사 → 4팀 독립 교차검증 반영 (docs/research 참고)
 - 실행: python3 tools/hb_spec.py  → jeongsi_tool.html 의 HB_DATA 블록을 갱신
+- UNIV[대학]["rules"]=비메디컬 규칙, UNIV[대학]["med"]=메디컬(의·치·한·약·수) 규칙 (앱 구분 ★의대 등은 m.zone 으로 구분 가능)
 - 메디컬/다른 대학을 추가할 때는 UNIV 에 대학명(앱의 모집단위 대학명 그대로)을 키로 규칙을 추가한다.
   규칙은 위에서부터 처음 맞는 것이 적용된다. m(매칭): name(학과명 정규식) noname gun(군) nogun zone(앱 구분 원본) nozone
 """

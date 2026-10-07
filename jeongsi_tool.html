@@ -832,9 +832,14 @@ function hbTest(u,m){
 }
 function hbCalc(u){
   const base={univ:u[0],det:[],note:'',src:[]};
-  if(HB_MED.has(catOf(u))) return {...base,cls:'미확인',grp:'메디컬 모집단위',sum:'메디컬(의·치·한의·약·수의) 모집단위는 아직 조사하지 않았어요.',note:'다음 조사 단계(메디컬)에서 확인해 반영할 예정이에요.',lvl:'조사 전',kind:'none'};
   const D=HB_DATA.univ[u[0]];
-  if(D){ for(const r of D.rules) if(hbTest(u,r.m)) return {...base,cls:r.cls,grp:r.name,sum:r.sum,det:r.det||[],note:r.note||'',src:(r.src||[]).map(k=>HB_DATA.src[k]).filter(Boolean),lvl:r.lvl||D.lvl,basis:D.basis,kind:'research'};
+  const hit=(r,lvlD)=>({...base,cls:r.cls,grp:r.name,sum:r.sum,det:r.det||[],note:r.note||'',src:(r.src||[]).map(k=>HB_DATA.src[k]).filter(Boolean),lvl:r.lvl||lvlD.lvl,basis:lvlD.basis,kind:'research'});
+  if(HB_MED.has(catOf(u))){
+    if(D&&D.med){ for(const r of D.med) if(hbTest(u,r.m)) return hit(r,D);
+      return {...base,cls:'미확인',grp:'구분 불가',sum:'조사한 전형 구분에 해당하지 않는 메디컬 모집단위예요.',lvl:'확인 필요',kind:'none'} }
+    return {...base,cls:'미확인',grp:'메디컬 모집단위',sum:'이 대학의 메디컬 모집단위는 아직 조사하지 않았어요.',lvl:'조사 전',kind:'none'};
+  }
+  if(D){ for(const r of D.rules) if(hbTest(u,r.m)) return hit(r,D);
     return {...base,cls:'미확인',grp:'구분 불가',sum:'조사한 전형 구분에 해당하지 않는 모집단위예요.',lvl:'확인 필요',kind:'none'} }
   const s=SAENG[u[20]];
   if(s) return {...base,cls:s[1]==='교과평가'?'정성':'정량',grp:s[0],sum:s[2],note:'분석기(고속성장분석기) 내신입력 시트에 입력칸이 있는 대학이에요. 대학 모집요강은 아직 확인하지 않았어요.',lvl:'분석기 엑셀 기준',kind:'workbook'};
