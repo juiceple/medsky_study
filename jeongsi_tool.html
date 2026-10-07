@@ -267,9 +267,24 @@ table.dt{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
 .finalbox .fe label{display:block;font-size:12px;font-weight:700;margin-bottom:4px;color:var(--ink2)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .finalbox .fv{color:var(--ink)}:root:not([data-theme="light"]) .finalbox.man .fv{color:var(--accent)}}
 :root[data-theme="dark"] .finalbox .fv{color:var(--ink)}:root[data-theme="dark"] .finalbox.man .fv{color:var(--accent)}
-.sb{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11.5px;font-weight:700;border:1px solid #c9b2e6;color:#6a3fa0;background:#f3ecfb;white-space:nowrap}
-:root[data-theme="dark"] .sb{color:#cfb2f2;background:#33284a;border-color:#5b4580}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .sb{color:#cfb2f2;background:#33284a;border-color:#5b4580}}
+.hb{display:inline-block;padding:2px 9px;border-radius:10px;font-size:11.5px;font-weight:700;border:1px solid;cursor:help;white-space:nowrap;line-height:1.5}
+.hb-n{color:var(--j0);background:var(--j0s);border-color:var(--line)}
+.hb-q{color:var(--j3);background:var(--j3s);border-color:color-mix(in srgb,var(--j3) 40%,transparent)}
+.hb-s{color:#6a3fa0;background:#f3ecfb;border-color:#c9b2e6}
+.hb-u{color:var(--j2);background:var(--j2s);border-color:color-mix(in srgb,var(--j2) 55%,transparent);border-style:dashed}
+:root[data-theme="dark"] .hb-s{color:#cfb2f2;background:#33284a;border-color:#5b4580}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .hb-s{color:#cfb2f2;background:#33284a;border-color:#5b4580}}
+.hb.big{font-size:13px;padding:3px 12px}
+.hbtip{position:fixed;z-index:300;max-width:400px;min-width:240px;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.28);padding:11px 14px;font-size:12.5px;line-height:1.55;pointer-events:none;display:none}
+.hbtip.on{display:block}
+.hbtip .th{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-weight:700;font-size:13px}
+.hbtip .th small{font-weight:500;color:var(--muted)}
+.hbtip h6{margin:8px 0 2px;font-size:11.5px;color:var(--muted);font-weight:700}
+.hbtip ul{margin:2px 0;padding-left:16px}
+.hbtip .ft{margin-top:8px;padding-top:6px;border-top:1px solid var(--line2);color:var(--muted);font-size:11.5px}
+.hbbox .src a{color:var(--navy2);text-decoration:underline;word-break:break-all}
+:root[data-theme="dark"] .hbbox .src a{color:#8db5ee}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .hbbox .src a{color:#8db5ee}}
 .gunc.g-ga{border-color:#2a5bd7;color:#2a5bd7}.gunc.g-na{border-color:#1e8a4c;color:#1e8a4c}.gunc.g-da{border-color:#8b3fc4;color:#8b3fc4}
 .gt.g-ga{color:#2a5bd7}.gt.g-na{color:#1e8a4c}.gt.g-da{color:#8b3fc4}
 .chip.gt[aria-pressed="true"].g-ga{background:#2a5bd7;border-color:#2a5bd7;color:#fff}.chip.gt[aria-pressed="true"].g-na{background:#1e8a4c;border-color:#1e8a4c;color:#fff}.chip.gt[aria-pressed="true"].g-da{background:#8b3fc4;border-color:#8b3fc4;color:#fff}
@@ -797,6 +812,60 @@ const UNIV_GROUPS=[
 const isPro=u=>['2년제','3년제','4년제'].includes(u[3]);
 function catOf(u){ if(String(u[2]).startsWith('★')) return u[2].slice(1); if(KIST.includes(u[0])) return '과기원'; return isPro(u)?'전문대':'일반대'; }
 function gunOf(u){ if(GUNS.includes(u[3])) return u[3]; if(u[3]==='수시이월') return '이월'; if(isPro(u)) return '전문'; return '군외'; }
+/* ===== 학생부 반영 구분: 미반영 / 정량 / 정성 / 미확인 =====
+   - 규칙 데이터(HB_DATA)는 2027학년도 시행계획·정시 모집요강 원문을 교차검증한 결과 (docs/research 참고)
+   - 조사하지 않은 대학과 메디컬은 '미확인'. 분석기 엑셀에 내신 입력칸이 있는 대학은 엑셀 기준으로 표시 */
+const HB_DATA=/*HB_DATA_START*/{"asOf":"2026-10-07","univ":{},"src":{}}/*HB_DATA_END*/;
+const HB_CLS=['미반영','정량','정성','미확인'], HB_CODE={'미반영':'n','정량':'q','정성':'s','미확인':'u'};
+const HB_MED=new Set(['의대','치대','한의대','약대','수의대']);
+const hbMemo=new WeakMap(), hbRe=new Map();
+const hbRx=s=>{let r=hbRe.get(s);if(!r){r=new RegExp(s);hbRe.set(s,r)}return r};
+function hbTest(u,m){
+  if(!m) return true;
+  if(m.name&&!hbRx(m.name).test(u[1])) return false;
+  if(m.noname&&hbRx(m.noname).test(u[1])) return false;
+  if(m.gun&&!m.gun.includes(u[3])) return false;
+  if(m.nogun&&m.nogun.includes(u[3])) return false;
+  if(m.zone&&!m.zone.includes(u[2])) return false;
+  if(m.nozone&&m.nozone.includes(u[2])) return false;
+  return true;
+}
+function hbCalc(u){
+  const base={univ:u[0],det:[],note:'',src:[]};
+  if(HB_MED.has(catOf(u))) return {...base,cls:'미확인',grp:'메디컬 모집단위',sum:'메디컬(의·치·한의·약·수의) 모집단위는 아직 조사하지 않았어요.',note:'다음 조사 단계(메디컬)에서 확인해 반영할 예정이에요.',lvl:'조사 전',kind:'none'};
+  const D=HB_DATA.univ[u[0]];
+  if(D){ for(const r of D.rules) if(hbTest(u,r.m)) return {...base,cls:r.cls,grp:r.name,sum:r.sum,det:r.det||[],note:r.note||'',src:(r.src||[]).map(k=>HB_DATA.src[k]).filter(Boolean),lvl:r.lvl||D.lvl,basis:D.basis,kind:'research'};
+    return {...base,cls:'미확인',grp:'구분 불가',sum:'조사한 전형 구분에 해당하지 않는 모집단위예요.',lvl:'확인 필요',kind:'none'} }
+  const s=SAENG[u[20]];
+  if(s) return {...base,cls:s[1]==='교과평가'?'정성':'정량',grp:s[0],sum:s[2],note:'분석기(고속성장분석기) 내신입력 시트에 입력칸이 있는 대학이에요. 대학 모집요강은 아직 확인하지 않았어요.',lvl:'분석기 엑셀 기준',kind:'workbook'};
+  return {...base,cls:'미확인',grp:'미조사 대학',sum:'이 대학의 정시 학생부 반영 여부는 아직 조사하지 않았어요.',lvl:'조사 전',kind:'none'};
+}
+function haksaengOf(u){let r=hbMemo.get(u);if(!r){r=hbCalc(u);hbMemo.set(u,r)}return r}
+const hbBadge=(i,big)=>{const h=haksaengOf(U[i]);return `<span class="hb hb-${HB_CODE[h.cls]}${big?' big':''}" data-hb="${i}" tabindex="0">${h.cls}</span>`};
+function hbTipHtml(i){
+  const u=U[i],h=haksaengOf(u);
+  return `<div class="th"><span class="hb hb-${HB_CODE[h.cls]}">${h.cls}</span><span>${esc(u[0])} <small>${esc(h.grp)}</small></span></div>
+    <h6>반영 방식</h6><div>${esc(h.sum)}</div>
+    ${h.det.length?`<ul>${h.det.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}
+    ${h.note?`<h6>특이 사항</h6><div>${esc(h.note)}</div>`:''}
+    <div class="ft">${esc(h.lvl||'')}${h.basis?' · '+esc(h.basis):''}</div>`;
+}
+(function(){
+  const tip=document.createElement('div'); tip.className='hbtip'; tip.setAttribute('role','tooltip'); document.body.appendChild(tip);
+  let cur=null;
+  const hide=()=>{tip.classList.remove('on');cur=null};
+  const show=el=>{ if(cur===el) return; cur=el; tip.innerHTML=hbTipHtml(+el.dataset.hb); tip.classList.add('on');
+    const r=el.getBoundingClientRect(),w=tip.offsetWidth,h=tip.offsetHeight;
+    let x=Math.min(Math.max(8,r.left),innerWidth-w-8), y=r.bottom+8; if(y+h>innerHeight-8) y=Math.max(8,r.top-h-8);
+    tip.style.left=x+'px'; tip.style.top=y+'px' };
+  document.addEventListener('mouseover',e=>{const b=e.target.closest&&e.target.closest('.hb[data-hb]'); if(b) show(b); else if(cur) hide()});
+  document.addEventListener('focusin',e=>{const b=e.target.closest&&e.target.closest('.hb[data-hb]'); if(b) show(b)});
+  document.addEventListener('focusout',hide);
+  document.addEventListener('scroll',hide,true);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')hide()});
+  document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('.hb[data-hb]'); if(b){e.stopPropagation(); cur===b&&tip.classList.contains('on')&&e.pointerType==='mouse'?0:show(b)} else hide()},true);
+})();
+
 /* 학생부(내신·교과평가·비교과) 반영 모집단위: 고속성장분석기 '내신입력' 시트의 환산식 기준.
    경기자전·경희태권·김천간호·상지물치·을지간호1·을지사회1은 엑셀상 수능 등급·점수 구간으로 계산돼 제외. */
 const SAENG={"고려가교교과":["고려대 (교과우수전형)","교과","학교 교과 성적(내신)을 대학 환산식으로 점수화해 반영해요. 어디가 '성적분석' 등으로 계산한 값을 입력하며, 미입력 시 기준등급 2.5를 적용해 분석해요.",200,196],"고려인문교과":["고려대 (교과우수전형)","교과","학교 교과 성적(내신)을 대학 환산식으로 점수화해 반영해요. 어디가 '성적분석' 등으로 계산한 값을 입력하며, 미입력 시 기준등급 2.5를 적용해 분석해요.",null,null],"고려자연교과":["고려대 (교과우수전형)","교과","학교 교과 성적(내신)을 대학 환산식으로 점수화해 반영해요. 어디가 '성적분석' 등으로 계산한 값을 입력하며, 미입력 시 기준등급 2.5를 적용해 분석해요.",null,null],"고려학부교과":["고려대 (교과우수전형)","교과","학교 교과 성적(내신)을 대학 환산식으로 점수화해 반영해요. 어디가 '성적분석' 등으로 계산한 값을 입력하며, 미입력 시 기준등급 2.5를 적용해 분석해요.",null,null],"대구대인문":["대구대","교과","내신 점수를 직접 입력해 반영해요(100점 만점).",100,100],"대구대자연":["대구대","교과","내신 점수를 직접 입력해 반영해요(100점 만점).",null,null],"대구대조형":["대구대","교과","내신 점수를 직접 입력해 반영해요(100점 만점).",null,null],"덕성자전":["덕성여대","교과","내신 점수를 직접 입력해 반영해요(100점 만점).",100,98],"동남보건":["동남보건대","교과","내신 점수를 직접 입력해 반영해요(100점 만점).",100,100],"서울간호":["서울대 (교과평가)","교과평가","교과평가 결과를 −6~0점의 보정점수로 반영해요. 평균 이상·약간 불리 0점 / 매우 불리 −3점 / 극히 불리 −6점이며, 미선택 시 평균 수준(0점)으로 분석해요.",null,null],"서울인문":["서울대 (교과평가)","교과평가","교과평가 결과를 −6~0점의 보정점수로 반영해요. 평균 이상·약간 불리 0점 / 매우 불리 −3점 / 극히 불리 −6점이며, 미선택 시 평균 수준(0점)으로 분석해요.",null,null],"서울자연":["서울대 (교과평가)","교과평가","교과평가 결과를 −6~0점의 보정점수로 반영해요. 평균 이상·약간 불리 0점 / 매우 불리 −3점 / 극히 불리 −6점이며, 미선택 시 평균 수준(0점)으로 분석해요.",null,null],"서울통합":["서울대 (교과평가)","교과평가","교과평가 결과를 −6~0점의 보정점수로 반영해요. 평균 이상·약간 불리 0점 / 매우 불리 −3점 / 극히 불리 −6점이며, 미선택 시 평균 수준(0점)으로 분석해요.",null,null],"연세간호":["연세대","교과","학교 교과 성적(내신)을 반영해요. 미입력 시 기준등급 2.5를 적용해 분석해요(과거 입시통계 참고).",50,48.5],"연세국제":["연세대","교과","학교 교과 성적(내신)을 반영해요. 미입력 시 기준등급 2.5를 적용해 분석해요(과거 입시통계 참고).",null,null],"연세의학":["연세대","교과","학교 교과 성적(내신)을 반영해요. 미입력 시 기준등급 2.5를 적용해 분석해요(과거 입시통계 참고).",null,null],"연세인문":["연세대","교과","학교 교과 성적(내신)을 반영해요. 미입력 시 기준등급 2.5를 적용해 분석해요(과거 입시통계 참고).",null,null],"연세자연":["연세대","교과","학교 교과 성적(내신)을 반영해요. 미입력 시 기준등급 2.5를 적용해 분석해요(과거 입시통계 참고).",null,null],"중앙경영":["중앙대 (비교과 출결)","비교과·출결","비교과(출결) 점수를 반영해요. 학생의 출결 점수를 입력하며, 미입력 시 비교내신 기본값으로 분석해요.",100,100],"중앙사회":["중앙대 (비교과 출결)","비교과·출결","비교과(출결) 점수를 반영해요. 학생의 출결 점수를 입력하며, 미입력 시 비교내신 기본값으로 분석해요.",null,null],"중앙영화":["중앙대 (비교과 출결)","비교과·출결","비교과(출결) 점수를 반영해요. 학생의 출결 점수를 입력하며, 미입력 시 비교내신 기본값으로 분석해요.",null,null],"중앙인문":["중앙대 (비교과 출결)","비교과·출결","비교과(출결) 점수를 반영해요. 학생의 출결 점수를 입력하며, 미입력 시 비교내신 기본값으로 분석해요.",null,null],"중앙자연":["중앙대 (비교과 출결)","비교과·출결","비교과(출결) 점수를 반영해요. 학생의 출결 점수를 입력하며, 미입력 시 비교내신 기본값으로 분석해요.",null,null],"중앙창의":["중앙대 (비교과 출결)","비교과·출결","비교과(출결) 점수를 반영해요. 학생의 출결 점수를 입력하며, 미입력 시 비교내신 기본값으로 분석해요.",null,null]};
@@ -873,7 +942,7 @@ const COLS=[
   {k:'region',t:'지역',f:i=>U[i][5],filter:true,sort:i=>U[i][5]},
   {k:'trait',t:'계열',f:i=>U[i][7],filter:true},
   {k:'cat',t:'구분',f:i=>catOf(U[i]),filter:true},
-  {k:'saeng',t:'학생부',f:i=>{const s=saengOf(U[i]);return s?'반영 · '+s[1]:'–'},filter:true,sort:i=>saengOf(U[i])?1:0},
+  {k:'hb',t:'학생부',f:i=>haksaengOf(U[i]).cls,filter:true,sort:i=>HB_CLS.indexOf(haksaengOf(U[i]).cls)},
   {k:'judge',t:'판정',f:i=>JL[B[basis][i][0]],filter:true,sort:i=>-B[basis][i][0]},
   {k:'my',t:'학생 누백',sort:i=>B[basis][i][1]??999},
   {k:'margin',t:'여유',sort:i=>marginOf(i)},
@@ -916,7 +985,7 @@ function cellHtml(k,i){
     case 'region':return `<td>${esc(u[5]||'')}</td>`;
     case 'trait':return `<td>${esc(u[7]||'')}</td>`;
     case 'cat':return `<td class="dim">${esc(catOf(u))}</td>`;
-    case 'saeng':{const s=saengOf(u);return s?`<td><span class="sb" title="${esc(s[0]+' · '+s[2])}">학생부 · ${esc(s[1])}</span></td>`:'<td class="dim">–</td>'}
+    case 'hb':return `<td>${hbBadge(i)}</td>`;
     case 'judge':return `<td><span class="jb j${b[0]}" title="${JD[b[0]]}">${JL[b[0]]}</span></td>`;
     case 'my':return `<td class="num"><b>${pct(b[1])}</b></td>`;
     case 'margin':{const m=marginOf(i);return `<td class="num" style="color:${m>=0?'var(--j4)':'var(--j1)'}">${m===-999?'–':(m>=0?'+':'')+fmt(m,2)}</td>`}
@@ -1193,7 +1262,7 @@ function drawFunk(rows){
 }
 
 /* ===== match ===== */
-const MF={region:new Set(),trait:new Set(),gun:new Set(),cat:new Set(),judge:new Set(),major:'',univ:'',excl0:true,noSaeng:false};
+const MF={region:new Set(),trait:new Set(),gun:new Set(),cat:new Set(),judge:new Set(),hb:new Set(),major:'',univ:'',excl0:true,noSaeng:false,noHbU:false};
 const TM=makeTable('match',{sortKey:'margin',dir:-1});
 let filtersBuilt=false;
 function chipRow(key,vals,lab){return `<div class="chips">${vals.map(v=>`<button class="chip ${key==='gun'&&GUNS.includes(v)?gunCls(v).replace('gunc ','gt '):''}" aria-pressed="${MF[key].has(v)}" data-mf="${key}" data-v="${esc(v)}">${esc(lab?lab(v):v)}</button>`).join('')}</div>`}
@@ -1205,6 +1274,7 @@ function rFilters(){
   <h3>구분</h3>${chipRow('cat',CATS)}
   <h3>계열</h3>${chipRow('trait',['자연','인문','공통'])}
   <h3>판정</h3>${chipRow('judge',['4','3','2','1'],v=>JL[v])}
+  <h3>학생부 반영 <span style="font-weight:400">(미선택 시 전체)</span></h3>${chipRow('hb',HB_CLS)}
   <h3>희망 지역 <span style="font-weight:400">(미선택 시 전체)</span></h3>${chipRow('region',SIDO)}
   <h3>전공 키워드</h3><input type="text" id="mfMajor" placeholder="예: 의예,약학,컴퓨터" value="${esc(MF.major)}"><div class="hint">쉼표로 여러 개 · 하나라도 포함되면 표시</div>
   <h3>대학명 검색</h3><input type="text" id="mfUniv" placeholder="예: 경희,중앙,부산대" value="${esc(MF.univ)}"><div class="hint">비워두면 전체 대학</div>
@@ -1215,7 +1285,9 @@ function rFilters(){
     <div class="hint" style="margin-left:22px">학생 누백이 소신 누백의 <input type="number" id="mfUpK" value="${BR.upK}" step="0.5" min="1.2" style="width:52px;padding:2px 5px"> 배 이상이면 제외</div>
     <label class="chk"><input type="checkbox" id="mfEx0" ${MF.excl0?'checked':''}> 수학·탐구 결격 모집단위 제외</label>
     <label class="chk"><input type="checkbox" id="mfNoSaeng" ${MF.noSaeng?'checked':''}> 학생부(생기부) 반영 모집단위 제외</label>
-    <div class="hint" style="margin-left:22px">내신·교과평가·비교과(출결)를 함께 보는 모집단위를 결과에서 뺍니다.</div></div>
+    <div class="hint" style="margin-left:22px">정량·정성으로 학생부를 반영하는 모집단위를 결과에서 뺍니다.</div>
+    <label class="chk"><input type="checkbox" id="mfNoHbU" ${MF.noHbU?'checked':''}> 학생부 '미확인' 모집단위도 제외</label>
+    <div class="hint" style="margin-left:22px">체크하면 학생부 '미반영'으로 확인된 모집단위만 남아요.</div></div>
   <div class="fbtns"><button class="btn pri" id="mfRun">매칭 실행</button><button class="btn ghost" id="mfCsv">결과 CSV로 저장</button><button class="btn" id="mfReset">조건 초기화</button></div>`;
   const F=$('filters');
   bindBasis(F,()=>{rFilters();rMatchMain()});
@@ -1226,16 +1298,17 @@ function rFilters(){
   $('mfDownK').onchange=e=>{BR.downK=+e.target.value||2.5;rMatchMain()};$('mfUpK').onchange=e=>{BR.upK=+e.target.value||2;rMatchMain()};
   $('mfEx0').onchange=e=>{MF.excl0=e.target.checked;rMatchMain()};
   $('mfNoSaeng').onchange=e=>{MF.noSaeng=e.target.checked;TM.limit=200;rMatchMain()};
+  $('mfNoHbU').onchange=e=>{MF.noHbU=e.target.checked;TM.limit=200;rMatchMain()};
   $('mfRun').onclick=()=>{rMatchMain();$('mmain').scrollTo(0,0)};
   $('mfCsv').onclick=exportCsv;
-  $('mfReset').onclick=()=>{['region','trait','gun','cat','judge'].forEach(k=>MF[k].clear());MF.major=MF.univ='';TM.cf={};rFilters();rMatchMain()};
+  $('mfReset').onclick=()=>{['region','trait','gun','cat','judge','hb'].forEach(k=>MF[k].clear());MF.major=MF.univ='';TM.cf={};rFilters();rMatchMain()};
 }
 function matchList(){
   const kw=s=>s.split(/[,\s]+/).map(x=>x.trim()).filter(Boolean);
   const mj=kw(MF.major), un=kw(MF.univ); const out=[];
   for(let i=0;i<U.length;i++){const u=U[i],b=B[basis][i];
     if(MF.excl0&&b[0]===0)continue;
-    if(MF.noSaeng&&saengOf(u))continue;
+    {const hc=haksaengOf(u).cls; if(MF.hb.size&&!MF.hb.has(hc))continue; if(MF.noSaeng&&(hc==='정량'||hc==='정성'))continue; if(MF.noHbU&&hc==='미확인')continue}
     if(MF.gun.size&&!MF.gun.has(gunOf(u)))continue;
     if(MF.cat.size&&!MF.cat.has(catOf(u)))continue;
     if(MF.trait.size&&!MF.trait.has(u[7]))continue;
@@ -1268,9 +1341,9 @@ function rMatchMain(){
 }
 function exportCsv(){
   const rows=TM.last||[]; if(!rows.length){toast('저장할 결과가 없어요');return}
-  const H=['대학교','학과','군','정원','지역','계열','구분','판정','학생누백','여유','적정누백','예상누백','소신누백','25합격권','24합격권','23합격권','22합격권','21합격권','합격권횟수','국어비율','수학비율','탐구비율','펑크예측','환산점수','적정점수','학생부반영'];
+  const H=['대학교','학과','군','정원','지역','계열','구분','판정','학생누백','여유','적정누백','예상누백','소신누백','25합격권','24합격권','23합격권','22합격권','21합격권','합격권횟수','국어비율','수학비율','탐구비율','펑크예측','환산점수','적정점수','학생부구분','학생부반영방식'];
   const q=v=>{v=v==null?'':String(v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};
-  const lines=rows.map(i=>{const u=U[i],b=B[basis][i],h=hitOf(i),r=u[13];return [u[0],u[1],gunLabel(gunOf(u)),u[4],u[5],u[7],catOf(u),JL[b[0]],b[1],marginOf(i)===-999?'':fmt(marginOf(i),3),b[3],b[4],b[5],...b[6],h.d?h.n+'/'+h.d:'',...r.map(x=>typeof x==='number'?x:''),funkOf(i).category,u[15],u[17],saengOf(u)?saengOf(u)[1]:''].map(q).join(',')});
+  const lines=rows.map(i=>{const u=U[i],b=B[basis][i],h=hitOf(i),r=u[13];return [u[0],u[1],gunLabel(gunOf(u)),u[4],u[5],u[7],catOf(u),JL[b[0]],b[1],marginOf(i)===-999?'':fmt(marginOf(i),3),b[3],b[4],b[5],...b[6],h.d?h.n+'/'+h.d:'',...r.map(x=>typeof x==='number'?x:''),funkOf(i).category,u[15],u[17],haksaengOf(u).cls,haksaengOf(u).sum].map(q).join(',')});
   saveDownload(`정시매칭_${S.name||'학생'}_${BASIS[basis]}.csv`,'\ufeff'+[H.join(','),...lines].join('\n'));
 }
 (function resizer(){const h=$('rh');let x0,w0;h.onmousedown=e=>{x0=e.clientX;w0=$('filters').offsetWidth;h.classList.add('dragging');const mv=e=>{$('filters').style.width=Math.max(220,Math.min(innerWidth*.6,w0+e.clientX-x0))+'px'};const up=()=>{removeEventListener('mousemove',mv);removeEventListener('mouseup',up)};addEventListener('mousemove',mv);addEventListener('mouseup',up)}})();
@@ -1307,7 +1380,7 @@ function drawBoard(host,ids){
   const by={가:[],나:[],다:[],etc:[]}; ids.forEach(i=>{const g=gunOf(U[i]);(by[g]||by.etc).push(i)});
   const card=i=>{const u=U[i],b=B[basis][i],g=gunOf(u),k=keyOf(i),fin=S.finals[g]===k;
     return `<div class="bcard ${fin?'final':''}"><div class="t"><div><b>${esc(u[0])}</b><small>${esc(u[1])} · 정원 ${cap(u[4])}</small></div><span class="jb j${b[0]}">${JL[b[0]]}</span></div>
-    <small style="margin-top:5px">학생 ${pct(b[1])}% · 적정 ${pct(b[3])}% · 소신 ${pct(b[5])}%</small><div style="margin-top:5px">${funkHtml(funkOf(i))}${saengOf(u)?` <span class="sb" title="${esc(saengOf(u)[2])}">학생부 · ${esc(saengOf(u)[1])}</span>`:''}</div>
+    <small style="margin-top:5px">학생 ${pct(b[1])}% · 적정 ${pct(b[3])}% · 소신 ${pct(b[5])}%</small><div style="margin-top:5px">${funkHtml(funkOf(i))} ${hbBadge(i)}</div>
     <div class="ops">${GUNS.includes(g)?`<button class="btn sm ${fin?'navy':''}" data-fin="${i}">${fin?'최종 지원 ✓':'최종 지원으로'}</button>`:''}<button class="btn sm" data-rep="${i}">리포트</button><button class="btn sm" data-del="${i}">빼기</button></div></div>`};
   const mix=l=>{const c=[0,0,0,0,0];l.forEach(i=>c[B[basis][i][0]]++);return [4,3,2,1].filter(j=>c[j]).map(j=>`<span class="jb j${j}">${JL[j]} ${c[j]}</span>`).join(' ')};
   host.innerHTML=`<div class="board">${GUNS.map(g=>`<section class="card col"><div class="colh"><span class="${gunCls(g)}">${g}</span><b class="${gunCls(g).replace('gunc ','gt ')}">${g}군</b><small>${S.finals[g]?'최종 '+esc(U[idxOf(S.finals[g])]?.[0]||''):'후보 '+by[g].length+'개'}</small></div>
@@ -1334,13 +1407,20 @@ function histChart(i){
     ${['21','22','23','24','25'].map((y,k)=>`<text x="${X(k)}" y="${H-8}" text-anchor="middle" font-size="11.5" fill="var(--ink2)">${y}학년도</text>`).join('')}</svg>
     <div class="legend"><span><i style="background:#2a5a9c"></i>합격권 누백</span><span><i style="background:var(--muted)"></i>상위 70% 누백</span><span>위로 갈수록 상위권</span></div>`;
 }
-function saengBox(u){
-  const s=saengOf(u); if(!s) return '';
-  return `<div class="rsec"><h4>📋 학생부(생기부) 반영 <span class="sb">${esc(s[1])}</span></h4>
-    <div class="tags" style="margin-bottom:6px"><span>${esc(s[0])}</span>${s[3]!=null?`<span>내신 만점 ${fmt(s[3],0)}점</span>`:''}${s[4]!=null?`<span>비교내신(기본값) ${fmt(s[4],1)}</span>`:''}${(()=>{const v=naeValueOf(u);return v!==undefined&&v!==''?`<span style="background:var(--accent-s);color:var(--accent);font-weight:700">학생 내신 ${esc(v)} 적용</span>`:'<span>학생 내신 미입력 · 기본값 적용</span>'})()}</div>
-    <p style="margin:0;font-size:13px">${esc(s[2])}</p>
-    ${(s[1]==='교과평가'||s[1]==='비교과·출결')?(()=>{const a=finalGrade(),b=qualAbsent(),m=(S.qual||{}).memo;return `<p class="status" style="margin:6px 0 0">학생 정성 자료 · ${a?`최종 평균 내신 ${fmt(a.val,2)}등급`:'내신 미입력'} · ${b!=null?`무단결석 ${b}일`:'출결 미입력'}${m?` · 특이사항: ${esc(m.slice(0,60))}${m.length>60?'…':''}`:''}</p>`})():''}
-    <p class="status" style="margin:6px 0 0">고속성장분석기에 반영된 정보 기준이에요. 세부 반영비율·평가요소는 해당 대학 모집요강으로 꼭 확인하세요.</p></div>`;
+function hbBox(u,i){
+  const h=haksaengOf(u), s=SAENG[u[20]];
+  const stu=[];
+  if(s){ const v=naeValueOf(u); stu.push(v!==undefined&&v!==''?`학생 내신 ${esc(v)} 적용 중 (학생 정보 탭에서 입력)`:`학생 내신 미입력 · 분석기 기본값${s[4]!=null?'('+fmt(s[4],1)+')':''} 적용 중`) }
+  if(h.cls==='정성'||(s&&(s[1]==='교과평가'||s[1]==='비교과·출결'))){const a=finalGrade(),b=qualAbsent(),m=(S.qual||{}).memo;
+    stu.push(`학생 정성 자료 · ${a?`최종 평균 내신 ${fmt(a.val,2)}등급`:'내신 미입력'} · ${b!=null?`무단결석 ${b}일`:'출결 미입력'}${m?` · 특이사항: ${esc(m.slice(0,60))}${m.length>60?'…':''}`:''}`)}
+  return `<div class="rsec hbbox"><h4>📋 학생부(생기부) 반영 ${hbBadge(i,true)}</h4>
+    <div class="tags" style="margin-bottom:6px"><span>${esc(h.grp)}</span>${s&&s[3]!=null?`<span>내신 만점 ${fmt(s[3],0)}점</span>`:''}</div>
+    <p style="margin:0;font-size:13px"><b>반영 방식</b> · ${esc(h.sum)}</p>
+    ${h.det.length?`<ul class="rl">${h.det.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}
+    ${h.note?`<p style="margin:6px 0 0;font-size:13px"><b>특이 사항</b> · ${esc(h.note)}</p>`:''}
+    ${stu.length?`<p class="status" style="margin:6px 0 0">${stu.join('<br>')}</p>`:''}
+    <p class="status src" style="margin:8px 0 0">근거: ${esc(h.lvl||'')}${h.basis?' · '+esc(h.basis):''}${h.src.length?'<br>'+h.src.map(x=>`<a href="${esc(x.u)}" target="_blank" rel="noopener noreferrer">${esc(x.t)}</a>${x.k?' <span>('+esc(x.k)+')</span>':''}`).join('<br>'):''}</p>
+    <p class="status" style="margin:4px 0 0">${esc(HB_DATA.asOf)} 기준 조사예요. 정시 모집요강(12월)에서 달라질 수 있으니 확정 후 다시 확인하세요.</p></div>`;
 }
 function bodyHtml(i){
   const u=U[i],b=B[basis][i],f=funkOf(i),r=u[13],engG=+S.eng||0,h=hitOf(i);
@@ -1357,7 +1437,7 @@ function bodyHtml(i){
     <div class="status" style="font-weight:700;margin-top:6px">참고</div>${li(f.notes)}</div></div>
   <div class="rsec chart"><h4>📈 5개년 입결 추이</h4>${histChart(i)}
     <table class="yt"><thead><tr><th>학년도</th>${['25','24','23','22','21'].map(y=>`<th>${y}</th>`).join('')}</tr></thead><tbody><tr><th>합격권</th>${b[6].map(v=>`<td>${pct(v)}</td>`).join('')}</tr><tr><th>상위 70%</th>${b[7].map(v=>`<td>${pct(v)}</td>`).join('')}</tr></tbody></table></div>
-  ${saengBox(u)}
+  ${hbBox(u,i)}
   <div class="rgrid"><div class="rsec"><h4>⚖️ 수능 반영</h4>
     ${r.every(x=>typeof x==='number')?`<div class="ratio"><div style="flex:${r[0]};background:#3d5a99">국어 ${fmt(r[0]*100,0)}%</div><div style="flex:${r[1]};background:#2b7a78">수학 ${fmt(r[1]*100,0)}%</div><div style="flex:${r[2]};background:#8a5a9e">탐구 ${fmt(r[2]*100,0)}%</div></div>`:`<p class="status">${esc(r.filter(x=>x!=='★').join(' '))}</p>`}
     <div class="tags" style="margin-top:8px"><span>${esc(u[11])}</span><span>${esc(u[10])}</span><span>탐구 ${u[12]??'–'}과목</span><span>${esc(u[9])}</span><span>${esc(u[8])}</span></div></div>
