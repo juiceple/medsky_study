@@ -31,9 +31,9 @@ button{cursor:pointer}
 input[type=text],input[type=number],input:not([type]),select,textarea{border:1px solid var(--line);background:var(--panel);border-radius:6px;padding:6px 9px;font-size:13px}
 textarea{width:100%;resize:vertical}
 /* header */
-header{background:linear-gradient(135deg,#132a4c,#1f3f6e);color:#fff;padding:18px 28px 16px;display:flex;gap:18px;align-items:flex-end;flex-wrap:wrap}
-.owner{background:#c0562f;color:#fff;font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:5px;display:inline-block;margin-bottom:8px}
-header h1{margin:0;font-size:20px;font-weight:700}
+header{background:linear-gradient(135deg,#132a4c,#1f3f6e);color:#fff;padding:9px 24px 9px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.owner{background:#c0562f;color:#fff;font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:5px;display:inline-block;margin-bottom:3px}
+header h1{margin:0;font-size:18px;font-weight:700}
 header p{margin:4px 0 0;font-size:12.5px;color:#cfe0f5}
 .hsearch{margin-left:auto;position:relative;width:min(380px,100%)}
 .hsearch input{width:100%;border:0;border-radius:8px;padding:9px 12px 9px 34px;font-size:13.5px;background:#fff;color:#1b2230}
@@ -46,6 +46,9 @@ header p{margin:4px 0 0;font-size:12.5px;color:#cfe0f5}
 .sugg button:hover,.sugg button.hl{background:var(--line2)}
 .sugg small{color:var(--muted)}
 .sugg mark{background:none;color:var(--accent);font-weight:700}
+.themebtn{all:unset;cursor:pointer;flex:none;border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:8px;padding:7px 12px;font-size:12.5px;font-weight:600;white-space:nowrap}
+.themebtn:hover{background:rgba(255,255,255,.14)}
+.themebtn:focus-visible{outline:2px solid #fff;outline-offset:2px}
 /* tabs */
 .tabbar{display:flex;gap:2px;background:var(--panel);border-bottom:1px solid var(--line);padding:0 20px;overflow-x:auto;position:sticky;top:0;z-index:40}
 .tab{all:unset;cursor:pointer;padding:12px 14px;font-size:13.5px;font-weight:600;color:var(--muted);border-bottom:3px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:6px}
@@ -110,11 +113,11 @@ h2.sec{margin:22px 0 6px;font-size:16px;color:var(--navy2);display:flex;align-it
 .chk{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;color:var(--ink2)}
 .chk input[type=number]{width:54px;padding:3px 6px}
 /* match layout */
-.layout{display:flex;height:calc(100vh - 150px);min-height:520px}
+.layout{display:flex;height:calc(100vh - var(--hh,112px));min-height:520px}
 .filters{width:300px;flex:none;background:var(--panel);border-right:1px solid var(--line);padding:14px 16px;overflow-y:auto}
 .rh{width:6px;flex:none;cursor:col-resize;background:var(--line)}
 .rh:hover{background:var(--navy2)}
-.mmain{flex:1;min-width:0;padding:16px 22px;overflow:auto}
+.mmain{flex:1;min-width:0;padding:12px 20px;overflow:auto}
 .filters h3{font-size:12px;color:var(--muted);margin:14px 0 6px;font-weight:700}
 .filters h3:first-child{margin-top:0}
 .chips{display:flex;flex-wrap:wrap;gap:5px}
@@ -134,16 +137,17 @@ h2.sec{margin:22px 0 6px;font-size:16px;color:var(--navy2);display:flex;align-it
 .dist button{all:unset;cursor:pointer;padding:3px 9px;border-radius:5px;font-size:12px;font-weight:700}
 .dist button[aria-pressed="true"]{outline:2px solid currentColor;outline-offset:1px}
 /* table */
-.twrap{overflow:auto;border:1px solid var(--line);border-radius:8px;background:var(--panel);max-height:calc(100vh - 290px);min-height:240px}
+.twrap{overflow:auto;border:1px solid var(--line);border-radius:8px;background:var(--panel);max-height:calc(100vh - 120px);min-height:360px}
+.mmain .twrap{max-height:calc(100vh - var(--hh,112px) - 125px)}
 table.dt{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
 .dt thead th{position:sticky;top:0;z-index:2;background:var(--navy);color:#fff;text-align:left;padding:8px 8px;font-weight:600;white-space:nowrap;border-right:1px solid rgba(255,255,255,.08)}
-.dt thead tr.sub th{top:34px;font-size:11px;font-weight:500;color:#cfe0f5;padding:3px 8px;background:var(--navy2)}
+.dt thead tr.sub th{top:33px;font-size:11px;font-weight:500;color:#cfe0f5;padding:3px 8px;background:var(--navy2)}
 .dt th.sortable{cursor:pointer}
 .dt th .arr{opacity:.75;margin-left:3px;font-size:10px}
 .fb{display:inline-block;margin-left:4px;cursor:pointer;color:#cfe0f5;font-size:10.5px;padding:0 4px;border-radius:3px;border:0;background:none}
 .fb:hover{background:rgba(255,255,255,.15);color:#fff}
 .fb.on{background:#fff;color:var(--accent)}
-.dt td{padding:7px 8px;border-bottom:1px solid var(--line2);white-space:nowrap;vertical-align:middle}
+.dt td{padding:5px 8px;border-bottom:1px solid var(--line2);white-space:nowrap;vertical-align:middle}
 .dt tbody tr{cursor:pointer}
 .dt tbody tr:hover td{background:var(--line2)}
 .dt td.nm{font-weight:600}
@@ -252,6 +256,9 @@ table.dt{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
   .omr td,.omr th{padding:7px 6px}
 }
 
+.sb{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11.5px;font-weight:700;border:1px solid #c9b2e6;color:#6a3fa0;background:#f3ecfb;white-space:nowrap}
+:root[data-theme="dark"] .sb{color:#cfb2f2;background:#33284a;border-color:#5b4580}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .sb{color:#cfb2f2;background:#33284a;border-color:#5b4580}}
 .gunc.g-ga{border-color:#2a5bd7;color:#2a5bd7}.gunc.g-na{border-color:#1e8a4c;color:#1e8a4c}.gunc.g-da{border-color:#8b3fc4;color:#8b3fc4}
 .gt.g-ga{color:#2a5bd7}.gt.g-na{color:#1e8a4c}.gt.g-da{color:#8b3fc4}
 .chip.gt[aria-pressed="true"].g-ga{background:#2a5bd7;border-color:#2a5bd7;color:#fff}.chip.gt[aria-pressed="true"].g-na{background:#1e8a4c;border-color:#1e8a4c;color:#fff}.chip.gt[aria-pressed="true"].g-da{background:#8b3fc4;border-color:#8b3fc4;color:#fff}
@@ -268,12 +275,12 @@ table.dt{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
   <div>
     <div class="owner">본 데이터는 MEDSKY의 자산입니다 · 외부 공유 및 유출을 금합니다</div>
     <h1>정시 합격 분석 도구</h1>
-    <p id="dataLine">데이터 불러오는 중…</p>
   </div>
   <div class="hsearch" role="search">
     <input id="gq" type="search" placeholder="대학·학과 바로 찾기 (예: 경희 한의, 부산대 약학)" autocomplete="off" aria-label="대학·학과 검색">
     <div class="sugg" id="sugg" role="listbox"></div>
   </div>
+  <button class="themebtn" id="themeBtn" type="button" aria-label="라이트/다크 모드 전환"></button>
 </header>
 <nav class="tabbar" role="tablist">
   <button class="tab" role="tab" data-tab="student">👤 학생 정보</button>
@@ -748,6 +755,10 @@ const UNIV_GROUPS=[
 const isPro=u=>['2년제','3년제','4년제'].includes(u[3]);
 function catOf(u){ if(String(u[2]).startsWith('★')) return u[2].slice(1); if(KIST.includes(u[0])) return '과기원'; return isPro(u)?'전문대':'일반대'; }
 function gunOf(u){ if(GUNS.includes(u[3])) return u[3]; if(u[3]==='수시이월') return '이월'; if(isPro(u)) return '전문'; return '군외'; }
+/* 학생부(내신·교과평가·비교과) 반영 모집단위: 고속성장분석기 '내신입력' 시트의 환산식 기준.
+   경기자전·경희태권·김천간호·상지물치·을지간호1·을지사회1은 엑셀상 수능 등급·점수 구간으로 계산돼 제외. */
+const SAENG={"고려가교교과":["고려대 (교과우수전형)","교과","학교 교과 성적(내신)을 대학 환산식으로 점수화해 반영해요. 어디가 '성적분석' 등으로 계산한 값을 입력하며, 미입력 시 기준등급 2.5를 적용해 분석해요.",200,196],"고려인문교과":["고려대 (교과우수전형)","교과","학교 교과 성적(내신)을 대학 환산식으로 점수화해 반영해요. 어디가 '성적분석' 등으로 계산한 값을 입력하며, 미입력 시 기준등급 2.5를 적용해 분석해요.",null,null],"고려자연교과":["고려대 (교과우수전형)","교과","학교 교과 성적(내신)을 대학 환산식으로 점수화해 반영해요. 어디가 '성적분석' 등으로 계산한 값을 입력하며, 미입력 시 기준등급 2.5를 적용해 분석해요.",null,null],"고려학부교과":["고려대 (교과우수전형)","교과","학교 교과 성적(내신)을 대학 환산식으로 점수화해 반영해요. 어디가 '성적분석' 등으로 계산한 값을 입력하며, 미입력 시 기준등급 2.5를 적용해 분석해요.",null,null],"대구대인문":["대구대","교과","내신 점수를 직접 입력해 반영해요(100점 만점).",100,100],"대구대자연":["대구대","교과","내신 점수를 직접 입력해 반영해요(100점 만점).",null,null],"대구대조형":["대구대","교과","내신 점수를 직접 입력해 반영해요(100점 만점).",null,null],"덕성자전":["덕성여대","교과","내신 점수를 직접 입력해 반영해요(100점 만점).",100,98],"동남보건":["동남보건대","교과","내신 점수를 직접 입력해 반영해요(100점 만점).",100,100],"서울간호":["서울대 (교과평가)","교과평가","교과평가 결과를 −6~0점의 보정점수로 반영해요. 평균 이상·약간 불리 0점 / 매우 불리 −3점 / 극히 불리 −6점이며, 미선택 시 평균 수준(0점)으로 분석해요.",null,null],"서울인문":["서울대 (교과평가)","교과평가","교과평가 결과를 −6~0점의 보정점수로 반영해요. 평균 이상·약간 불리 0점 / 매우 불리 −3점 / 극히 불리 −6점이며, 미선택 시 평균 수준(0점)으로 분석해요.",null,null],"서울자연":["서울대 (교과평가)","교과평가","교과평가 결과를 −6~0점의 보정점수로 반영해요. 평균 이상·약간 불리 0점 / 매우 불리 −3점 / 극히 불리 −6점이며, 미선택 시 평균 수준(0점)으로 분석해요.",null,null],"서울통합":["서울대 (교과평가)","교과평가","교과평가 결과를 −6~0점의 보정점수로 반영해요. 평균 이상·약간 불리 0점 / 매우 불리 −3점 / 극히 불리 −6점이며, 미선택 시 평균 수준(0점)으로 분석해요.",null,null],"연세간호":["연세대","교과","학교 교과 성적(내신)을 반영해요. 미입력 시 기준등급 2.5를 적용해 분석해요(과거 입시통계 참고).",50,48.5],"연세국제":["연세대","교과","학교 교과 성적(내신)을 반영해요. 미입력 시 기준등급 2.5를 적용해 분석해요(과거 입시통계 참고).",null,null],"연세의학":["연세대","교과","학교 교과 성적(내신)을 반영해요. 미입력 시 기준등급 2.5를 적용해 분석해요(과거 입시통계 참고).",null,null],"연세인문":["연세대","교과","학교 교과 성적(내신)을 반영해요. 미입력 시 기준등급 2.5를 적용해 분석해요(과거 입시통계 참고).",null,null],"연세자연":["연세대","교과","학교 교과 성적(내신)을 반영해요. 미입력 시 기준등급 2.5를 적용해 분석해요(과거 입시통계 참고).",null,null],"중앙경영":["중앙대 (비교과 출결)","비교과·출결","비교과(출결) 점수를 반영해요. 학생의 출결 점수를 입력하며, 미입력 시 비교내신 기본값으로 분석해요.",100,100],"중앙사회":["중앙대 (비교과 출결)","비교과·출결","비교과(출결) 점수를 반영해요. 학생의 출결 점수를 입력하며, 미입력 시 비교내신 기본값으로 분석해요.",null,null],"중앙영화":["중앙대 (비교과 출결)","비교과·출결","비교과(출결) 점수를 반영해요. 학생의 출결 점수를 입력하며, 미입력 시 비교내신 기본값으로 분석해요.",null,null],"중앙인문":["중앙대 (비교과 출결)","비교과·출결","비교과(출결) 점수를 반영해요. 학생의 출결 점수를 입력하며, 미입력 시 비교내신 기본값으로 분석해요.",null,null],"중앙자연":["중앙대 (비교과 출결)","비교과·출결","비교과(출결) 점수를 반영해요. 학생의 출결 점수를 입력하며, 미입력 시 비교내신 기본값으로 분석해요.",null,null],"중앙창의":["중앙대 (비교과 출결)","비교과·출결","비교과(출결) 점수를 반영해요. 학생의 출결 점수를 입력하며, 미입력 시 비교내신 기본값으로 분석해요.",null,null]};
+const saengOf=u=>SAENG[u[20]]||null;
 const gunCls=g=>'gunc '+({가:'g-ga',나:'g-na',다:'g-da'}[g]||'x');
 const gunLabel=g=>GUNS.includes(g)?g+'군':({이월:'수시이월',전문:'전문대',군외:'군외'})[g]||g;
 const cap=v=>v==null?'–':(v<1?'미정':v);
@@ -820,6 +831,7 @@ const COLS=[
   {k:'region',t:'지역',f:i=>U[i][5],filter:true,sort:i=>U[i][5]},
   {k:'trait',t:'계열',f:i=>U[i][7],filter:true},
   {k:'cat',t:'구분',f:i=>catOf(U[i]),filter:true},
+  {k:'saeng',t:'학생부',f:i=>{const s=saengOf(U[i]);return s?'반영 · '+s[1]:'–'},filter:true,sort:i=>saengOf(U[i])?1:0},
   {k:'judge',t:'판정',f:i=>JL[B[basis][i][0]],filter:true,sort:i=>-B[basis][i][0]},
   {k:'my',t:'학생 누백',sort:i=>B[basis][i][1]??999},
   {k:'margin',t:'여유',sort:i=>marginOf(i)},
@@ -862,6 +874,7 @@ function cellHtml(k,i){
     case 'region':return `<td>${esc(u[5]||'')}</td>`;
     case 'trait':return `<td>${esc(u[7]||'')}</td>`;
     case 'cat':return `<td class="dim">${esc(catOf(u))}</td>`;
+    case 'saeng':{const s=saengOf(u);return s?`<td><span class="sb" title="${esc(s[0]+' · '+s[2])}">학생부 · ${esc(s[1])}</span></td>`:'<td class="dim">–</td>'}
     case 'judge':return `<td><span class="jb j${b[0]}" title="${JD[b[0]]}">${JL[b[0]]}</span></td>`;
     case 'my':return `<td class="num"><b>${pct(b[1])}</b></td>`;
     case 'margin':{const m=marginOf(i);return `<td class="num" style="color:${m>=0?'var(--j4)':'var(--j1)'}">${m===-999?'–':(m>=0?'+':'')+fmt(m,2)}</td>`}
@@ -936,7 +949,6 @@ function go(t,keep){tab=t;document.querySelectorAll('[data-tab]').forEach(b=>b.s
 function header(){
   $('curName').textContent=S.name||'새 학생';
   const n=Object.keys(S.picks).length; $('wishN').hidden=!n; $('wishN').textContent=n;
-  $('dataLine').textContent=`${MODEL_META.title||'분석기 데이터'} · 모집단위 ${U.length.toLocaleString()}개`;
 }
 function basisSeg(short){return `<span class="seg" role="group" aria-label="비교 기준">${Object.entries(BASIS).map(([k,v])=>`<button aria-pressed="${basis===k}" data-basis="${k}">${v}${short?'':' 응시자 기준'}</button>`).join('')}</span>`}
 function bindBasis(host,rerender){host.querySelectorAll('[data-basis]').forEach(b=>b.onclick=()=>{basis=b.dataset.basis;rerender()})}
@@ -1095,7 +1107,7 @@ function drawFunk(rows){
 }
 
 /* ===== match ===== */
-const MF={region:new Set(),trait:new Set(),gun:new Set(),cat:new Set(),judge:new Set(),major:'',univ:'',excl0:true};
+const MF={region:new Set(),trait:new Set(),gun:new Set(),cat:new Set(),judge:new Set(),major:'',univ:'',excl0:true,noSaeng:false};
 const TM=makeTable('match',{sortKey:'margin',dir:-1});
 let filtersBuilt=false;
 function chipRow(key,vals,lab){return `<div class="chips">${vals.map(v=>`<button class="chip ${key==='gun'&&GUNS.includes(v)?gunCls(v).replace('gunc ','gt '):''}" aria-pressed="${MF[key].has(v)}" data-mf="${key}" data-v="${esc(v)}">${esc(lab?lab(v):v)}</button>`).join('')}</div>`}
@@ -1115,7 +1127,9 @@ function rFilters(){
     <div class="hint" style="margin-left:22px">적정 판정이면서 적정 누백이 학생 누백의 <input type="number" id="mfDownK" value="${BR.downK}" step="0.5" min="1.5" style="width:52px;padding:2px 5px"> 배 이상이면 제외</div>
     <label class="chk"><input type="checkbox" id="mfUp" ${BR.up?'checked':''}> 과도한 상향(우주상향) 자동 제외</label>
     <div class="hint" style="margin-left:22px">학생 누백이 소신 누백의 <input type="number" id="mfUpK" value="${BR.upK}" step="0.5" min="1.2" style="width:52px;padding:2px 5px"> 배 이상이면 제외</div>
-    <label class="chk"><input type="checkbox" id="mfEx0" ${MF.excl0?'checked':''}> 수학·탐구 결격 모집단위 제외</label></div>
+    <label class="chk"><input type="checkbox" id="mfEx0" ${MF.excl0?'checked':''}> 수학·탐구 결격 모집단위 제외</label>
+    <label class="chk"><input type="checkbox" id="mfNoSaeng" ${MF.noSaeng?'checked':''}> 학생부(생기부) 반영 모집단위 제외</label>
+    <div class="hint" style="margin-left:22px">내신·교과평가·비교과(출결)를 함께 보는 모집단위를 결과에서 뺍니다.</div></div>
   <div class="fbtns"><button class="btn pri" id="mfRun">매칭 실행</button><button class="btn ghost" id="mfCsv">결과 CSV로 저장</button><button class="btn" id="mfReset">조건 초기화</button></div>`;
   const F=$('filters');
   bindBasis(F,()=>{rFilters();rMatchMain()});
@@ -1125,6 +1139,7 @@ function rFilters(){
   $('mfDown').onchange=e=>{BR.down=e.target.checked;rMatchMain()};$('mfUp').onchange=e=>{BR.up=e.target.checked;rMatchMain()};
   $('mfDownK').onchange=e=>{BR.downK=+e.target.value||2.5;rMatchMain()};$('mfUpK').onchange=e=>{BR.upK=+e.target.value||2;rMatchMain()};
   $('mfEx0').onchange=e=>{MF.excl0=e.target.checked;rMatchMain()};
+  $('mfNoSaeng').onchange=e=>{MF.noSaeng=e.target.checked;TM.limit=200;rMatchMain()};
   $('mfRun').onclick=()=>{rMatchMain();$('mmain').scrollTo(0,0)};
   $('mfCsv').onclick=exportCsv;
   $('mfReset').onclick=()=>{['region','trait','gun','cat','judge'].forEach(k=>MF[k].clear());MF.major=MF.univ='';TM.cf={};rFilters();rMatchMain()};
@@ -1134,6 +1149,7 @@ function matchList(){
   const mj=kw(MF.major), un=kw(MF.univ); const out=[];
   for(let i=0;i<U.length;i++){const u=U[i],b=B[basis][i];
     if(MF.excl0&&b[0]===0)continue;
+    if(MF.noSaeng&&saengOf(u))continue;
     if(MF.gun.size&&!MF.gun.has(gunOf(u)))continue;
     if(MF.cat.size&&!MF.cat.has(catOf(u)))continue;
     if(MF.trait.size&&!MF.trait.has(u[7]))continue;
@@ -1166,9 +1182,9 @@ function rMatchMain(){
 }
 function exportCsv(){
   const rows=TM.last||[]; if(!rows.length){toast('저장할 결과가 없어요');return}
-  const H=['대학교','학과','군','정원','지역','계열','구분','판정','학생누백','여유','적정누백','예상누백','소신누백','25합격권','24합격권','23합격권','22합격권','21합격권','합격권횟수','국어비율','수학비율','탐구비율','펑크예측','환산점수','적정점수'];
+  const H=['대학교','학과','군','정원','지역','계열','구분','판정','학생누백','여유','적정누백','예상누백','소신누백','25합격권','24합격권','23합격권','22합격권','21합격권','합격권횟수','국어비율','수학비율','탐구비율','펑크예측','환산점수','적정점수','학생부반영'];
   const q=v=>{v=v==null?'':String(v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};
-  const lines=rows.map(i=>{const u=U[i],b=B[basis][i],h=hitOf(i),r=u[13];return [u[0],u[1],gunLabel(gunOf(u)),u[4],u[5],u[7],catOf(u),JL[b[0]],b[1],marginOf(i)===-999?'':fmt(marginOf(i),3),b[3],b[4],b[5],...b[6],h.d?h.n+'/'+h.d:'',...r.map(x=>typeof x==='number'?x:''),funkOf(i).category,u[15],u[17]].map(q).join(',')});
+  const lines=rows.map(i=>{const u=U[i],b=B[basis][i],h=hitOf(i),r=u[13];return [u[0],u[1],gunLabel(gunOf(u)),u[4],u[5],u[7],catOf(u),JL[b[0]],b[1],marginOf(i)===-999?'':fmt(marginOf(i),3),b[3],b[4],b[5],...b[6],h.d?h.n+'/'+h.d:'',...r.map(x=>typeof x==='number'?x:''),funkOf(i).category,u[15],u[17],saengOf(u)?saengOf(u)[1]:''].map(q).join(',')});
   saveDownload(`정시매칭_${S.name||'학생'}_${BASIS[basis]}.csv`,'\ufeff'+[H.join(','),...lines].join('\n'));
 }
 (function resizer(){const h=$('rh');let x0,w0;h.onmousedown=e=>{x0=e.clientX;w0=$('filters').offsetWidth;h.classList.add('dragging');const mv=e=>{$('filters').style.width=Math.max(220,Math.min(innerWidth*.6,w0+e.clientX-x0))+'px'};const up=()=>{removeEventListener('mousemove',mv);removeEventListener('mouseup',up)};addEventListener('mousemove',mv);addEventListener('mouseup',up)}})();
@@ -1205,7 +1221,7 @@ function drawBoard(host,ids){
   const by={가:[],나:[],다:[],etc:[]}; ids.forEach(i=>{const g=gunOf(U[i]);(by[g]||by.etc).push(i)});
   const card=i=>{const u=U[i],b=B[basis][i],g=gunOf(u),k=keyOf(i),fin=S.finals[g]===k;
     return `<div class="bcard ${fin?'final':''}"><div class="t"><div><b>${esc(u[0])}</b><small>${esc(u[1])} · 정원 ${cap(u[4])}</small></div><span class="jb j${b[0]}">${JL[b[0]]}</span></div>
-    <small style="margin-top:5px">학생 ${pct(b[1])}% · 적정 ${pct(b[3])}% · 소신 ${pct(b[5])}%</small><div style="margin-top:5px">${funkHtml(funkOf(i))}</div>
+    <small style="margin-top:5px">학생 ${pct(b[1])}% · 적정 ${pct(b[3])}% · 소신 ${pct(b[5])}%</small><div style="margin-top:5px">${funkHtml(funkOf(i))}${saengOf(u)?` <span class="sb" title="${esc(saengOf(u)[2])}">학생부 · ${esc(saengOf(u)[1])}</span>`:''}</div>
     <div class="ops">${GUNS.includes(g)?`<button class="btn sm ${fin?'navy':''}" data-fin="${i}">${fin?'최종 지원 ✓':'최종 지원으로'}</button>`:''}<button class="btn sm" data-rep="${i}">리포트</button><button class="btn sm" data-del="${i}">빼기</button></div></div>`};
   const mix=l=>{const c=[0,0,0,0,0];l.forEach(i=>c[B[basis][i][0]]++);return [4,3,2,1].filter(j=>c[j]).map(j=>`<span class="jb j${j}">${JL[j]} ${c[j]}</span>`).join(' ')};
   host.innerHTML=`<div class="board">${GUNS.map(g=>`<section class="card col"><div class="colh"><span class="${gunCls(g)}">${g}</span><b class="${gunCls(g).replace('gunc ','gt ')}">${g}군</b><small>${S.finals[g]?'최종 '+esc(U[idxOf(S.finals[g])]?.[0]||''):'후보 '+by[g].length+'개'}</small></div>
@@ -1232,6 +1248,13 @@ function histChart(i){
     ${['21','22','23','24','25'].map((y,k)=>`<text x="${X(k)}" y="${H-8}" text-anchor="middle" font-size="11.5" fill="var(--ink2)">${y}학년도</text>`).join('')}</svg>
     <div class="legend"><span><i style="background:#2a5a9c"></i>합격권 누백</span><span><i style="background:var(--muted)"></i>상위 70% 누백</span><span>위로 갈수록 상위권</span></div>`;
 }
+function saengBox(u){
+  const s=saengOf(u); if(!s) return '';
+  return `<div class="rsec"><h4>📋 학생부(생기부) 반영 <span class="sb">${esc(s[1])}</span></h4>
+    <div class="tags" style="margin-bottom:6px"><span>${esc(s[0])}</span>${s[3]!=null?`<span>내신 만점 ${fmt(s[3],0)}점</span>`:''}${s[4]!=null?`<span>비교내신(기본값) ${fmt(s[4],1)}</span>`:''}</div>
+    <p style="margin:0;font-size:13px">${esc(s[2])}</p>
+    <p class="status" style="margin:6px 0 0">고속성장분석기에 반영된 정보 기준이에요. 세부 반영비율·평가요소는 해당 대학 모집요강으로 꼭 확인하세요.</p></div>`;
+}
 function bodyHtml(i){
   const u=U[i],b=B[basis][i],f=funkOf(i),r=u[13],engG=+S.eng||0,h=hitOf(i);
   const lv=[['적정',u[17],b[3],4],['예상',u[18],b[4],3],['소신',u[19],b[5],2]], mx=Math.max(b[1]||0,...lv.map(x=>x[2]||0))||1;
@@ -1247,6 +1270,7 @@ function bodyHtml(i){
     <div class="status" style="font-weight:700;margin-top:6px">참고</div>${li(f.notes)}</div></div>
   <div class="rsec chart"><h4>📈 5개년 입결 추이</h4>${histChart(i)}
     <table class="yt"><thead><tr><th>학년도</th>${['25','24','23','22','21'].map(y=>`<th>${y}</th>`).join('')}</tr></thead><tbody><tr><th>합격권</th>${b[6].map(v=>`<td>${pct(v)}</td>`).join('')}</tr><tr><th>상위 70%</th>${b[7].map(v=>`<td>${pct(v)}</td>`).join('')}</tr></tbody></table></div>
+  ${saengBox(u)}
   <div class="rgrid"><div class="rsec"><h4>⚖️ 수능 반영</h4>
     ${r.every(x=>typeof x==='number')?`<div class="ratio"><div style="flex:${r[0]};background:#3d5a99">국어 ${fmt(r[0]*100,0)}%</div><div style="flex:${r[1]};background:#2b7a78">수학 ${fmt(r[1]*100,0)}%</div><div style="flex:${r[2]};background:#8a5a9e">탐구 ${fmt(r[2]*100,0)}%</div></div>`:`<p class="status">${esc(r.filter(x=>x!=='★').join(' '))}</p>`}
     <div class="tags" style="margin-top:8px"><span>${esc(u[11])}</span><span>${esc(u[10])}</span><span>탐구 ${u[12]??'–'}과목</span><span>${esc(u[9])}</span><span>${esc(u[8])}</span></div></div>
@@ -1382,6 +1406,18 @@ async function applyPending(){
   finally{busy(false)}
 }
 
+/* ===== 라이트/다크 전환 ===== */
+(function(){
+  const root=document.documentElement,btn=document.getElementById('themeBtn');
+  const eff=()=>root.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+  const paint=()=>{btn.textContent=eff()==='dark'?'☀️ 라이트 모드':'🌙 다크 모드'};
+  try{const s=localStorage.getItem('medsky_theme');if(s==='light'||s==='dark')root.dataset.theme=s}catch(e){}
+  btn.onclick=()=>{const n=eff()==='dark'?'light':'dark';root.dataset.theme=n;try{localStorage.setItem('medsky_theme',n)}catch(e){}paint()};
+  paint();
+})();
+/* ===== 상단 높이 측정 (표 높이 계산용) ===== */
+function setHH(){const h=document.querySelector('header'),t=document.querySelector('.tabbar');document.documentElement.style.setProperty('--hh',(h.offsetHeight+t.offsetHeight)+'px')}
+addEventListener('resize',setHH);setHH();
 /* ===== 로컬(브라우저 단독) 저장 계층: 채팅 런타임이 없을 때 사용 ===== */
 let LOCAL=false;
 const LS_STU='medsky_jeongsi_students_v1';
