@@ -190,6 +190,10 @@ def apply_med():
     missing = hb_med_spec.build_med(UNIV, SRC, LV_OFFICIAL, LV_COPY, R)
     if missing:
         print("메디컬 규칙 누락(검증 JSON 없음):", missing)
+    import hb_b2_spec
+    miss2 = hb_b2_spec.build_b2(UNIV, SRC, LV_COPY, R)
+    if miss2:
+        print("비메디컬(2차 범위) 규칙 누락(검증 JSON 없음):", miss2)
 
 def build():
     data = {"asOf": ASOF, "src": SRC, "univ": UNIV}
