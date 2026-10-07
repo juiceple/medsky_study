@@ -1322,7 +1322,7 @@ function rData(){
     <h4 style="margin:18px 0 6px;font-size:14px">업데이트 방법</h4>
     <ol class="rl" style="font-size:13px"><li>새 고속성장분석기 파일을 고르고 <b>파일 분석</b>을 눌러요. 파일이 커서 30초~1분 정도 걸려요.</li>
       <li>파일 안의 예시 성적으로 다시 계산해서, 엑셀이 저장해 둔 결과와 똑같은지 자동으로 검증해요.</li>
-      <li>검증 결과를 보고 <b>이 데이터로 적용</b>을 누르면 ${ASSETS?'저장돼서 이 도구를 쓰는 모든 사람에게 다음 접속부터 반영돼요.':'이번 접속에 반영돼요. (편집 권한이 있는 계정에서 올리면 모두에게 저장돼요)'}</li></ol>
+      <li>검증 결과를 보고 <b>이 데이터로 적용</b>을 누르면 ${ASSETS?'저장돼서 이 도구를 쓰는 모든 사람에게 다음 접속부터 반영돼요.':(LOCAL?'이 브라우저에 저장돼요. 다른 사람·다른 컴퓨터에는 HTML 파일을 직접 전달해야 해요.':'이번 접속에 반영돼요. (편집 권한이 있는 계정에서 올리면 모두에게 저장돼요)')}</li></ol>
     <div class="bar" style="margin-top:14px"><input type="file" id="xf" accept=".xlsb,.xlsx,.xlsm,.xls"><button class="btn pri" id="xgo" disabled>파일 분석</button><span class="status" id="xst"></span></div>
     <div id="xrep"></div>
   </div>`;
@@ -1372,11 +1372,40 @@ async function applyPending(){
       const up=await ASSETS.upload(new Blob([b64],{type:'text/plain'}),{type:'text/plain'});
       await db.collection('config').doc('model').set({asset:up.id,title:model.meta.title,file:model.meta.file,uploadedAt:model.meta.uploadedAt,units:U.length});
       toast('새 데이터를 저장했어요. 모두에게 다음 접속부터 반영돼요');
+    } else if(LOCAL){
+      busy(true,'이 브라우저에 저장하는 중…');
+      try{ const gz=await gzipU8(JSON.stringify(model)); await idbSet('model',{gz,uploadedAt:model.meta.uploadedAt}); model.meta.source='이 브라우저에 저장'; toast('새 데이터를 이 브라우저에 저장했어요. 다음에 열어도 유지돼요') }
+      catch(e){ toast('이번 접속에만 반영했어요 (저장 공간 부족): '+(e.message||e)) }
     } else toast('새 데이터를 이번 접속에 반영했어요');
     PENDING=null; header(); rData(); setCalcStatus();
   }catch(e){ toast('저장하지 못했어요: '+(e.code||e.message||e)); }
   finally{busy(false)}
 }
+
+/* ===== 로컬(브라우저 단독) 저장 계층: 채팅 런타임이 없을 때 사용 ===== */
+let LOCAL=false;
+const LS_STU='medsky_jeongsi_students_v1';
+function localDb(){
+  const load=()=>{try{return JSON.parse(localStorage.getItem(LS_STU)||'{}')}catch(e){return {}}};
+  const store=o=>localStorage.setItem(LS_STU,JSON.stringify(o));
+  const subs=new Set(); const fire=()=>{const o=load();const docs=Object.entries(o).map(([id,b])=>({id,data:()=>b}));subs.forEach(f=>f({docs}))};
+  const col={
+    add:async b=>{const o=load();const id='s'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);o[id]=b;store(o);fire();return {id}},
+    doc:id=>({set:async b=>{const o=load();o[id]=b;store(o);fire()},delete:async()=>{const o=load();delete o[id];store(o);fire()}}),
+    onSnapshot:cb=>{subs.add(cb);cb({docs:Object.entries(load()).map(([id,b])=>({id,data:()=>b}))});return ()=>subs.delete(cb)},
+  };
+  return {doc:()=>({collection:()=>col}),collection:()=>({doc:()=>({get:async()=>({exists:false}),set:async()=>{}})})};
+}
+function localDownloads(){
+  return {save:async({filename,data})=>{const blob=data instanceof Blob?data:new Blob([data],{type:'application/octet-stream'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename;document.body.appendChild(a);a.click();
+    setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000)}};
+}
+/* 업로드한 고속성장분석기 모델은 용량이 커서 IndexedDB에 보관 */
+function idb(){return new Promise((res,rej)=>{const r=indexedDB.open('medsky_jeongsi',1);r.onupgradeneeded=()=>r.result.createObjectStore('kv');r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
+async function idbGet(k){const d=await idb();return new Promise((res,rej)=>{const q=d.transaction('kv').objectStore('kv').get(k);q.onsuccess=()=>res(q.result);q.onerror=()=>rej(q.error)})}
+async function idbSet(k,v){const d=await idb();return new Promise((res,rej)=>{const tx=d.transaction('kv','readwrite');tx.objectStore('kv').put(v,k);tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error)})}
+async function idbDel(k){const d=await idb();return new Promise((res,rej)=>{const tx=d.transaction('kv','readwrite');tx.objectStore('kv').delete(k);tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error)})}
 
 /* ===== init ===== */
 (async function init(){
@@ -1390,7 +1419,14 @@ async function applyPending(){
   }catch(e){ console.error(e); toast('계산 데이터를 불러오지 못했어요') }
   busy(false); header(); setCalcStatus(); go('browse');
   try{
-    if(!window.claude?.use) return;
+    if(!window.claude?.use){
+      LOCAL=true; db=localDb(); uid='local'; DL=localDownloads(); ASSETS=null;
+      try{ const saved=await idbGet('model'); if(saved){ setCalcStatus('저장된 데이터 불러오는 중…');
+        const m=JSON.parse(await gunzipText(saved.gz)); m.meta={...m.meta,source:'이 브라우저에 저장',uploadedAt:saved.uploadedAt}; useModel(m); calcAll(); header(); setCalcStatus(); go(tab,true); toast(`저장해 둔 데이터(${m.meta.title})로 계산했어요`) } }catch(e){ console.warn('저장된 데이터 불러오기 실패',e); setCalcStatus() }
+      stuCol().onSnapshot(snap=>{ students=snap.docs.map(x=>({...x.data(),id:x.id})).sort((a,b)=>(b.updated||0)-(a.updated||0)); if(tab==='student') rStudent() });
+      if(tab==='student') rStudent();
+      return;
+    }
     const [d,u,dl,as]=await Promise.all([claude.use('db'),claude.use('user'),claude.use('downloads'),claude.use('assets').catch(()=>null)]);
     DL=dl||null; ASSETS=as||null;
     if(d){ db=d;
