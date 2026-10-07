@@ -172,15 +172,23 @@ UNIV["이화여자대학교"] = {"basis": "2027학년도 정시모집요강", "l
    "학교폭력 감점만 있어요. 인문·자연 통합선발, 뇌인지과학부, 인공지능데이터사이언스학부, 간호학부 등 모두 같은 규칙이에요.", ["ewha_jeongsi"]),
 ]}
 
+def apply_med():
+    sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+    import hb_med_spec
+    missing = hb_med_spec.build_med(UNIV, SRC, LV_OFFICIAL, LV_COPY, R)
+    if missing:
+        print("메디컬 규칙 누락(검증 JSON 없음):", missing)
+
 def build():
     data = {"asOf": ASOF, "src": SRC, "univ": UNIV}
     return json.dumps(data, ensure_ascii=False, separators=(",", ":"))
 
 if __name__ == "__main__":
+    apply_med()
     html = pathlib.Path(__file__).resolve().parent.parent / "jeongsi_tool.html"
     t = html.read_text(encoding="utf-8")
     a, b = "/*HB_DATA_START*/", "/*HB_DATA_END*/"
     i, j = t.index(a) + len(a), t.index(b)
     t = t[:i] + build() + t[j:]
     html.write_text(t, encoding="utf-8")
-    print("HB_DATA 갱신:", len(UNIV), "개 대학,", sum(len(v["rules"]) for v in UNIV.values()), "개 규칙")
+    print("HB_DATA 갱신:", len(UNIV), "개 대학, 비메디컬", sum(len(v["rules"]) for v in UNIV.values()), "개 / 메디컬", sum(len(v.get("med",[])) for v in UNIV.values()), "개 규칙")
