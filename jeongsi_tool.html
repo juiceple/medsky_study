@@ -304,6 +304,7 @@ table.dt{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
 .tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;margin-top:8px}.chtier{border:1px solid var(--line);border-radius:10px;padding:10px 12px}.chtier .th{display:flex;gap:8px;align-items:center}.chtier .tip{font-size:11.5px;color:var(--muted);margin:3px 0 6px}
 .chips2{display:flex;flex-wrap:wrap;gap:5px}.uchip{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:3px 10px;font-size:12.5px;font-weight:600;cursor:pointer}.uchip:hover{border-color:var(--navy2)}.uchip small{margin-left:5px;color:var(--muted);font-weight:500}
 .trk{display:inline-block;font-size:10.5px;font-weight:700;border-radius:4px;padding:0 5px;margin-left:5px;vertical-align:1px;line-height:16px;white-space:nowrap}
+.twrap .trk,.dt .trk,td .trk{margin-left:0}
 .trk.gen{color:var(--muted);background:var(--line2);font-weight:600}
 .trk.reg{color:var(--j4);background:var(--j4s)}.trk.gyo{color:var(--j3);background:var(--j3s)}.trk.spc{color:#7a3e9d;background:#efe1f7}.trk.car{color:var(--j2);background:var(--j2s)}.trk.num{color:var(--ink2);background:var(--line)}
 :root[data-theme="dark"] .trk.spc{color:#d3a8ec;background:#35214a}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .trk.spc{color:#d3a8ec;background:#35214a}}
@@ -938,7 +939,23 @@ function trkBase(u){
   if(/[^0-9]([12])$/.test(n)) return {l:'전형'+n.slice(-1),c:'num',tip:'같은 모집단위를 전형 1·2로 나눠 모집하는 대학이에요(가천대는 일반전형1=백분위, 일반전형2=등급 활용). 대학 요강으로 확인하세요.'};
   return {l:'일반',c:'gen',tip:'정시 일반전형이에요(표기가 없는 모집단위).'};
 }
-const trkTag=u=>{const k=trkOf(u);return `<span class="trk ${k.c}" title="${esc(k.tip)}">${k.l}</span>`};
+const trkMemo=new Map();
+/* 조사한 전형 정보: 학생부 반영 조사(HB_DATA)의 전형명·요약에서 자격·이월·전형 관련 문장만 뽑는다 */
+function trkInfo(u){
+  let r=trkMemo.get(u);if(r!==undefined)return r;
+  const k=trkOf(u);r=null;
+  if(k.c!=='gen'){
+    const h=haksaengOf(u);
+    if(h&&h.grp&&h.kind==='research'){
+      const re=/(지역인재|지역균형|지역의사|거주|고교|고등학교|이수|출신|졸업|자격|이월|교과우수|만학|강원인재|추천)/;
+      const seen=new Set(),ls=[];
+      [h.sum,...(h.det||[]),h.note].filter(Boolean).forEach(s=>String(s).split(/(?<=[.。])\s+|\n/).forEach(x=>{x=x.trim();if(x&&re.test(x)&&!seen.has(x)){seen.add(x);ls.push(x)}}));
+      r={grp:h.grp,lines:ls.slice(0,4)};
+    }
+  }
+  trkMemo.set(u,r);return r;
+}
+const trkTag=u=>{const k=trkOf(u),f=trkInfo(u);const tip=k.tip+(f?`\n\n[요강 조사] ${f.grp}${f.lines.length?'\n· '+f.lines.join('\n· '):''}`:'');return `<span class="trk ${k.c}" title="${esc(tip)}">${k.l}</span>`};
 const trkTxt=u=>trkOf(u).l;
 const keyOf=i=>U[i][0]+'|'+U[i][1]+'|'+U[i][3];
 let KEYIDX=new Map(); function reindex(){KEYIDX=new Map(U.map((u,i)=>[u[0]+'|'+u[1]+'|'+u[3],i]))} reindex();
@@ -1004,6 +1021,7 @@ const COLS=[
   {k:'add',t:'담기'},
   {k:'univ',t:'대학교',f:i=>U[i][0],filter:true,sort:i=>U[i][0]},
   {k:'major',t:'학과',sort:i=>U[i][1]},
+  {k:'trk',t:'전형 유형',f:i=>trkOf(U[i]).l,filter:true,sort:i=>trkOf(U[i]).l},
   {k:'gun',t:'군',f:i=>gunLabel(gunOf(U[i])),filter:true,sort:i=>({가:1,나:2,다:3})[U[i][3]]||9},
   {k:'cap',t:'정원',sort:i=>U[i][4]??-1},
   {k:'region',t:'지역',f:i=>U[i][5],filter:true,sort:i=>U[i][5]},
@@ -1046,7 +1064,8 @@ function cellHtml(k,i){
   switch(k){
     case 'add':{const on=S.picks[keyOf(i)]!=null;return `<td><button class="wb ${on?'on':''}" data-add="${i}">${on?'담음':'+ 담기'}</button></td>`}
     case 'univ':return `<td class="nm">${esc(u[0])}</td>`;
-    case 'major':return `<td>${esc(u[1])}${trkTag(u)}</td>`;
+    case 'major':return `<td>${esc(u[1])}</td>`;
+    case 'trk':return `<td>${trkTag(u)}</td>`;
     case 'gun':{const g=gunOf(u);return `<td><span class="${gunCls(g)}">${esc(GUNS.includes(g)?g:gunLabel(g))}</span></td>`}
     case 'cap':return `<td class="num">${cap(u[4])}</td>`;
     case 'region':return `<td>${esc(u[5]||'')}</td>`;
@@ -1324,7 +1343,7 @@ function drawFunk(rows){
   const hits=rows.filter(i=>funkOf(i).badgeClass!=='none').sort((a,b)=>funkOf(b).score-funkOf(a).score);
   $('funkPanel').innerHTML=`<div class="fpan"><button class="btn sm close" id="fclose">닫기</button><h4>⚡ 펑크 예측</h4>
   <div class="status">25학년도 입결을 직전 3년 평균과 비교하고 정원 규모를 함께 봐요. 미달·추합 실제 결과와는 다를 수 있는 참고 지표예요.</div>
-  ${hits.length?`<table><thead><tr><th>모집단위</th><th>예측</th><th>근거</th></tr></thead><tbody>${hits.slice(0,40).map(i=>{const f=funkOf(i);return `<tr data-i="${i}" style="cursor:pointer"><td><b>${esc(U[i][0])}</b> ${esc(U[i][1])}${trkTag(U[i])}<br><span class="status">${gunLabel(gunOf(U[i]))} · 정원 ${cap(U[i][4])}</span></td><td>${funkHtml(f)}</td><td>${esc([...f.reasons,...f.risks][0]||'')}</td></tr>`}).join('')}</tbody></table>`:'<p class="status">지금 보이는 모집단위에서는 뚜렷한 펑크·반등 신호가 없어요.</p>'}</div>`;
+  ${hits.length?`<table><thead><tr><th>모집단위</th><th>전형</th><th>예측</th><th>근거</th></tr></thead><tbody>${hits.slice(0,40).map(i=>{const f=funkOf(i);return `<tr data-i="${i}" style="cursor:pointer"><td><b>${esc(U[i][0])}</b> ${esc(U[i][1])}<br><span class="status">${gunLabel(gunOf(U[i]))} · 정원 ${cap(U[i][4])}</span></td><td>${trkTag(U[i])}</td><td>${funkHtml(f)}</td><td>${esc([...f.reasons,...f.risks][0]||'')}</td></tr>`}).join('')}</tbody></table>`:'<p class="status">지금 보이는 모집단위에서는 뚜렷한 펑크·반등 신호가 없어요.</p>'}</div>`;
   $('fclose').onclick=()=>{BR.funk=false;$('funkPanel').innerHTML=''};
   $('funkPanel').querySelectorAll('tr[data-i]').forEach(r=>r.onclick=()=>openDetail(+r.dataset.i));
 }
@@ -1571,8 +1590,8 @@ function rWish(){
   const host=$('wb');
   if(!ids.length){host.innerHTML=`<div class="card empty">아직 담은 모집단위가 없어요.<br><br><button class="btn pri" onclick="go('match')">정밀 매칭 도구로 가기</button> <button class="btn" onclick="go('browse')">대학 둘러보기</button></div>`;return}
   if(WV==='board') return drawBoard(host,ids);
-  host.innerHTML=`<div class="twrap" style="max-height:none"><table class="dt"><thead><tr><th>#</th><th>군</th><th>대학교</th><th>학과</th><th>정원</th><th>판정</th><th>학생 누백</th><th>적정</th><th>소신</th><th>합격권</th><th>펑크예측</th><th style="min-width:200px">메모</th><th></th></tr></thead><tbody>
-  ${ids.map((i,n)=>{const u=U[i],b=B[basis][i],k=keyOf(i),h=hitOf(i),g=gunOf(u);return `<tr data-i="${i}"><td class="dim">${n+1}</td><td><span class="${gunCls(g)}">${esc(GUNS.includes(g)?g:gunLabel(g))}</span></td><td class="nm">${esc(u[0])}${S.finals[g]===k?' <span class="jb j3">최종</span>':''}</td><td>${esc(u[1])}${trkTag(u)}</td><td class="num">${cap(u[4])}</td>
+  host.innerHTML=`<div class="twrap" style="max-height:none"><table class="dt"><thead><tr><th>#</th><th>군</th><th>대학교</th><th>학과</th><th>전형 유형</th><th>정원</th><th>판정</th><th>학생 누백</th><th>적정</th><th>소신</th><th>합격권</th><th>펑크예측</th><th style="min-width:200px">메모</th><th></th></tr></thead><tbody>
+  ${ids.map((i,n)=>{const u=U[i],b=B[basis][i],k=keyOf(i),h=hitOf(i),g=gunOf(u);return `<tr data-i="${i}"><td class="dim">${n+1}</td><td><span class="${gunCls(g)}">${esc(GUNS.includes(g)?g:gunLabel(g))}</span></td><td class="nm">${esc(u[0])}${S.finals[g]===k?' <span class="jb j3">최종</span>':''}</td><td>${esc(u[1])}</td><td>${trkTag(u)}</td><td class="num">${cap(u[4])}</td>
     <td><span class="jb j${b[0]}">${JL[b[0]]}</span></td><td class="num"><b>${pct(b[1])}</b></td><td class="num">${pct(b[3])}</td><td class="num">${pct(b[5])}</td><td class="num">${h.d?h.n+'/'+h.d:'–'}</td><td>${funkHtml(funkOf(i))}</td>
     <td><input class="memo-in" data-memo="${esc(k)}" value="${esc(S.notes[k]?.memo||'')}" placeholder="메모"></td>
     <td><button class="btn sm navy" data-rep="${i}">리포트</button> <button class="btn sm" data-del="${i}">빼기</button></td></tr>`}).join('')}</tbody></table></div>`;
@@ -1612,6 +1631,12 @@ function histChart(i){
     ${['21','22','23','24','25'].map((y,k)=>`<text x="${X(k)}" y="${H-8}" text-anchor="middle" font-size="11.5" fill="var(--ink2)">${y}학년도</text>`).join('')}</svg>
     <div class="legend"><span><i style="background:#2a5a9c"></i>합격권 누백</span><span><i style="background:var(--muted)"></i>상위 70% 누백</span><span>위로 갈수록 상위권</span></div>`;
 }
+function trkBox(u){
+  const k=trkOf(u),f=trkInfo(u);
+  return `<div class="rsec"><h4>🎓 전형 유형 ${trkTag(u)}</h4><p style="margin:0;font-size:13px">${esc(k.tip)}</p>
+    ${f?`<p style="margin:6px 0 0;font-size:13px"><b>요강 전형명</b> · ${esc(f.grp)}</p>${f.lines.length?`<ul class="rl">${f.lines.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}`:''}
+    <p class="status" style="margin:6px 0 0">전형 유형은 모집단위 이름의 표기로 판별해요. 대학별 지원 자격(고교 소재지 등)은 정시 모집요강으로 꼭 확인하세요.</p></div>`;
+}
 function hbBox(u,i){
   const h=haksaengOf(u), s=SAENG[u[20]];
   const stu=[];
@@ -1642,6 +1667,7 @@ function bodyHtml(i){
     <div class="status" style="font-weight:700;margin-top:6px">참고</div>${li(f.notes)}</div></div>
   <div class="rsec chart"><h4>📈 5개년 입결 추이</h4>${histChart(i)}
     <table class="yt"><thead><tr><th>학년도</th>${['25','24','23','22','21'].map(y=>`<th>${y}</th>`).join('')}</tr></thead><tbody><tr><th>합격권</th>${b[6].map(v=>`<td>${pct(v)}</td>`).join('')}</tr><tr><th>상위 70%</th>${b[7].map(v=>`<td>${pct(v)}</td>`).join('')}</tr></tbody></table></div>
+  ${trkBox(u)}
   ${hbBox(u,i)}
   <div class="rgrid"><div class="rsec"><h4>⚖️ 수능 반영</h4>
     ${r.every(x=>typeof x==='number')?`<div class="ratio"><div style="flex:${r[0]};background:#3d5a99">국어 ${fmt(r[0]*100,0)}%</div><div style="flex:${r[1]};background:#2b7a78">수학 ${fmt(r[1]*100,0)}%</div><div style="flex:${r[2]};background:#8a5a9e">탐구 ${fmt(r[2]*100,0)}%</div></div>`:`<p class="status">${esc(r.filter(x=>x!=='★').join(' '))}</p>`}
