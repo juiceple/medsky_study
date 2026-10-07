@@ -256,6 +256,17 @@ table.dt{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
   .omr td,.omr th{padding:7px 6px}
 }
 
+.finalbox{display:flex;gap:24px;align-items:center;flex-wrap:wrap;background:var(--paper);border:1px solid var(--line);border-left:5px solid var(--navy2);border-radius:10px;padding:14px 20px;margin-bottom:16px}
+.finalbox.man{border-left-color:var(--accent)}
+.finalbox small{display:block;font-size:12.5px;font-weight:700;color:var(--ink2)}
+.finalbox .fv{font-size:44px;font-weight:800;line-height:1.1;color:var(--navy2);margin:2px 0}
+.finalbox .fv span{font-size:16px;font-weight:600;margin-left:6px;color:var(--muted)}
+.finalbox.man .fv{color:var(--accent)}
+.finalbox .fs{font-size:12px;color:var(--muted)}
+.finalbox .fe{margin-left:auto}
+.finalbox .fe label{display:block;font-size:12px;font-weight:700;margin-bottom:4px;color:var(--ink2)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .finalbox .fv{color:var(--ink)}:root:not([data-theme="light"]) .finalbox.man .fv{color:var(--accent)}}
+:root[data-theme="dark"] .finalbox .fv{color:var(--ink)}:root[data-theme="dark"] .finalbox.man .fv{color:var(--accent)}
 .sb{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11.5px;font-weight:700;border:1px solid #c9b2e6;color:#6a3fa0;background:#f3ecfb;white-space:nowrap}
 :root[data-theme="dark"] .sb{color:#cfb2f2;background:#33284a;border-color:#5b4580}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .sb{color:#cfb2f2;background:#33284a;border-color:#5b4580}}
@@ -1010,18 +1021,29 @@ function rNaesin(){
 }
 const QSEM=[['1-1','1학년 1학기'],['1-2','1학년 2학기'],['2-1','2학년 1학기'],['2-2','2학년 2학기'],['3-1','3학년 1학기'],['3-2','3학년 2학기 (선택)']];
 function qualAvg(){const v=QSEM.map(([k])=>parseFloat(((S.qual||{}).sem||{})[k])).filter(x=>!isNaN(x));return v.length?{avg:v.reduce((a,x)=>a+x,0)/v.length,n:v.length}:null}
+function finalGrade(){const q=S.qual||{},m=parseFloat(q.finalManual);if(!isNaN(m)&&String(q.finalManual).trim()!=='')return {val:m,src:'manual'};const a=qualAvg();return a?{val:a.avg,src:'auto',n:a.n}:null}
 function qualAbsent(){const a=(S.qual||{}).absent||{};const v=['1','2','3'].map(k=>parseInt(a[k])).filter(x=>!isNaN(x));return v.length?v.reduce((s,x)=>s+x,0):null}
 function rQual(){
   const q=S.qual||{}, sem=q.sem||{}, ab=q.absent||{};
-  const sumLine=()=>{const a=qualAvg(),b=qualAbsent();return `${a?`입력된 ${a.n}개 학기 단순평균 <b>${fmt(a.avg,2)}</b> 등급`:'학기별 점수를 입력하면 평균이 표시돼요'}${b!=null?` · 무단결석 합계 <b>${b}</b>일`:''}`};
-  $('qualBox').innerHTML=`<div class="grid2" style="align-items:start">
+  const sumLine=()=>{const b=qualAbsent();return b!=null?`무단결석 합계 <b>${b}</b>일`:'학년별 무단 결석 일수를 입력하세요'};
+  const finalHtml=()=>{const f=finalGrade();return `<div class="finalbox"><div><small>최종 평균 내신 <span style="font-weight:400">(전 교과 평균 등급)</span></small>
+      <div class="fv" id="qFinalVal">${f?fmt(f.val,2):'–'}<span>등급</span></div>
+      <div class="fs" id="qFinalSrc">${f?(f.src==='manual'?'✏️ 직접 입력한 값을 쓰고 있어요':`학기별 입력 ${f.n}개의 단순평균으로 자동 계산`):'학기별 점수를 입력하면 자동으로 계산돼요'}</div></div>
+      <div class="fe"><label for="qFinalMan">직접 수정 <span class="status">(비우면 자동 계산값 사용)</span></label>
+        <div style="display:flex;gap:6px;align-items:center"><input id="qFinalMan" inputmode="decimal" value="${esc(q.finalManual??'')}" placeholder="예: 2.75" style="width:110px;font-size:16px;font-weight:700"><button class="btn sm" id="qFinalReset" type="button">자동값으로</button></div></div></div>`};
+  $('qualBox').innerHTML=`${finalHtml()}<div class="grid2" style="align-items:start">
     <div><div class="gtitle" style="margin-bottom:6px">학기별 산출 내신 점수 <small>(전 교과 평균 등급)</small></div>
       <table class="omr"><tbody>${QSEM.map(([k,n])=>`<tr><td class="area" style="width:150px">${n}</td><td><input inputmode="decimal" data-qs="${k}" value="${esc(sem[k]??'')}" placeholder="예: 2.85" aria-label="${n} 산출 내신"></td></tr>`).join('')}</tbody></table>
-      <div class="hint" id="qSum" style="margin-top:6px">${sumLine()}</div></div>
+</div>
     <div><div class="gtitle" style="margin-bottom:6px">출결 상황 <small>(무단 결석 일수)</small></div>
       <table class="omr"><tbody>${[['1','1학년'],['2','2학년'],['3','3학년']].map(([k,n])=>`<tr><td class="area" style="width:150px">${n}</td><td><input inputmode="numeric" data-qa="${k}" value="${esc(ab[k]??'')}" placeholder="0" aria-label="${n} 무단 결석 일수"> <span class="status">일</span></td></tr>`).join('')}</tbody></table>
+      <div class="hint" id="qSum" style="margin-top:6px">${sumLine()}</div>
       <div class="field" style="margin-top:12px"><label for="qMemo">특이 사항</label><textarea id="qMemo" rows="5" placeholder="예: 2학년 1학기 질병 결석(인정), 의료동아리 부장, 수학 세특 우수, 봉사 100시간, 담임 의견 등">${esc(q.memo||'')}</textarea></div></div></div>`;
-  const touch=()=>{S.qual=S.qual||{};autosave();$('qSum').innerHTML=sumLine()};
+  const paintFinal=()=>{const f=finalGrade();$('qFinalVal').firstChild.nodeValue=f?fmt(f.val,2):'–';$('qFinalSrc').textContent=f?(f.src==='manual'?'✏️ 직접 입력한 값을 쓰고 있어요':`학기별 입력 ${f.n}개의 단순평균으로 자동 계산`):'학기별 점수를 입력하면 자동으로 계산돼요';$('qFinalVal').parentNode.parentNode.classList.toggle('man',!!f&&f.src==='manual')};
+  const touch=()=>{S.qual=S.qual||{};autosave();$('qSum').innerHTML=sumLine();paintFinal()};
+  paintFinal();
+  $('qFinalMan').oninput=e=>{S.qual=S.qual||{};S.qual.finalManual=e.target.value.trim();touch()};
+  $('qFinalReset').onclick=()=>{S.qual=S.qual||{};S.qual.finalManual='';$('qFinalMan').value='';touch()};
   $('qualBox').querySelectorAll('[data-qs]').forEach(el=>el.oninput=()=>{S.qual=S.qual||{};S.qual.sem={...(S.qual.sem||{}),[el.dataset.qs]:el.value.trim()};touch()});
   $('qualBox').querySelectorAll('[data-qa]').forEach(el=>el.oninput=()=>{S.qual=S.qual||{};S.qual.absent={...(S.qual.absent||{}),[el.dataset.qa]:el.value.trim()};touch()});
   $('qMemo').oninput=e=>{S.qual=S.qual||{};S.qual.memo=e.target.value;autosave()};
@@ -1317,7 +1339,7 @@ function saengBox(u){
   return `<div class="rsec"><h4>📋 학생부(생기부) 반영 <span class="sb">${esc(s[1])}</span></h4>
     <div class="tags" style="margin-bottom:6px"><span>${esc(s[0])}</span>${s[3]!=null?`<span>내신 만점 ${fmt(s[3],0)}점</span>`:''}${s[4]!=null?`<span>비교내신(기본값) ${fmt(s[4],1)}</span>`:''}${(()=>{const v=naeValueOf(u);return v!==undefined&&v!==''?`<span style="background:var(--accent-s);color:var(--accent);font-weight:700">학생 내신 ${esc(v)} 적용</span>`:'<span>학생 내신 미입력 · 기본값 적용</span>'})()}</div>
     <p style="margin:0;font-size:13px">${esc(s[2])}</p>
-    ${(s[1]==='교과평가'||s[1]==='비교과·출결')?(()=>{const a=qualAvg(),b=qualAbsent(),m=(S.qual||{}).memo;return `<p class="status" style="margin:6px 0 0">학생 정성 자료 · ${a?`학기 평균 ${fmt(a.avg,2)}등급`:'학기별 내신 미입력'} · ${b!=null?`무단결석 ${b}일`:'출결 미입력'}${m?` · 특이사항: ${esc(m.slice(0,60))}${m.length>60?'…':''}`:''}</p>`})():''}
+    ${(s[1]==='교과평가'||s[1]==='비교과·출결')?(()=>{const a=finalGrade(),b=qualAbsent(),m=(S.qual||{}).memo;return `<p class="status" style="margin:6px 0 0">학생 정성 자료 · ${a?`최종 평균 내신 ${fmt(a.val,2)}등급`:'내신 미입력'} · ${b!=null?`무단결석 ${b}일`:'출결 미입력'}${m?` · 특이사항: ${esc(m.slice(0,60))}${m.length>60?'…':''}`:''}</p>`})():''}
     <p class="status" style="margin:6px 0 0">고속성장분석기에 반영된 정보 기준이에요. 세부 반영비율·평가요소는 해당 대학 모집요강으로 꼭 확인하세요.</p></div>`;
 }
 function bodyHtml(i){
