@@ -303,6 +303,10 @@ table.dt{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
 :root[data-theme="dark"] .pk b{color:var(--ink)}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .pk b{color:var(--ink)}}
 .tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;margin-top:8px}.chtier{border:1px solid var(--line);border-radius:10px;padding:10px 12px}.chtier .th{display:flex;gap:8px;align-items:center}.chtier .tip{font-size:11.5px;color:var(--muted);margin:3px 0 6px}
 .chips2{display:flex;flex-wrap:wrap;gap:5px}.uchip{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:3px 10px;font-size:12.5px;font-weight:600;cursor:pointer}.uchip:hover{border-color:var(--navy2)}.uchip small{margin-left:5px;color:var(--muted);font-weight:500}
+.trk{display:inline-block;font-size:10.5px;font-weight:700;border-radius:4px;padding:0 5px;margin-left:5px;vertical-align:1px;line-height:16px;white-space:nowrap}
+.trk.gen{color:var(--muted);background:var(--line2);font-weight:600}
+.trk.reg{color:var(--j4);background:var(--j4s)}.trk.gyo{color:var(--j3);background:var(--j3s)}.trk.spc{color:#7a3e9d;background:#efe1f7}.trk.car{color:var(--j2);background:var(--j2s)}.trk.num{color:var(--ink2);background:var(--line)}
+:root[data-theme="dark"] .trk.spc{color:#d3a8ec;background:#35214a}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .trk.spc{color:#d3a8ec;background:#35214a}}
 /* ===== 성적대 위치 차트 ===== */
 .chs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0}
 .chs>div{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
@@ -917,6 +921,25 @@ const saengOf=u=>SAENG[u[20]]||null;
 const gunCls=g=>'gunc '+({가:'g-ga',나:'g-na',다:'g-da'}[g]||'x');
 const gunLabel=g=>GUNS.includes(g)?g+'군':({이월:'수시이월',전문:'전문대',군외:'군외'})[g]||g;
 const cap=v=>v==null?'–':(v<1?'미정':v);
+
+/* 전형 유형: 데이터에 별도 열이 없어 모집단위 이름의 표기([지역]·[교과]·[만학]·끝 숫자)와 군(수시이월)으로 판별한다.
+   표기가 없는 모집단위는 '일반'(정시 일반전형)으로 본다. 정원 외 전형(농어촌·기회균형 등)은 이 데이터에 없다. */
+function trkOf(u){
+  const k=trkBase(u);
+  if(u[3]==='수시이월'&&k.c!=='car'&&k.c!=='gen'&&k.c!=='num') return {...k,l:k.l+'(이월)',tip:k.tip+' 수시 미충원 인원을 정시로 이월해 선발하는 단위예요.'};
+  return k;
+}
+function trkBase(u){
+  const n=u[1];
+  if(/\[지역\]/.test(n)) return u[0]==='서울대학교'?{l:'지역균형',c:'reg',tip:'서울대 지역균형전형(수능 60 + 교과평가 40)이에요. 이름의 [지역] 표기 단위예요.'}:{l:'지역인재',c:'reg',tip:'지역인재전형이에요. 이름의 [지역] 표기 단위로, 해당 지역 고교 졸업(예정)자만 지원할 수 있어요.'};
+  if(/\[교과\]/.test(n)) return {l:'교과우수',c:'gyo',tip:'교과우수전형이에요. 이름의 [교과] 표기 단위예요(대학별 학생부 교과 반영).'};
+  if(/\[만학\]/.test(n)) return {l:'만학도',c:'spc',tip:'만학도전형이에요. 이름의 [만학] 표기 단위예요.'};
+  if(u[3]==='수시이월') return {l:'수시이월',c:'car',tip:'수시모집 미충원 인원을 정시로 넘겨 선발하는 모집단위예요. 선발 방식은 대학 요강을 확인하세요.'};
+  if(/[^0-9]([12])$/.test(n)) return {l:'전형'+n.slice(-1),c:'num',tip:'같은 모집단위를 전형 1·2로 나눠 모집하는 대학이에요(가천대는 일반전형1=백분위, 일반전형2=등급 활용). 대학 요강으로 확인하세요.'};
+  return {l:'일반',c:'gen',tip:'정시 일반전형이에요(표기가 없는 모집단위).'};
+}
+const trkTag=u=>{const k=trkOf(u);return `<span class="trk ${k.c}" title="${esc(k.tip)}">${k.l}</span>`};
+const trkTxt=u=>trkOf(u).l;
 const keyOf=i=>U[i][0]+'|'+U[i][1]+'|'+U[i][3];
 let KEYIDX=new Map(); function reindex(){KEYIDX=new Map(U.map((u,i)=>[u[0]+'|'+u[1]+'|'+u[3],i]))} reindex();
 const idxOf=k=>KEYIDX.get(k);
@@ -1023,7 +1046,7 @@ function cellHtml(k,i){
   switch(k){
     case 'add':{const on=S.picks[keyOf(i)]!=null;return `<td><button class="wb ${on?'on':''}" data-add="${i}">${on?'담음':'+ 담기'}</button></td>`}
     case 'univ':return `<td class="nm">${esc(u[0])}</td>`;
-    case 'major':return `<td>${esc(u[1])}</td>`;
+    case 'major':return `<td>${esc(u[1])}${trkTag(u)}</td>`;
     case 'gun':{const g=gunOf(u);return `<td><span class="${gunCls(g)}">${esc(GUNS.includes(g)?g:gunLabel(g))}</span></td>`}
     case 'cap':return `<td class="num">${cap(u[4])}</td>`;
     case 'region':return `<td>${esc(u[5]||'')}</td>`;
@@ -1301,7 +1324,7 @@ function drawFunk(rows){
   const hits=rows.filter(i=>funkOf(i).badgeClass!=='none').sort((a,b)=>funkOf(b).score-funkOf(a).score);
   $('funkPanel').innerHTML=`<div class="fpan"><button class="btn sm close" id="fclose">닫기</button><h4>⚡ 펑크 예측</h4>
   <div class="status">25학년도 입결을 직전 3년 평균과 비교하고 정원 규모를 함께 봐요. 미달·추합 실제 결과와는 다를 수 있는 참고 지표예요.</div>
-  ${hits.length?`<table><thead><tr><th>모집단위</th><th>예측</th><th>근거</th></tr></thead><tbody>${hits.slice(0,40).map(i=>{const f=funkOf(i);return `<tr data-i="${i}" style="cursor:pointer"><td><b>${esc(U[i][0])}</b> ${esc(U[i][1])}<br><span class="status">${gunLabel(gunOf(U[i]))} · 정원 ${cap(U[i][4])}</span></td><td>${funkHtml(f)}</td><td>${esc([...f.reasons,...f.risks][0]||'')}</td></tr>`}).join('')}</tbody></table>`:'<p class="status">지금 보이는 모집단위에서는 뚜렷한 펑크·반등 신호가 없어요.</p>'}</div>`;
+  ${hits.length?`<table><thead><tr><th>모집단위</th><th>예측</th><th>근거</th></tr></thead><tbody>${hits.slice(0,40).map(i=>{const f=funkOf(i);return `<tr data-i="${i}" style="cursor:pointer"><td><b>${esc(U[i][0])}</b> ${esc(U[i][1])}${trkTag(U[i])}<br><span class="status">${gunLabel(gunOf(U[i]))} · 정원 ${cap(U[i][4])}</span></td><td>${funkHtml(f)}</td><td>${esc([...f.reasons,...f.risks][0]||'')}</td></tr>`}).join('')}</tbody></table>`:'<p class="status">지금 보이는 모집단위에서는 뚜렷한 펑크·반등 신호가 없어요.</p>'}</div>`;
   $('fclose').onclick=()=>{BR.funk=false;$('funkPanel').innerHTML=''};
   $('funkPanel').querySelectorAll('tr[data-i]').forEach(r=>r.onclick=()=>openDetail(+r.dataset.i));
 }
@@ -1389,9 +1412,9 @@ function rMatchMain(){
 }
 function exportCsv(){
   const rows=TM.last||[]; if(!rows.length){toast('저장할 결과가 없어요');return}
-  const H=['대학교','학과','군','정원','지역','계열','구분','판정','학생누백','여유','적정누백','예상누백','소신누백','25합격권','24합격권','23합격권','22합격권','21합격권','합격권횟수','국어비율','수학비율','탐구비율','펑크예측','환산점수','적정점수','학생부구분','학생부반영방식'];
+  const H=['대학교','학과','전형유형','군','정원','지역','계열','구분','판정','학생누백','여유','적정누백','예상누백','소신누백','25합격권','24합격권','23합격권','22합격권','21합격권','합격권횟수','국어비율','수학비율','탐구비율','펑크예측','환산점수','적정점수','학생부구분','학생부반영방식'];
   const q=v=>{v=v==null?'':String(v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};
-  const lines=rows.map(i=>{const u=U[i],b=B[basis][i],h=hitOf(i),r=u[13];return [u[0],u[1],gunLabel(gunOf(u)),u[4],u[5],u[7],catOf(u),JL[b[0]],b[1],marginOf(i)===-999?'':fmt(marginOf(i),3),b[3],b[4],b[5],...b[6],h.d?h.n+'/'+h.d:'',...r.map(x=>typeof x==='number'?x:''),funkOf(i).category,u[15],u[17],haksaengOf(u).cls,haksaengOf(u).sum].map(q).join(',')});
+  const lines=rows.map(i=>{const u=U[i],b=B[basis][i],h=hitOf(i),r=u[13];return [u[0],u[1],trkTxt(u),gunLabel(gunOf(u)),u[4],u[5],u[7],catOf(u),JL[b[0]],b[1],marginOf(i)===-999?'':fmt(marginOf(i),3),b[3],b[4],b[5],...b[6],h.d?h.n+'/'+h.d:'',...r.map(x=>typeof x==='number'?x:''),funkOf(i).category,u[15],u[17],haksaengOf(u).cls,haksaengOf(u).sum].map(q).join(',')});
   saveDownload(`정시매칭_${S.name||'학생'}_${BASIS[basis]}.csv`,'\ufeff'+[H.join(','),...lines].join('\n'));
 }
 (function resizer(){const h=$('rh');let x0,w0;h.onmousedown=e=>{x0=e.clientX;w0=$('filters').offsetWidth;h.classList.add('dragging');const mv=e=>{$('filters').style.width=Math.max(220,Math.min(innerWidth*.6,w0+e.clientX-x0))+'px'};const up=()=>{removeEventListener('mousemove',mv);removeEventListener('mouseup',up)};addEventListener('mousemove',mv);addEventListener('mouseup',up)}})();
@@ -1425,7 +1448,7 @@ function chRow(label,idxs,key,sub){
     <div class="chd" title="모집단위 ${s.n}개 · 적정+예상 ${Math.round(s.ok*100)}%">${[4,3,2,1].filter(j=>s.c[j]).map(j=>`<span class="j${j}">${JL[j]} ${s.c[j]}</span>`).join('')}</div></div>`;
   if(!open)return head;
   const bb=B[basis];const ids=idxs.filter(i=>bb[i][0]&&bb[i][3]!=null).sort((a,b)=>bb[a][3]-bb[b][3]);
-  const dots=ids.map(i=>`<span class="dt2 j${bb[i][0]}" data-ci="${i}" data-dk="${esc(key)}" style="left:${l(bb[i][3])}%" title="${esc(U[i][0]+' '+U[i][1]+' · '+gunLabel(gunOf(U[i]))+'군 · 적정 상위 '+fmt(bb[i][3],2)+'% · 학생 상위 '+fmt(bb[i][1],2)+'% · '+JL[bb[i][0]])}"></span>`).join('');
+  const dots=ids.map(i=>`<span class="dt2 j${bb[i][0]}" data-ci="${i}" data-dk="${esc(key)}" style="left:${l(bb[i][3])}%" title="${esc(U[i][0]+' '+U[i][1]+' ['+trkTxt(U[i])+'] · '+gunLabel(gunOf(U[i]))+'군 · 적정 상위 '+fmt(bb[i][3],2)+'% · 학생 상위 '+fmt(bb[i][1],2)+'% · '+JL[bb[i][0]])}"></span>`).join('');
   return head+`<div class="chx"><div class="chr"><div class="chn" style="font-weight:500;font-size:12px">모집단위별 적정 누백<small>${ids.length}개</small></div><div class="cht">${gl}${s.st!=null?`<span class="st" style="left:${l(s.st)}%"></span>`:''}${dots}</div><div class="chd"><button class="btn sm ghost" data-cu="${esc(key)}">${key.startsWith('c:')?'구분 상세':'대학 상세'} 열기</button></div></div></div>`;
 }
 
@@ -1549,7 +1572,7 @@ function rWish(){
   if(!ids.length){host.innerHTML=`<div class="card empty">아직 담은 모집단위가 없어요.<br><br><button class="btn pri" onclick="go('match')">정밀 매칭 도구로 가기</button> <button class="btn" onclick="go('browse')">대학 둘러보기</button></div>`;return}
   if(WV==='board') return drawBoard(host,ids);
   host.innerHTML=`<div class="twrap" style="max-height:none"><table class="dt"><thead><tr><th>#</th><th>군</th><th>대학교</th><th>학과</th><th>정원</th><th>판정</th><th>학생 누백</th><th>적정</th><th>소신</th><th>합격권</th><th>펑크예측</th><th style="min-width:200px">메모</th><th></th></tr></thead><tbody>
-  ${ids.map((i,n)=>{const u=U[i],b=B[basis][i],k=keyOf(i),h=hitOf(i),g=gunOf(u);return `<tr data-i="${i}"><td class="dim">${n+1}</td><td><span class="${gunCls(g)}">${esc(GUNS.includes(g)?g:gunLabel(g))}</span></td><td class="nm">${esc(u[0])}${S.finals[g]===k?' <span class="jb j3">최종</span>':''}</td><td>${esc(u[1])}</td><td class="num">${cap(u[4])}</td>
+  ${ids.map((i,n)=>{const u=U[i],b=B[basis][i],k=keyOf(i),h=hitOf(i),g=gunOf(u);return `<tr data-i="${i}"><td class="dim">${n+1}</td><td><span class="${gunCls(g)}">${esc(GUNS.includes(g)?g:gunLabel(g))}</span></td><td class="nm">${esc(u[0])}${S.finals[g]===k?' <span class="jb j3">최종</span>':''}</td><td>${esc(u[1])}${trkTag(u)}</td><td class="num">${cap(u[4])}</td>
     <td><span class="jb j${b[0]}">${JL[b[0]]}</span></td><td class="num"><b>${pct(b[1])}</b></td><td class="num">${pct(b[3])}</td><td class="num">${pct(b[5])}</td><td class="num">${h.d?h.n+'/'+h.d:'–'}</td><td>${funkHtml(funkOf(i))}</td>
     <td><input class="memo-in" data-memo="${esc(k)}" value="${esc(S.notes[k]?.memo||'')}" placeholder="메모"></td>
     <td><button class="btn sm navy" data-rep="${i}">리포트</button> <button class="btn sm" data-del="${i}">빼기</button></td></tr>`}).join('')}</tbody></table></div>`;
@@ -1561,7 +1584,7 @@ function rWish(){
 function drawBoard(host,ids){
   const by={가:[],나:[],다:[],etc:[]}; ids.forEach(i=>{const g=gunOf(U[i]);(by[g]||by.etc).push(i)});
   const card=i=>{const u=U[i],b=B[basis][i],g=gunOf(u),k=keyOf(i),fin=S.finals[g]===k;
-    return `<div class="bcard ${fin?'final':''}"><div class="t"><div><b>${esc(u[0])}</b><small>${esc(u[1])} · 정원 ${cap(u[4])}</small></div><span class="jb j${b[0]}">${JL[b[0]]}</span></div>
+    return `<div class="bcard ${fin?'final':''}"><div class="t"><div><b>${esc(u[0])}</b><small>${esc(u[1])}${trkTag(u)} · 정원 ${cap(u[4])}</small></div><span class="jb j${b[0]}">${JL[b[0]]}</span></div>
     <small style="margin-top:5px">학생 ${pct(b[1])}% · 적정 ${pct(b[3])}% · 소신 ${pct(b[5])}%</small><div style="margin-top:5px">${funkHtml(funkOf(i))} ${hbBadge(i)}</div>
     <div class="ops">${GUNS.includes(g)?`<button class="btn sm ${fin?'navy':''}" data-fin="${i}">${fin?'최종 지원 ✓':'최종 지원으로'}</button>`:''}<button class="btn sm" data-rep="${i}">리포트</button><button class="btn sm" data-del="${i}">빼기</button></div></div>`};
   const mix=l=>{const c=[0,0,0,0,0];l.forEach(i=>c[B[basis][i][0]]++);return [4,3,2,1].filter(j=>c[j]).map(j=>`<span class="jb j${j}">${JL[j]} ${c[j]}</span>`).join(' ')};
@@ -1632,7 +1655,7 @@ function closeDrawer(){const d=$('drawer');d.classList.remove('open');d.setAttri
 $('scrim').onclick=closeDrawer;
 function openDetail(i){
   curDetail=i; const u=U[i],on=S.picks[keyOf(i)]!=null;
-  openDrawer(`<div class="rhd"><div><h2>${esc(u[0])} ${esc(u[1])}</h2><p>${gunLabel(gunOf(u))} · 정원 ${cap(u[4])} · ${esc(u[5])} ${esc(u[6]||'')} · ${esc(u[7])} · ${esc(catOf(u))}</p></div>
+  openDrawer(`<div class="rhd"><div><h2>${esc(u[0])} ${esc(u[1])}${trkTag(u)}</h2><p>${gunLabel(gunOf(u))} · 정원 ${cap(u[4])} · ${esc(u[5])} ${esc(u[6]||'')} · ${esc(u[7])} · ${esc(catOf(u))}</p></div>
     <div style="display:flex;gap:6px"><button class="btn sm ${on?'':'pri'}" id="dAdd">${on?'목록에서 빼기':'+ 지원희망 담기'}</button><button class="btn sm" id="dx" aria-label="닫기">✕</button></div></div>${bodyHtml(i)}`);
   $('dx').onclick=closeDrawer; $('dAdd').onclick=()=>{togglePick(i);openDetail(i);refreshTables()};
 }
@@ -1641,7 +1664,7 @@ function openReport(i){
   const u=U[i],k=keyOf(i),n=S.notes[k]||{};
   openDrawer(`<div class="rhd"><div class="status">${esc(S.name||'학생')} · 정시 모집단위 리포트</div><div style="display:flex;gap:6px"><button class="btn sm navy" id="rImg">🖼 이미지로 저장</button><button class="btn sm" id="dx" aria-label="닫기">✕</button></div></div>
   <div id="repArea" style="background:var(--panel);padding:6px 2px">
-    <div class="rhd" style="margin-top:10px"><div><h2>${esc(u[0])} ${esc(u[1])}</h2><p>${gunLabel(gunOf(u))} · 정원 ${cap(u[4])} · ${esc(u[5])} · ${esc(u[7])} · ${BASIS[basis]} 응시자 기준</p></div></div>
+    <div class="rhd" style="margin-top:10px"><div><h2>${esc(u[0])} ${esc(u[1])}${trkTag(u)}</h2><p>${gunLabel(gunOf(u))} · 정원 ${cap(u[4])} · ${esc(u[5])} · ${esc(u[7])} · ${BASIS[basis]} 응시자 기준</p></div></div>
     ${bodyHtml(i)}
     <div class="rsec"><h4>✏️ 컨설턴트 코멘트</h4><textarea id="rCom" rows="4" placeholder="이 모집단위에 대한 판단과 전략을 적어주세요">${esc(n.comment||'')}</textarea></div>
   </div>`,true);
@@ -1668,7 +1691,7 @@ async function exportImage(name){
     const us=[]; for(let i=0;i<U.length&&us.length<14;i++){const s=U[i][0]+' '+U[i][1];if(ws.every(w=>s.includes(w)))us.push(i)}
     items=[...un.map(n=>({t:'u',n})),...us.map(i=>({t:'i',i}))]; hl=-1;
     box.innerHTML=(un.length?`<h6>대학</h6>${un.map((n,k)=>`<button data-k="${k}"><span>${mark(n,ws)}</span><small>모집단위 ${U.filter(u=>u[0]===n).length}개</small></button>`).join('')}`:'')
-      +(us.length?`<h6>모집단위</h6>${us.map((i,k)=>{const b=B[basis][i];return `<button data-k="${un.length+k}"><span>${mark(U[i][0]+' '+U[i][1],ws)} <small class="${gunCls(gunOf(U[i])).replace('gunc ','gt ')}">${gunLabel(gunOf(U[i]))}</small></span><span class="jb j${b[0]}">${JL[b[0]]}</span></button>`}).join('')}`:'')
+      +(us.length?`<h6>모집단위</h6>${us.map((i,k)=>{const b=B[basis][i];return `<button data-k="${un.length+k}"><span>${mark(U[i][0]+' '+U[i][1],ws)}${trkTag(U[i])} <small class="${gunCls(gunOf(U[i])).replace('gunc ','gt ')}">${gunLabel(gunOf(U[i]))}</small></span><span class="jb j${b[0]}">${JL[b[0]]}</span></button>`}).join('')}`:'')
       ||'<h6>일치하는 대학·학과가 없어요</h6>';
     box.classList.add('open');
   }
