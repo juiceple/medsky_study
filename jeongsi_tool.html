@@ -308,6 +308,9 @@ table.dt{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
   <h2 class="sec">📝 수능 성적</h2>
   <p class="intro">국어·수학·탐구는 표준점수, 영어·한국사·제2외국어는 등급을 넣으면 백분위·등급·상위 누적이 바로 계산돼요.</p>
   <div class="card" id="omrBox"></div>
+  <h2 class="sec">📚 학생부(내신) 점수</h2>
+  <p class="intro">진학사 등에서 산출한 학생의 대학별 내신 환산점수를 직접 입력하세요. 비워 두면 분석기의 기본값(비교내신)으로 계산돼요. 입력하면 해당 대학 모집단위의 환산점수·판정이 바로 다시 계산돼요.</p>
+  <div class="card" id="naesinBox" style="padding:14px 16px"></div>
   <h2 class="sec">📊 분석 요약</h2>
   <p class="intro">성적을 바꾸면 고속성장분석기와 같은 수식으로 전체 모집단위의 환산점수·누백·판정이 바로 다시 계산돼요.</p>
   <div class="card" id="sumBox" style="padding:14px 16px"></div>
@@ -677,6 +680,7 @@ function useModel(model){
   // 수능입력: 과목명 → 행
   const inp=EN.sheet('수능입력'); IN_ROWS={};
   for(let r=0;r<Math.min(inp.nr,80);r++){const b=EN.raw(inp,r,1); if(typeof b==='string'&&b.trim()&&!inp.F.has(r*16384+2)) IN_ROWS[b.trim()]=r}
+  buildNaesinDefs();
   // 모집단위 고정 정보
   const rowsOf=name=>{const s=EN.sheet(name),out=[];for(let r=5;r<s.nr;r++){if(EN.raw(s,r,1))out.push(r)}return out};
   for(const k in RS) ROWS[k]=rowsOf(RS[k]);
@@ -687,6 +691,26 @@ function useModel(model){
     B[k]=ROWS[k].map(r=>[0,null,null,numOr(raw(s,r,12)),numOr(raw(s,r,13)),numOr(raw(s,r,14)),[15,16,17,18,19].map(c=>numOr(cleanV(raw(s,r,c)))),[20,21,22,23,24].map(c=>numOr(cleanV(raw(s,r,c)))),'']);}
   reindex(); FUNK_CACHE.clear();
 }
+/* ===== 학생부(내신) 직접입력: 분석기 '내신입력' 시트의 대학별 입력칸(직접입력 열) ===== */
+const NAE_GROUPS=[['고려','고려대 (교과우수전형)'],['연세','연세대'],['중앙','중앙대 (비교과 출결)'],['대구대','대구대'],['덕성','덕성여대'],['동남','동남보건대'],['서울','서울대 (교과평가)']];
+const NAE_EXCL=new Set(['경기자전','경희태권','김천간호','상지물치','을지간호1','을지사회1']); // 수능 등급·점수 구간 기반이라 입력 대상 아님
+let NAESIN=[];
+const naeKeyOf=name=>{const g=NAE_GROUPS.find(([p])=>String(name||'').startsWith(p));return g?g[0]:null};
+function buildNaesinDefs(){
+  NAESIN=[]; let sh; try{sh=EN.sheet('내신입력')}catch(e){return}
+  const seen=new Set();
+  for(let r=6;r<Math.min(sh.nr,60);r++){
+    const nm=EN.raw(sh,r,1); if(typeof nm!=='string'||NAE_EXCL.has(nm)) continue;
+    const k=naeKeyOf(nm); if(!k||seen.has(k)) continue; seen.add(k);
+    const d={k,row:r,name:NAE_GROUPS.find(g=>g[0]===k)[1]};
+    if(k==='서울'){ d.options=[]; for(let q=r;q<r+4;q++){const o=EN.raw(sh,q,2); if(typeof o==='string'&&o.trim()) d.options.push(o.trim())} }
+    else { const mx=EN.raw(sh,r,2),bs=EN.raw(sh,r,4); d.max=typeof mx==='number'?mx:null; d.base=typeof bs==='number'?bs:null }
+    NAESIN.push(d);
+  }
+  NAESIN.sort((a,b)=>NAE_GROUPS.findIndex(g=>g[0]===a.k)-NAE_GROUPS.findIndex(g=>g[0]===b.k));
+}
+function naeCount(k){return U.filter(u=>SAENG[u[20]]&&naeKeyOf(u[20])===k).length}
+function naeValueOf(u){const k=naeKeyOf(u[20]);return k?(S.naesin||{})[k]:undefined}
 function scoresFromModel(){ // 파일에 들어 있던 성적
   const inp=EN.sheet('수능입력'),sc={}; for(const b in IN_ROWS){const v=EN.raw(inp,IN_ROWS[b],2);if(typeof v==='number'&&v>0)sc[b]=v} return sc;
 }
@@ -696,7 +720,11 @@ function inputMap(st){
   put(st.t1.sub,st.t1.s); if(st.t2.sub!==st.t1.sub) put(st.t2.sub,st.t2.s); if(st.lang.sub) put(st.lang.sub,st.lang.g);
   return m;
 }
-function applyInputs(st){ const m=inputMap(st); for(const b in IN_ROWS) EN.setRC('수능입력',IN_ROWS[b],2,m[b]??0); EN.reset(); }
+function applyInputs(st){ const m=inputMap(st); for(const b in IN_ROWS) EN.setRC('수능입력',IN_ROWS[b],2,m[b]??0);
+  if(NAESIN.length){ const ov=EN.sheet('내신입력').over;
+    for(const d of NAESIN){ const v=(st.naesin||{})[d.k]; const key=d.row*16384+3;
+      if(v===undefined||v===null||v==='') ov.delete(key); else EN.setRC('내신입력',d.row,3,d.options?v:+v) } }
+  EN.reset(); }
 function subjInfo(name){ // 수능입력 시트의 백분위·등급·누적 (엑셀 수식 결과)
   const r=IN_ROWS[name]; if(r==null) return null; const v=c=>{const x=EN.cell('수능입력',r,c);return typeof x==='number'?x:null};
   const p=v(3),g=v(4),cum=v(5); if(!g) return null; return {pct:p,grade:g,cum};
@@ -796,7 +824,7 @@ function funkOf(i){
 const funkHtml=f=>`<span class="fk ${f.badgeClass}">${f.category}</span>`;
 
 /* ===== student state ===== */
-const BLANK=()=>({id:null,name:'',kor:{sub:'화작',s:null},math:{sub:'확통',s:null},eng:null,hist:null,t1:{sub:SCI[0],s:null},t2:{sub:SCI[1],s:null},lang:{sub:'',g:null},memoReq:'',memoCon:'',picks:{},finals:{},notes:{}});
+const BLANK=()=>({id:null,name:'',kor:{sub:'화작',s:null},math:{sub:'확통',s:null},eng:null,hist:null,t1:{sub:SCI[0],s:null},t2:{sub:SCI[1],s:null},lang:{sub:'',g:null},memoReq:'',memoCon:'',naesin:{},picks:{},finals:{},notes:{}});
 let S=BLANK();
 let basis='all';
 function scoresFromFile(sc){
@@ -960,7 +988,22 @@ function rStudent(){
   $('stuStatus').textContent=db?(S.id?'저장된 학생이에요':''):'저장소 연결 전 · 내보내기로 파일 백업 가능';
   const miss=[];if(!S.eng)miss.push('영어');if(!S.hist)miss.push('한국사');
   $('resWarn').innerHTML=miss.length?`<div class="notice warn" style="margin-top:14px">${miss.join('·')} 등급을 넣어야 대학별 판정이 계산돼요. 비어 있으면 분석기와 똑같이 전부 '오류'로 나와요.</div>`:'';
-  rOmr(); rStudentStats();
+  rOmr(); rNaesin(); rStudentStats();
+}
+function rNaesin(){
+  const box=$('naesinBox'); if(!NAESIN.length){box.innerHTML='<span class="status">이 분석기 파일에는 내신 입력칸이 없어요.</span>';return}
+  box.innerHTML=`<div style="overflow-x:auto"><table class="omr"><thead><tr><th>대학</th><th>내신 환산점수</th><th>미입력 시 적용값</th><th>적용 모집단위</th></tr></thead><tbody>${NAESIN.map(d=>{
+    const v=(S.naesin||{})[d.k]; const inp=d.options
+      ?`<select data-nae="${d.k}"><option value="">미선택 (평균 수준 0)</option>${d.options.map(o=>`<option ${o===v?'selected':''}>${esc(o)}</option>`).join('')}</select>`
+      :`<input inputmode="decimal" data-nae="${d.k}" value="${v??''}" placeholder="${d.max?'0~'+fmt(d.max,0):''}" aria-label="${esc(d.name)} 내신 환산점수"> <span class="status">${d.max?'/ '+fmt(d.max,0)+'점':''}</span>`;
+    return `<tr><td class="area" style="width:190px">${esc(d.name)}</td><td>${inp}</td><td class="status">${d.options?'평균 수준(0점)':(d.base!=null?fmt(d.base,1)+'점 (비교내신)':'기본값')}</td><td class="status">${naeCount(d.k)}개</td></tr>`}).join('')}</tbody></table></div>
+    <div class="hint" style="margin-top:8px">경기자전·경희태권·김천간호·상지물치·을지간호·을지사회는 분석기에서 수능 등급으로 계산하므로 입력칸이 없어요.</div>`;
+  box.querySelectorAll('[data-nae]').forEach(el=>el.onchange=()=>{
+    let v=el.value.trim(); const d=NAESIN.find(x=>x.k===el.dataset.nae);
+    if(v!==''&&!d.options){ v=v.replace(/,/g,''); const n=Number(v); if(isNaN(n)||n<0||(d.max&&n>d.max)){toast(`${d.name}: 0~${d.max||''} 사이 숫자를 입력하세요`);el.value=(S.naesin||{})[d.k]??'';return} v=n }
+    S.naesin={...(S.naesin||{})}; if(v===''||v==null) delete S.naesin[d.k]; else S.naesin[d.k]=v;
+    scheduleCalc(); autosave();
+  });
 }
 function opt(list,sel){return list.map(x=>`<option ${x===sel?'selected':''}>${esc(x)}</option>`).join('')}
 function bubbles(g){return `<div class="bubbles">${[1,2,3,4,5,6,7,8,9].map(i=>`<span class="bub ${i===g?'on':''}">${i}</span>`).join('')}</div>`}
@@ -1251,7 +1294,7 @@ function histChart(i){
 function saengBox(u){
   const s=saengOf(u); if(!s) return '';
   return `<div class="rsec"><h4>📋 학생부(생기부) 반영 <span class="sb">${esc(s[1])}</span></h4>
-    <div class="tags" style="margin-bottom:6px"><span>${esc(s[0])}</span>${s[3]!=null?`<span>내신 만점 ${fmt(s[3],0)}점</span>`:''}${s[4]!=null?`<span>비교내신(기본값) ${fmt(s[4],1)}</span>`:''}</div>
+    <div class="tags" style="margin-bottom:6px"><span>${esc(s[0])}</span>${s[3]!=null?`<span>내신 만점 ${fmt(s[3],0)}점</span>`:''}${s[4]!=null?`<span>비교내신(기본값) ${fmt(s[4],1)}</span>`:''}${(()=>{const v=naeValueOf(u);return v!==undefined&&v!==''?`<span style="background:var(--accent-s);color:var(--accent);font-weight:700">학생 내신 ${esc(v)} 적용</span>`:'<span>학생 내신 미입력 · 기본값 적용</span>'})()}</div>
     <p style="margin:0;font-size:13px">${esc(s[2])}</p>
     <p class="status" style="margin:6px 0 0">고속성장분석기에 반영된 정보 기준이에요. 세부 반영비율·평가요소는 해당 대학 모집요강으로 꼭 확인하세요.</p></div>`;
 }
