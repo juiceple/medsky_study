@@ -296,6 +296,33 @@ table.dt{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
 .seg button.gt.g-ga[aria-pressed="true"]{background:#2a5bd7}.seg button.gt.g-na[aria-pressed="true"]{background:#1e8a4c}.seg button.gt.g-da[aria-pressed="true"]{background:#8b3fc4}
 .calcstat{color:var(--j4);font-weight:600}
 .calcstat.busy{color:var(--accent)}
+
+/* ===== 성적대 위치 차트 ===== */
+.chs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0}
+.chs>div{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+.chs small{display:block;color:var(--muted);font-size:12px}.chs b{font-size:20px;color:var(--navy2)}
+:root[data-theme="dark"] .chs b{color:var(--ink)}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .chs b{color:var(--ink)}}
+.chg{margin:16px 0 0}.chg h3{margin:0 0 6px;font-size:14px;color:var(--navy2);display:flex;gap:8px;align-items:baseline}
+:root[data-theme="dark"] .chg h3{color:var(--ink)}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .chg h3{color:var(--ink)}}
+.chg h3 small{font-weight:500;color:var(--muted);font-size:12px}
+.chr{display:grid;grid-template-columns:150px minmax(260px,1fr) 190px;gap:10px;align-items:center;padding:4px 10px;border-bottom:1px solid var(--line2);cursor:pointer;min-height:34px}
+.chr:hover{background:var(--line2)}.chr.hd{cursor:default;font-size:11.5px;color:var(--muted);border-bottom:1px solid var(--line);background:transparent}
+.chr.hd:hover{background:transparent}
+.chn{font-weight:600;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.chn small{color:var(--muted);font-weight:400;margin-left:4px}
+.cht{position:relative;height:22px}.cht .gl{position:absolute;top:0;bottom:0;width:1px;background:var(--line2)}
+.chr.hd .cht{height:16px}.chr.hd .cht span{position:absolute;transform:translateX(-50%);font-size:10.5px;white-space:nowrap}
+.cht .wh{position:absolute;top:10px;height:2px;background:var(--j4);opacity:.55}
+.cht .iq{position:absolute;top:4px;height:14px;background:var(--j4s);border:1.5px solid var(--j4);border-radius:3px;min-width:4px}
+.cht .md{position:absolute;top:2px;height:18px;width:2px;background:var(--j4)}
+.cht .st{position:absolute;top:3px;width:12px;height:12px;margin-left:-6px;background:var(--navy2);border:2px solid var(--panel);transform:rotate(45deg);top:5px;box-shadow:0 0 0 1px var(--navy2)}
+:root[data-theme="dark"] .cht .st{background:#f0c040;box-shadow:0 0 0 1px #f0c040}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .cht .st{background:#f0c040;box-shadow:0 0 0 1px #f0c040}}
+.cht .dt2{position:absolute;top:7px;width:8px;height:8px;margin-left:-4px;border-radius:50%;border:1px solid var(--panel);cursor:pointer}
+.cht .dt2.j4{background:var(--j4)}.cht .dt2.j3{background:var(--j3)}.cht .dt2.j2{background:var(--j2)}.cht .dt2.j1{background:var(--j1)}
+.chd{display:flex;gap:3px;font-size:11px;flex-wrap:wrap}.chd span{padding:1px 6px;border-radius:9px;font-weight:600}
+.chd .j4{background:var(--j4s);color:var(--j4)}.chd .j3{background:var(--j3s);color:var(--j3)}.chd .j2{background:var(--j2s);color:var(--j2)}.chd .j1{background:var(--j1s);color:var(--j1)}
+.chx{padding:6px 10px 10px;background:var(--line2)}.chx .chr{border:0;background:transparent;cursor:default;min-height:30px}
+.chlg{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--ink2);margin:6px 2px}.chlg i{display:inline-block;vertical-align:middle;margin-right:4px}
+@media(max-width:760px){.chr{grid-template-columns:100px 1fr}.chr>.chd{grid-column:1/-1}}
 </style></head><body>
 <header>
   <div>
@@ -311,6 +338,7 @@ table.dt{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
 <nav class="tabbar" role="tablist">
   <button class="tab" role="tab" data-tab="student">👤 학생 정보</button>
   <button class="tab" role="tab" data-tab="browse">대학 둘러보기</button>
+  <button class="tab" role="tab" data-tab="chart">📊 성적대 위치</button>
   <button class="tab" role="tab" data-tab="match">정밀 매칭 도구</button>
   <button class="tab" role="tab" data-tab="wish">🎯 지원희망 모집단위 <span class="badge-n" id="wishN" hidden></span></button>
   <button class="tab" role="tab" data-tab="data">🗂️ 데이터 관리</button>
@@ -353,6 +381,8 @@ table.dt{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
 </div></section>
 
 <section class="page" id="p-browse"><div class="wrap" id="browseWrap"></div></section>
+
+<section class="page" id="p-chart"><div class="wrap" id="chartWrap"></div></section>
 
 <section class="page" id="p-match">
   <div class="layout">
@@ -1064,7 +1094,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeColFilter();cl
 let tab='browse';
 document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>go(b.dataset.tab));
 function go(t,keep){tab=t;document.querySelectorAll('[data-tab]').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===t));document.querySelectorAll('.page').forEach(p=>p.classList.toggle('on',p.id==='p-'+t));
-  ({student:rStudent,browse:rBrowse,match:rMatch,wish:rWish,data:rData})[t](); closeColFilter(); if(!keep) window.scrollTo(0,0)}
+  ({student:rStudent,browse:rBrowse,chart:rChart,match:rMatch,wish:rWish,data:rData})[t](); closeColFilter(); if(!keep) window.scrollTo(0,0)}
 function header(){
   $('curName').textContent=S.name||'새 학생';
   const n=Object.keys(S.picks).length; $('wishN').hidden=!n; $('wishN').textContent=n;
@@ -1271,7 +1301,7 @@ function drawFunk(rows){
 }
 
 /* ===== match ===== */
-const MF={region:new Set(),trait:new Set(),gun:new Set(),cat:new Set(),judge:new Set(),hb:new Set(),major:'',univ:'',excl0:true,noSaeng:false,noHbU:false};
+const MF={region:new Set(),trait:new Set(),gun:new Set(),cat:new Set(),judge:new Set(),hb:new Set(),major:'',univ:'',excl0:true,noSaeng:false,noHbU:false,noPro:false};
 const TM=makeTable('match',{sortKey:'margin',dir:-1});
 let filtersBuilt=false;
 function chipRow(key,vals,lab){return `<div class="chips">${vals.map(v=>`<button class="chip ${key==='gun'&&GUNS.includes(v)?gunCls(v).replace('gunc ','gt '):''}" aria-pressed="${MF[key].has(v)}" data-mf="${key}" data-v="${esc(v)}">${esc(lab?lab(v):v)}</button>`).join('')}</div>`}
@@ -1293,6 +1323,7 @@ function rFilters(){
     <label class="chk"><input type="checkbox" id="mfUp" ${BR.up?'checked':''}> 과도한 상향(우주상향) 자동 제외</label>
     <div class="hint" style="margin-left:22px">학생 누백이 소신 누백의 <input type="number" id="mfUpK" value="${BR.upK}" step="0.5" min="1.2" style="width:52px;padding:2px 5px"> 배 이상이면 제외</div>
     <label class="chk"><input type="checkbox" id="mfEx0" ${MF.excl0?'checked':''}> 수학·탐구 결격 모집단위 제외</label>
+    <label class="chk"><input type="checkbox" id="mfNoPro" ${MF.noPro?'checked':''}> 전문대 제외</label>
     <label class="chk"><input type="checkbox" id="mfNoSaeng" ${MF.noSaeng?'checked':''}> 학생부(생기부) 반영 모집단위 제외</label>
     <div class="hint" style="margin-left:22px">정량·정성으로 학생부를 반영하는 모집단위를 결과에서 뺍니다.</div>
     <label class="chk"><input type="checkbox" id="mfNoHbU" ${MF.noHbU?'checked':''}> 학생부 '미확인' 모집단위도 제외</label>
@@ -1306,6 +1337,7 @@ function rFilters(){
   $('mfDown').onchange=e=>{BR.down=e.target.checked;rMatchMain()};$('mfUp').onchange=e=>{BR.up=e.target.checked;rMatchMain()};
   $('mfDownK').onchange=e=>{BR.downK=+e.target.value||2.5;rMatchMain()};$('mfUpK').onchange=e=>{BR.upK=+e.target.value||2;rMatchMain()};
   $('mfEx0').onchange=e=>{MF.excl0=e.target.checked;rMatchMain()};
+  $('mfNoPro').onchange=e=>{MF.noPro=e.target.checked;TM.limit=200;rMatchMain()};
   $('mfNoSaeng').onchange=e=>{MF.noSaeng=e.target.checked;TM.limit=200;rMatchMain()};
   $('mfNoHbU').onchange=e=>{MF.noHbU=e.target.checked;TM.limit=200;rMatchMain()};
   $('mfRun').onclick=()=>{rMatchMain();$('mmain').scrollTo(0,0)};
@@ -1317,6 +1349,7 @@ function matchList(){
   const mj=kw(MF.major), un=kw(MF.univ); const out=[];
   for(let i=0;i<U.length;i++){const u=U[i],b=B[basis][i];
     if(MF.excl0&&b[0]===0)continue;
+    if(MF.noPro&&isPro(u))continue;
     {const hc=haksaengOf(u).cls; if(MF.hb.size&&!MF.hb.has(hc))continue; if(MF.noSaeng&&(hc==='정량'||hc==='정성'))continue; if(MF.noHbU&&hc==='미확인')continue}
     if(MF.gun.size&&!MF.gun.has(gunOf(u)))continue;
     if(MF.cat.size&&!MF.cat.has(catOf(u)))continue;
@@ -1358,6 +1391,98 @@ function exportCsv(){
 (function resizer(){const h=$('rh');let x0,w0;h.onmousedown=e=>{x0=e.clientX;w0=$('filters').offsetWidth;h.classList.add('dragging');const mv=e=>{$('filters').style.width=Math.max(220,Math.min(innerWidth*.6,w0+e.clientX-x0))+'px'};const up=()=>{removeEventListener('mousemove',mv);removeEventListener('mouseup',up)};addEventListener('mousemove',mv);addEventListener('mouseup',up)}})();
 
 const XLSX_URL='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js', H2C_URL='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+
+/* ===== 성적대 위치 차트 =====
+   누백(누적백분위, 작을수록 상위) 축에 대학별 '적정 누백' 분포와 학생 위치를 한 화면에 그린다.
+   - 막대: 대학(또는 구분) 안 모집단위들의 적정 누백 25~75% 구간, 가는 선은 최소~최대, 세로선은 중앙값
+   - 마름모: 그 대학 모집단위들에서 학생의 누백 중앙값(학생 환산점수는 모집단위마다 달라서 중앙값 사용)
+   - 막대의 마름모가 막대 오른쪽(숫자가 작은 쪽)에 가까울수록 학생이 적정선보다 위에 있는 대학 */
+const CH={trait:'all',gun:new Set(),incPro:false,incMed:true,incEtc:false,sort:'group',open:new Set(),etcLim:40};
+const CHT=[0.1,0.5,1,3,5,10,20,40,70,100];
+const chX=p=>{const v=Math.log10(Math.min(100,Math.max(0.1,p)))+1;return (v/3*100).toFixed(2)};
+const medOf=a=>{if(!a.length)return null;const s=[...a].sort((x,y)=>x-y),m=s.length>>1;return s.length%2?s[m]:(s[m-1]+s[m])/2};
+const qOf=(s,q)=>{const k=(s.length-1)*q,f=Math.floor(k),c=Math.ceil(k);return s[f]+(s[c]-s[f])*(k-f)};
+function chStats(idxs){
+  const bb=B[basis],ap=[],st=[],c={4:0,3:0,2:0,1:0};
+  for(const i of idxs){const b=bb[i];if(!b[0]||b[3]==null)continue;ap.push(b[3]);if(typeof b[1]==='number'&&b[1]>0)st.push(b[1]);c[b[0]]++}
+  if(!ap.length)return null;ap.sort((x,y)=>x-y);
+  const n=c[4]+c[3]+c[2]+c[1];
+  return {n,c,min:ap[0],max:ap[ap.length-1],q1:qOf(ap,.25),q3:qOf(ap,.75),md:qOf(ap,.5),st:medOf(st),ok:(c[4]+c[3])/n};
+}
+function chRow(label,idxs,key,sub){
+  const s=chStats(idxs);if(!s)return '';
+  const l=x=>chX(x),open=CH.open.has(key);
+  const gl=CHT.map(v=>`<i class="gl" style="left:${l(v)}%"></i>`).join('');
+  const iqL=l(s.q1),iqR=l(s.q3);
+  const head=`<div class="chr" data-ck="${esc(key)}" title="클릭하면 모집단위별 점을 펼쳐요"><div class="chn">${open?'▾':'▸'} ${esc(label)}${sub?`<small>${esc(sub)}</small>`:''}</div>
+    <div class="cht">${gl}<span class="wh" style="left:${l(s.min)}%;width:${Math.max(0,l(s.max)-l(s.min))}%"></span><span class="iq" style="left:${iqL}%;width:${Math.max(0,iqR-iqL)}%"></span><span class="md" style="left:${l(s.md)}%"></span>${s.st!=null?`<span class="st" style="left:${l(s.st)}%" title="학생 누백 중앙값 상위 ${fmt(s.st,2)}%"></span>`:''}</div>
+    <div class="chd" title="모집단위 ${s.n}개 · 적정+예상 ${Math.round(s.ok*100)}%">${[4,3,2,1].filter(j=>s.c[j]).map(j=>`<span class="j${j}">${JL[j]} ${s.c[j]}</span>`).join('')}</div></div>`;
+  if(!open)return head;
+  const bb=B[basis];const ids=idxs.filter(i=>bb[i][0]&&bb[i][3]!=null).sort((a,b)=>bb[a][3]-bb[b][3]);
+  const dots=ids.map(i=>`<span class="dt2 j${bb[i][0]}" data-ci="${i}" data-dk="${esc(key)}" style="left:${l(bb[i][3])}%" title="${esc(U[i][0]+' '+U[i][1]+' · '+gunLabel(gunOf(U[i]))+'군 · 적정 상위 '+fmt(bb[i][3],2)+'% · 학생 상위 '+fmt(bb[i][1],2)+'% · '+JL[bb[i][0]])}"></span>`).join('');
+  return head+`<div class="chx"><div class="chr"><div class="chn" style="font-weight:500;font-size:12px">모집단위별 적정 누백<small>${ids.length}개</small></div><div class="cht">${gl}${s.st!=null?`<span class="st" style="left:${l(s.st)}%"></span>`:''}${dots}</div><div class="chd"><button class="btn sm ghost" data-cu="${esc(key)}">${key.startsWith('c:')?'구분 상세':'대학 상세'} 열기</button></div></div></div>`;
+}
+function rChart(){
+  const w=$('chartWrap');
+  const byU=new Map();
+  const ok=(u,i)=>{
+    if(!B[basis][i][0])return false;
+    if(!CH.incPro&&isPro(u))return false;
+    if(!CH.incMed&&(HB_MED.has(catOf(u))||catOf(u)==='교대'))return false;
+    if(CH.trait!=='all'&&u[7]!==CH.trait&&u[7]!=='공통')return false;
+    if(CH.gun.size&&!CH.gun.has(gunOf(u)))return false;
+    return true};
+  const sel=[];U.forEach((u,i)=>{if(ok(u,i)){sel.push(i);if(!byU.has(u[0]))byU.set(u[0],[]);byU.get(u[0]).push(i)}});
+  const body=[];const inGrp=new Set();
+  for(const g of UNIV_GROUPS){
+    const rows=[];
+    if(g.cats){for(const c of g.cats){const ids=sel.filter(i=>catOf(U[i])===c);if(ids.length){const r=chRow(c,ids,'c:'+c,'');if(r)rows.push({r,m:chStats(ids)})}}}
+    for(const n of (g.unis||[])){inGrp.add(n);
+      let ids=byU.get(n)||[];
+      if(g.label==='교대')ids=ids.filter(i=>catOf(U[i])==='교대');
+      if(!ids.length)continue;const r=chRow(n,ids,'u:'+n,'');if(r)rows.push({r,m:chStats(ids)})}
+    if(CH.sort==='rate')rows.sort((a,b)=>b.m.ok-a.m.ok||a.m.md-b.m.md);
+    if(rows.length)body.push(chBlock(g.label,rows.map(x=>x.r).join(''),rows.length));
+  }
+  if(CH.incEtc){
+    const all=[...byU.keys()].filter(n=>!inGrp.has(n)).map(n=>({n,ids:byU.get(n),m:chStats(byU.get(n))})).filter(x=>x.m);
+    all.sort((a,b)=>CH.sort==='rate'?b.m.ok-a.m.ok||a.m.md-b.m.md:a.m.md-b.m.md);
+    const shown=all.slice(0,CH.etcLim);
+    body.push(chBlock('그 외 대학',shown.map(x=>chRow(x.n,x.ids,'u:'+x.n,'')).join('')+(all.length>shown.length?`<div style="padding:10px"><button class="btn sm" id="chMore">더 보기 (${shown.length}/${all.length})</button></div>`:''),all.length));
+  }
+  // 요약: 정규 모집(가·나·다) 일반 모집단위의 판정 분포 + 학생 대표 누백
+  const reg=sel.filter(i=>GUNS.includes(gunOf(U[i])));
+  const tot={4:0,3:0,2:0,1:0},stv=[];reg.forEach(i=>{const b=B[basis][i];tot[b[0]]++;if(typeof b[1]==='number'&&b[1]>0&&b[3]!=null&&b[3]<=30)stv.push(b[1])});
+  const chip=(k,v,cls)=>`<button class="chip ${cls||''}" aria-pressed="${v}" data-chk="${k}">`;
+  w.innerHTML=`<div class="bar"><span class="lbl">현재 학생</span><b>${esc(S.name||'새 학생')}</b><span class="sep"></span>${basisSeg()}<span class="sep"></span>
+    <span class="lbl">계열</span><span class="seg">${[['all','전체'],['자연','자연'],['인문','인문']].map(([k,v])=>`<button aria-pressed="${CH.trait===k}" data-ctrait="${k}">${v}</button>`).join('')}</span><span class="sep"></span>
+    <span class="lbl">군</span><div class="chips" style="display:inline-flex">${GUNS.map(g=>`<button class="chip ${gunCls(g).replace('gunc ','gt ')}" aria-pressed="${CH.gun.has(g)}" data-cgun="${g}">${g}군</button>`).join('')}</div></div>
+  <div class="bar" style="margin-top:8px"><label class="chk"><input type="checkbox" id="chMed" ${CH.incMed?'checked':''}> 의치한약수·교대 포함</label>
+    <label class="chk"><input type="checkbox" id="chPro" ${CH.incPro?'checked':''}> 전문대 포함</label>
+    <label class="chk"><input type="checkbox" id="chEtc" ${CH.incEtc?'checked':''}> 그 외 대학도 보기</label><span class="sep"></span>
+    <span class="lbl">정렬</span><span class="seg"><button aria-pressed="${CH.sort==='group'}" data-csort="group">대학 그룹 순</button><button aria-pressed="${CH.sort==='rate'}" data-csort="rate">합격 가능 비율 순</button></span></div>
+  <div class="chs"><div><small>비교 기준 · 모집단위(가·나·다군)</small><b>${reg.length.toLocaleString()}개</b></div>
+    <div><small>적정 / 예상</small><b style="color:var(--j4)">${tot[4].toLocaleString()}</b> / <b style="color:var(--j3)">${tot[3].toLocaleString()}</b></div>
+    <div><small>소신 / 위험</small><b style="color:var(--j2)">${tot[2].toLocaleString()}</b> / <b style="color:var(--j1)">${tot[1].toLocaleString()}</b></div>
+    <div><small>학생 대표 위치(적정권 모집단위 누백 중앙값)</small><b>${stv.length?'상위 '+fmt(medOf(stv),2)+'%':'–'}</b></div></div>
+  <p class="intro">가로축은 누백(전국 응시자 중 상위 몇 %인지)이에요. <b>왼쪽일수록 상위권</b> 대학이고, 마름모(◆)가 학생 위치예요. 막대는 대학 모집단위들의 적정선 25~75% 구간이므로, <b>◆가 막대보다 왼쪽이면 학생이 그 대학 적정선 위</b>, 막대 오른쪽이면 상향이에요. 행을 누르면 모집단위별 점이 펼쳐지고 점을 누르면 상세가 열려요.</p>
+  <div class="chlg"><span><i style="width:18px;height:10px;background:var(--j4s);border:1.5px solid var(--j4);border-radius:3px"></i>적정 누백 25~75%</span><span><i style="width:16px;height:2px;background:var(--j4)"></i>최소~최대</span><span><i style="width:8px;height:8px;background:var(--navy2);transform:rotate(45deg)"></i>학생 누백 중앙값</span>
+    <span><i class="dt2 j4" style="position:static;display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--j4)"></i>적정 <i style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--j3)"></i>예상 <i style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--j2)"></i>소신 <i style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--j1)"></i>위험</span></div>
+  ${body.join('')||'<div class="card empty" style="padding:30px;margin-top:12px">조건에 맞는 대학이 없어요.</div>'}`;
+  bindBasis(w,rChart);
+  w.querySelectorAll('[data-ctrait]').forEach(b=>b.onclick=()=>{CH.trait=b.dataset.ctrait;rChart()});
+  w.querySelectorAll('[data-cgun]').forEach(b=>b.onclick=()=>{const g=b.dataset.cgun;CH.gun.has(g)?CH.gun.delete(g):CH.gun.add(g);rChart()});
+  w.querySelectorAll('[data-csort]').forEach(b=>b.onclick=()=>{CH.sort=b.dataset.csort;rChart()});
+  $('chMed').onchange=e=>{CH.incMed=e.target.checked;rChart()};$('chPro').onchange=e=>{CH.incPro=e.target.checked;rChart()};$('chEtc').onchange=e=>{CH.incEtc=e.target.checked;rChart()};
+  const more=$('chMore');if(more)more.onclick=()=>{CH.etcLim+=60;rChart()};
+  w.querySelectorAll('[data-ck]').forEach(r=>r.onclick=()=>{const k=r.dataset.ck;CH.open.has(k)?CH.open.delete(k):CH.open.add(k);const y=scrollY;rChart();scrollTo(0,y)});
+  w.querySelectorAll('[data-cu]').forEach(b=>b.onclick=e=>{e.stopPropagation();const k=b.dataset.cu;openUniv(k.startsWith('c:')?{cat:k.slice(2)}:{univ:k.slice(2)})});
+  w.querySelectorAll('[data-ci]').forEach(d=>d.onclick=e=>{e.stopPropagation();const i=+d.dataset.ci,u=U[i];const k=d.dataset.dk;openUniv(k.startsWith('c:')?{cat:k.slice(2)}:{univ:u[0]},i)});
+}
+function chBlock(label,rows,n){
+  const ax=`<div class="chr hd"><div>${esc(label)}</div><div class="cht">${CHT.filter(v=>v<100).map(v=>`<span style="left:${chX(v)}%">${v}%</span>`).join('')}</div><div>판정 분포(모집단위 수)</div></div>`;
+  return `<section class="chg card" style="margin-top:14px;padding:8px 0 0"><h3 style="padding:0 12px">${esc(label)} <small>${n}개</small></h3>${ax}${rows}</section>`;
+}
 /* ===== wish ===== */
 let WV='list';
 function rWish(){
@@ -1463,7 +1588,7 @@ function openDetail(i){
     <div style="display:flex;gap:6px"><button class="btn sm ${on?'':'pri'}" id="dAdd">${on?'목록에서 빼기':'+ 지원희망 담기'}</button><button class="btn sm" id="dx" aria-label="닫기">✕</button></div></div>${bodyHtml(i)}`);
   $('dx').onclick=closeDrawer; $('dAdd').onclick=()=>{togglePick(i);openDetail(i);refreshTables()};
 }
-function refreshTables(){ if(tab==='match') rMatchMain(); else if(tab==='browse') rBrowse(); else if(tab==='wish') rWish(); }
+function refreshTables(){ if(tab==='match') rMatchMain(); else if(tab==='chart') rChart(); else if(tab==='browse') rBrowse(); else if(tab==='wish') rWish(); }
 function openReport(i){
   const u=U[i],k=keyOf(i),n=S.notes[k]||{};
   openDrawer(`<div class="rhd"><div class="status">${esc(S.name||'학생')} · 정시 모집단위 리포트</div><div style="display:flex;gap:6px"><button class="btn sm navy" id="rImg">🖼 이미지로 저장</button><button class="btn sm" id="dx" aria-label="닫기">✕</button></div></div>
