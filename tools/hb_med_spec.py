@@ -120,7 +120,10 @@ def build_med(UNIV, SRC, LV_OFFICIAL, LV_COPY, R):
         if not j:
             missing.append(univ); continue
         keys = []
-        for i, s in enumerate(_src_list(j.get("sources", []), univ)):
+        lst = _src_list(j.get("sources", []), univ)
+        if not lst:
+            lst = [{"t": univ + " 2027학년도 정시모집요강", "u": "", "k": "입학처 원문 PDF (링크 미확보)"}]
+        for i, s in enumerate(lst):
             k = "med_%s_%d" % (univ, i)
             SRC[k] = s; keys.append(k)
         out = []
