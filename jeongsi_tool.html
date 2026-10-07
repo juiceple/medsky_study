@@ -297,6 +297,12 @@ table.dt{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
 .calcstat{color:var(--j4);font-weight:600}
 .calcstat.busy{color:var(--accent)}
 
+.chprof{padding:14px 16px;margin-top:4px}.chprof .phd{display:flex;gap:10px;align-items:baseline;margin-bottom:8px}.chprof .phd b{font-size:16px}
+.psub{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}.chsub{background:var(--line2);border-radius:8px;padding:6px 10px;min-width:120px}.chsub small{display:block;color:var(--muted);font-size:11px}.chsub b{font-size:17px;margin-right:6px}.chsub em{font-style:normal;font-size:11px;color:var(--ink2)}
+.pk{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-bottom:12px}.pk>div{border:1px solid var(--line);border-radius:10px;padding:10px 14px}.pk small{display:block;color:var(--muted);font-size:12px}.pk b{font-size:22px;color:var(--navy2)}.pk em{display:block;font-style:normal;font-size:11.5px;color:var(--muted)}
+:root[data-theme="dark"] .pk b{color:var(--ink)}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .pk b{color:var(--ink)}}
+.tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;margin-top:8px}.chtier{border:1px solid var(--line);border-radius:10px;padding:10px 12px}.chtier .th{display:flex;gap:8px;align-items:center}.chtier .tip{font-size:11.5px;color:var(--muted);margin:3px 0 6px}
+.chips2{display:flex;flex-wrap:wrap;gap:5px}.uchip{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:3px 10px;font-size:12.5px;font-weight:600;cursor:pointer}.uchip:hover{border-color:var(--navy2)}.uchip small{margin-left:5px;color:var(--muted);font-weight:500}
 /* ===== 성적대 위치 차트 ===== */
 .chs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0}
 .chs>div{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
@@ -1397,7 +1403,7 @@ const XLSX_URL='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min
    - 막대: 대학(또는 구분) 안 모집단위들의 적정 누백 25~75% 구간, 가는 선은 최소~최대, 세로선은 중앙값
    - 마름모: 그 대학 모집단위들에서 학생의 누백 중앙값(학생 환산점수는 모집단위마다 달라서 중앙값 사용)
    - 막대의 마름모가 막대 오른쪽(숫자가 작은 쪽)에 가까울수록 학생이 적정선보다 위에 있는 대학 */
-const CH={trait:'all',gun:new Set(),incPro:false,incMed:true,incEtc:false,sort:'group',open:new Set(),etcLim:40};
+const CH={trait:'all',gun:new Set(),incPro:false,incMed:true,incEtc:false,sort:'group',open:new Set(),etcLim:40,q:''};
 const CHT=[0.1,0.5,1,3,5,10,20,40,70,100];
 const chX=p=>{const v=Math.log10(Math.min(100,Math.max(0.1,p)))+1;return (v/3*100).toFixed(2)};
 const medOf=a=>{if(!a.length)return null;const s=[...a].sort((x,y)=>x-y),m=s.length>>1;return s.length%2?s[m]:(s[m-1]+s[m])/2};
@@ -1422,15 +1428,55 @@ function chRow(label,idxs,key,sub){
   const dots=ids.map(i=>`<span class="dt2 j${bb[i][0]}" data-ci="${i}" data-dk="${esc(key)}" style="left:${l(bb[i][3])}%" title="${esc(U[i][0]+' '+U[i][1]+' · '+gunLabel(gunOf(U[i]))+'군 · 적정 상위 '+fmt(bb[i][3],2)+'% · 학생 상위 '+fmt(bb[i][1],2)+'% · '+JL[bb[i][0]])}"></span>`).join('');
   return head+`<div class="chx"><div class="chr"><div class="chn" style="font-weight:500;font-size:12px">모집단위별 적정 누백<small>${ids.length}개</small></div><div class="cht">${gl}${s.st!=null?`<span class="st" style="left:${l(s.st)}%"></span>`:''}${dots}</div><div class="chd"><button class="btn sm ghost" data-cu="${esc(key)}">${key.startsWith('c:')?'구분 상세':'대학 상세'} 열기</button></div></div></div>`;
 }
+
+/* 학생 요약(상단 카드): 기준(전체·이과·문과)만 반영하고 아래 필터와는 무관
+   - 대표 누백 = 일반대·과기원 가·나·다군 모집단위(결격 제외) 전체에서 학생 누백의 중앙값
+   - 전국 등수 = 대표 누백 × 해당 기준 응시자 수
+   - 추천 대학: 대학별로 모집단위 (적정 누백 ÷ 학생 누백)의 중앙값을 구해 구간을 나눈다
+     (1.6 이상 안정 · 0.9~1.6 적정 · 0.6~0.9 소신/도전 · 0.35~0.6 상향 도전). 같은 구간 안에서는 선발 수준이 높은 대학(적정 누백이 작은 순)부터 */
+function chProfile(){
+  const bb=B[basis],st=[],byU=new Map();let total=0;
+  U.forEach((u,i)=>{const b=bb[i];if(!b[0]||b[1]==null||!(b[1]>0))return;
+    const c=catOf(u);if(c!=='일반대'&&c!=='과기원'&&c!=='교대')return;if(!GUNS.includes(gunOf(u)))return;
+    if(c!=='교대')st.push(b[1]);
+    if(b[3]!=null&&b[3]>0){if(!byU.has(u[0]))byU.set(u[0],[]);byU.get(u[0]).push(i)}
+    if(!total){const m=/\/(\d+)$/.exec(b[2]||'');if(m)total=+m[1]}});
+  st.sort((a,b)=>a-b);
+  const mid=st.length?qOf(st,.5):null;
+  const inG=new Set(UNIV_GROUPS.flatMap(g=>g.unis||[]));
+  const recs=[];
+  byU.forEach((ids,n)=>{if(ids.length<2&&!inG.has(n))return;
+    const r=medOf(ids.map(i=>bb[i][3]/bb[i][1])),s=chStats(ids);if(r==null||!s)return;
+    recs.push({n,r,md:s.md,s,ids})});
+  const tier=(lo,hi)=>recs.filter(x=>x.r>=lo&&x.r<hi).sort((a,b)=>a.md-b.md);
+  return {mid,lo:st.length?qOf(st,.1):null,hi:st.length?qOf(st,.9):null,rank:mid!=null&&total?Math.round(mid/100*total):null,total,units:st.length,
+    tiers:[['상향 도전',tier(.35,.6),'j1','학생 점수가 대학 적정선보다 다소 낮은 구간이에요. 소신 지원 후보'],['소신',tier(.6,.9),'j2','적정선에 조금 못 미치는 대학이에요'],['적정 추천',tier(.9,1.6),'j4','학생 점수가 적정선 근처이거나 조금 위인 대학이에요 (핵심 후보)'],['안정',tier(1.6,1e9),'j3','학생 점수가 적정선보다 크게 위인 대학이에요 (하향·안정)']]};
+}
+function chSummary(){
+  const P=chProfile();
+  const sj=(lab,x)=>x?`<span class="chsub"><small>${lab}</small><b>${fmt(x.pct,0)}</b><em>${x.grade}등급 · 상위 ${fmt(x.cum,2)}%</em></span>`:'';
+  const I={kor:subjInfo('국어('+S.kor.sub+')'),math:subjInfo('수학('+S.math.sub+')'),eng:subjInfo('영어'),t1:subjInfo(S.t1.sub),t2:S.t2.sub!==S.t1.sub?subjInfo(S.t2.sub):null};
+  const sci=s=>SCI.includes(s),track=(S.math.sub!=='확통'&&sci(S.t1.sub)&&sci(S.t2.sub))?'이과':'문과';
+  const tiers=P.tiers.map(([lab,list,cls,tip])=>`<div class="chtier"><div class="th"><span class="jb ${cls}">${lab}</span><small>${list.length}개교${list.length>12?' · 상위 12개 표시':''}</small></div><div class="tip">${esc(tip)}</div>
+    <div class="chips2">${list.slice(0,12).map(x=>`<button class="uchip" data-rec="${esc(x.n)}" title="모집단위 ${x.s.n}개 · 적정 ${x.s.c[4]} · 예상 ${x.s.c[3]} · 소신 ${x.s.c[2]} · 위험 ${x.s.c[1]}">${esc(x.n.replace(/대학교$/,'대'))}<small>${x.s.c[4]+x.s.c[3]}/${x.s.n}</small></button>`).join('')||'<span class="status">해당 없음</span>'}</div></div>`).join('');
+  return `<section class="card chprof"><div class="phd"><b>${esc(S.name||'새 학생')}</b><span class="status">${track} 계열 · ${BASIS[basis]} 응시자 기준</span></div>
+    <div class="psub">${sj('국어('+S.kor.sub+')',I.kor)}${sj('수학('+S.math.sub+')',I.math)}${sj('영어',I.eng)}${sj(S.t1.sub,I.t1)}${sj(S.t2.sub,I.t2)}</div>
+    <div class="pk"><div><small>전국 등수 (추정)</small><b>${P.rank!=null?'약 '+P.rank.toLocaleString()+'등':'–'}</b><em>${P.total?P.total.toLocaleString()+'명 중':''}</em></div>
+      <div><small>대표 누백</small><b>${P.mid!=null?'상위 '+fmt(P.mid,2)+'%':'–'}</b><em>${P.lo!=null?'모집단위별 범위 상위 '+fmt(P.lo,2)+'~'+fmt(P.hi,2)+'%':''}</em></div>
+      <div><small>산출 근거</small><b style="font-size:14px">${P.units.toLocaleString()}개 모집단위</b><em>일반대·과기원 가·나·다군 학생 누백의 중앙값</em></div></div>
+    <div class="ptiers"><b style="font-size:13px">추천 대학 목록 <small class="status" style="font-weight:400">학과가 아닌 대학 단위 참고용 · 칩의 숫자는 적정+예상 모집단위 수/전체 · 누르면 대학 상세</small></b>
+    <div class="tiers">${tiers}</div></div></section>`;
+}
 function rChart(){
   const w=$('chartWrap');
-  const byU=new Map();
+  const byU=new Map();const qw=CH.q.split(/[,\s]+/).filter(Boolean);
   const ok=(u,i)=>{
     if(!B[basis][i][0])return false;
     if(!CH.incPro&&isPro(u))return false;
     if(!CH.incMed&&(HB_MED.has(catOf(u))||catOf(u)==='교대'))return false;
     if(CH.trait!=='all'&&u[7]!==CH.trait&&u[7]!=='공통')return false;
     if(CH.gun.size&&!CH.gun.has(gunOf(u)))return false;
+    if(qw.length&&!qw.some(x=>u[0].includes(x)))return false;
     return true};
   const sel=[];U.forEach((u,i)=>{if(ok(u,i)){sel.push(i);if(!byU.has(u[0]))byU.set(u[0],[]);byU.get(u[0]).push(i)}});
   const body=[];const inGrp=new Set();
@@ -1444,27 +1490,27 @@ function rChart(){
     if(CH.sort==='rate')rows.sort((a,b)=>b.m.ok-a.m.ok||a.m.md-b.m.md);
     if(rows.length)body.push(chBlock(g.label,rows.map(x=>x.r).join(''),rows.length));
   }
-  if(CH.incEtc){
+  if(CH.incEtc||qw.length){
     const all=[...byU.keys()].filter(n=>!inGrp.has(n)).map(n=>({n,ids:byU.get(n),m:chStats(byU.get(n))})).filter(x=>x.m);
     all.sort((a,b)=>CH.sort==='rate'?b.m.ok-a.m.ok||a.m.md-b.m.md:a.m.md-b.m.md);
-    const shown=all.slice(0,CH.etcLim);
+    const shown=all.slice(0,qw.length?400:CH.etcLim);
     body.push(chBlock('그 외 대학',shown.map(x=>chRow(x.n,x.ids,'u:'+x.n,'')).join('')+(all.length>shown.length?`<div style="padding:10px"><button class="btn sm" id="chMore">더 보기 (${shown.length}/${all.length})</button></div>`:''),all.length));
   }
   // 요약: 정규 모집(가·나·다) 일반 모집단위의 판정 분포 + 학생 대표 누백
   const reg=sel.filter(i=>GUNS.includes(gunOf(U[i])));
   const tot={4:0,3:0,2:0,1:0},stv=[];reg.forEach(i=>{const b=B[basis][i];tot[b[0]]++;if(typeof b[1]==='number'&&b[1]>0&&b[3]!=null&&b[3]<=30)stv.push(b[1])});
   const chip=(k,v,cls)=>`<button class="chip ${cls||''}" aria-pressed="${v}" data-chk="${k}">`;
-  w.innerHTML=`<div class="bar"><span class="lbl">현재 학생</span><b>${esc(S.name||'새 학생')}</b><span class="sep"></span>${basisSeg()}<span class="sep"></span>
+  w.innerHTML=`${chSummary()}<div class="bar" style="margin-top:12px"><span class="lbl">비교 기준</span>${basisSeg()}<span class="sep"></span>
     <span class="lbl">계열</span><span class="seg">${[['all','전체'],['자연','자연'],['인문','인문']].map(([k,v])=>`<button aria-pressed="${CH.trait===k}" data-ctrait="${k}">${v}</button>`).join('')}</span><span class="sep"></span>
     <span class="lbl">군</span><div class="chips" style="display:inline-flex">${GUNS.map(g=>`<button class="chip ${gunCls(g).replace('gunc ','gt ')}" aria-pressed="${CH.gun.has(g)}" data-cgun="${g}">${g}군</button>`).join('')}</div></div>
   <div class="bar" style="margin-top:8px"><label class="chk"><input type="checkbox" id="chMed" ${CH.incMed?'checked':''}> 의치한약수·교대 포함</label>
     <label class="chk"><input type="checkbox" id="chPro" ${CH.incPro?'checked':''}> 전문대 포함</label>
-    <label class="chk"><input type="checkbox" id="chEtc" ${CH.incEtc?'checked':''}> 그 외 대학도 보기</label><span class="sep"></span>
+    <label class="chk"><input type="checkbox" id="chEtc" ${CH.incEtc||qw.length?'checked':''} ${qw.length?'disabled':''}> 그 외 대학도 보기</label><span class="sep"></span>
+    <input type="search" id="chQ" placeholder="대학 검색 (예: 인천, 외국어, 쉼표로 여러 개)" value="${esc(CH.q)}" style="width:260px" aria-label="대학 검색"><span class="sep"></span>
     <span class="lbl">정렬</span><span class="seg"><button aria-pressed="${CH.sort==='group'}" data-csort="group">대학 그룹 순</button><button aria-pressed="${CH.sort==='rate'}" data-csort="rate">합격 가능 비율 순</button></span></div>
   <div class="chs"><div><small>비교 기준 · 모집단위(가·나·다군)</small><b>${reg.length.toLocaleString()}개</b></div>
     <div><small>적정 / 예상</small><b style="color:var(--j4)">${tot[4].toLocaleString()}</b> / <b style="color:var(--j3)">${tot[3].toLocaleString()}</b></div>
-    <div><small>소신 / 위험</small><b style="color:var(--j2)">${tot[2].toLocaleString()}</b> / <b style="color:var(--j1)">${tot[1].toLocaleString()}</b></div>
-    <div><small>학생 대표 위치(적정권 모집단위 누백 중앙값)</small><b>${stv.length?'상위 '+fmt(medOf(stv),2)+'%':'–'}</b></div></div>
+    <div><small>소신 / 위험</small><b style="color:var(--j2)">${tot[2].toLocaleString()}</b> / <b style="color:var(--j1)">${tot[1].toLocaleString()}</b></div></div>
   <p class="intro">가로축은 누백(전국 응시자 중 상위 몇 %인지)이에요. <b>왼쪽일수록 상위권</b> 대학이고, 마름모(◆)가 학생 위치예요. 막대는 대학 모집단위들의 적정선 25~75% 구간이므로, <b>◆가 막대보다 왼쪽이면 학생이 그 대학 적정선 위</b>, 막대 오른쪽이면 상향이에요. 행을 누르면 모집단위별 점이 펼쳐지고 점을 누르면 상세가 열려요.</p>
   <div class="chlg"><span><i style="width:18px;height:10px;background:var(--j4s);border:1.5px solid var(--j4);border-radius:3px"></i>적정 누백 25~75%</span><span><i style="width:16px;height:2px;background:var(--j4)"></i>최소~최대</span><span><i style="width:8px;height:8px;background:var(--navy2);transform:rotate(45deg)"></i>학생 누백 중앙값</span>
     <span><i class="dt2 j4" style="position:static;display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--j4)"></i>적정 <i style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--j3)"></i>예상 <i style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--j2)"></i>소신 <i style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--j1)"></i>위험</span></div>
@@ -1474,6 +1520,8 @@ function rChart(){
   w.querySelectorAll('[data-cgun]').forEach(b=>b.onclick=()=>{const g=b.dataset.cgun;CH.gun.has(g)?CH.gun.delete(g):CH.gun.add(g);rChart()});
   w.querySelectorAll('[data-csort]').forEach(b=>b.onclick=()=>{CH.sort=b.dataset.csort;rChart()});
   $('chMed').onchange=e=>{CH.incMed=e.target.checked;rChart()};$('chPro').onchange=e=>{CH.incPro=e.target.checked;rChart()};$('chEtc').onchange=e=>{CH.incEtc=e.target.checked;rChart()};
+  let ct;$('chQ').oninput=e=>{CH.q=e.target.value.trim();clearTimeout(ct);ct=setTimeout(()=>{rChart();const q=$('chQ');q.focus();q.setSelectionRange(q.value.length,q.value.length)},250)};
+  w.querySelectorAll('[data-rec]').forEach(b=>b.onclick=()=>openUniv({univ:b.dataset.rec}));
   const more=$('chMore');if(more)more.onclick=()=>{CH.etcLim+=60;rChart()};
   w.querySelectorAll('[data-ck]').forEach(r=>r.onclick=()=>{const k=r.dataset.ck;CH.open.has(k)?CH.open.delete(k):CH.open.add(k);const y=scrollY;rChart();scrollTo(0,y)});
   w.querySelectorAll('[data-cu]').forEach(b=>b.onclick=e=>{e.stopPropagation();const k=b.dataset.cu;openUniv(k.startsWith('c:')?{cat:k.slice(2)}:{univ:k.slice(2)})});
