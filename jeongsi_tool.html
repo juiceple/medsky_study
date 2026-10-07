@@ -308,9 +308,12 @@ table.dt{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
   <h2 class="sec">📝 수능 성적</h2>
   <p class="intro">국어·수학·탐구는 표준점수, 영어·한국사·제2외국어는 등급을 넣으면 백분위·등급·상위 누적이 바로 계산돼요.</p>
   <div class="card" id="omrBox"></div>
-  <h2 class="sec">📚 학생부(내신) 점수</h2>
+  <h2 class="sec">📚 학생부 정량 평가용 — 대학별 내신 환산점수</h2>
   <p class="intro">진학사 등에서 산출한 학생의 대학별 내신 환산점수를 직접 입력하세요. 비워 두면 분석기의 기본값(비교내신)으로 계산돼요. 입력하면 해당 대학 모집단위의 환산점수·판정이 바로 다시 계산돼요.</p>
   <div class="card" id="naesinBox" style="padding:14px 16px"></div>
+  <h2 class="sec">🗒️ 학생부 정성 평가용 — 학생 정보 정리</h2>
+  <p class="intro">교과 정량 점수가 아니라 생기부를 정성적으로 평가하는 대학(교과평가·학업충실도·출결 등)을 위해 학생 정보를 정리해 두는 칸이에요. 점수 계산에는 쓰이지 않고, 학생 저장·내보내기에 함께 담겨요.</p>
+  <div class="card" id="qualBox" style="padding:14px 16px"></div>
   <h2 class="sec">📊 분석 요약</h2>
   <p class="intro">성적을 바꾸면 고속성장분석기와 같은 수식으로 전체 모집단위의 환산점수·누백·판정이 바로 다시 계산돼요.</p>
   <div class="card" id="sumBox" style="padding:14px 16px"></div>
@@ -824,7 +827,7 @@ function funkOf(i){
 const funkHtml=f=>`<span class="fk ${f.badgeClass}">${f.category}</span>`;
 
 /* ===== student state ===== */
-const BLANK=()=>({id:null,name:'',kor:{sub:'화작',s:null},math:{sub:'확통',s:null},eng:null,hist:null,t1:{sub:SCI[0],s:null},t2:{sub:SCI[1],s:null},lang:{sub:'',g:null},memoReq:'',memoCon:'',naesin:{},picks:{},finals:{},notes:{}});
+const BLANK=()=>({id:null,name:'',kor:{sub:'화작',s:null},math:{sub:'확통',s:null},eng:null,hist:null,t1:{sub:SCI[0],s:null},t2:{sub:SCI[1],s:null},lang:{sub:'',g:null},memoReq:'',memoCon:'',naesin:{},qual:{},picks:{},finals:{},notes:{}});
 let S=BLANK();
 let basis='all';
 function scoresFromFile(sc){
@@ -988,7 +991,7 @@ function rStudent(){
   $('stuStatus').textContent=db?(S.id?'저장된 학생이에요':''):'저장소 연결 전 · 내보내기로 파일 백업 가능';
   const miss=[];if(!S.eng)miss.push('영어');if(!S.hist)miss.push('한국사');
   $('resWarn').innerHTML=miss.length?`<div class="notice warn" style="margin-top:14px">${miss.join('·')} 등급을 넣어야 대학별 판정이 계산돼요. 비어 있으면 분석기와 똑같이 전부 '오류'로 나와요.</div>`:'';
-  rOmr(); rNaesin(); rStudentStats();
+  rOmr(); rNaesin(); rQual(); rStudentStats();
 }
 function rNaesin(){
   const box=$('naesinBox'); if(!NAESIN.length){box.innerHTML='<span class="status">이 분석기 파일에는 내신 입력칸이 없어요.</span>';return}
@@ -1004,6 +1007,24 @@ function rNaesin(){
     S.naesin={...(S.naesin||{})}; if(v===''||v==null) delete S.naesin[d.k]; else S.naesin[d.k]=v;
     scheduleCalc(); autosave();
   });
+}
+const QSEM=[['1-1','1학년 1학기'],['1-2','1학년 2학기'],['2-1','2학년 1학기'],['2-2','2학년 2학기'],['3-1','3학년 1학기'],['3-2','3학년 2학기 (선택)']];
+function qualAvg(){const v=QSEM.map(([k])=>parseFloat(((S.qual||{}).sem||{})[k])).filter(x=>!isNaN(x));return v.length?{avg:v.reduce((a,x)=>a+x,0)/v.length,n:v.length}:null}
+function qualAbsent(){const a=(S.qual||{}).absent||{};const v=['1','2','3'].map(k=>parseInt(a[k])).filter(x=>!isNaN(x));return v.length?v.reduce((s,x)=>s+x,0):null}
+function rQual(){
+  const q=S.qual||{}, sem=q.sem||{}, ab=q.absent||{};
+  const sumLine=()=>{const a=qualAvg(),b=qualAbsent();return `${a?`입력된 ${a.n}개 학기 단순평균 <b>${fmt(a.avg,2)}</b> 등급`:'학기별 점수를 입력하면 평균이 표시돼요'}${b!=null?` · 무단결석 합계 <b>${b}</b>일`:''}`};
+  $('qualBox').innerHTML=`<div class="grid2" style="align-items:start">
+    <div><div class="gtitle" style="margin-bottom:6px">학기별 산출 내신 점수 <small>(전 교과 평균 등급)</small></div>
+      <table class="omr"><tbody>${QSEM.map(([k,n])=>`<tr><td class="area" style="width:150px">${n}</td><td><input inputmode="decimal" data-qs="${k}" value="${esc(sem[k]??'')}" placeholder="예: 2.85" aria-label="${n} 산출 내신"></td></tr>`).join('')}</tbody></table>
+      <div class="hint" id="qSum" style="margin-top:6px">${sumLine()}</div></div>
+    <div><div class="gtitle" style="margin-bottom:6px">출결 상황 <small>(무단 결석 일수)</small></div>
+      <table class="omr"><tbody>${[['1','1학년'],['2','2학년'],['3','3학년']].map(([k,n])=>`<tr><td class="area" style="width:150px">${n}</td><td><input inputmode="numeric" data-qa="${k}" value="${esc(ab[k]??'')}" placeholder="0" aria-label="${n} 무단 결석 일수"> <span class="status">일</span></td></tr>`).join('')}</tbody></table>
+      <div class="field" style="margin-top:12px"><label for="qMemo">특이 사항</label><textarea id="qMemo" rows="5" placeholder="예: 2학년 1학기 질병 결석(인정), 의료동아리 부장, 수학 세특 우수, 봉사 100시간, 담임 의견 등">${esc(q.memo||'')}</textarea></div></div></div>`;
+  const touch=()=>{S.qual=S.qual||{};autosave();$('qSum').innerHTML=sumLine()};
+  $('qualBox').querySelectorAll('[data-qs]').forEach(el=>el.oninput=()=>{S.qual=S.qual||{};S.qual.sem={...(S.qual.sem||{}),[el.dataset.qs]:el.value.trim()};touch()});
+  $('qualBox').querySelectorAll('[data-qa]').forEach(el=>el.oninput=()=>{S.qual=S.qual||{};S.qual.absent={...(S.qual.absent||{}),[el.dataset.qa]:el.value.trim()};touch()});
+  $('qMemo').oninput=e=>{S.qual=S.qual||{};S.qual.memo=e.target.value;autosave()};
 }
 function opt(list,sel){return list.map(x=>`<option ${x===sel?'selected':''}>${esc(x)}</option>`).join('')}
 function bubbles(g){return `<div class="bubbles">${[1,2,3,4,5,6,7,8,9].map(i=>`<span class="bub ${i===g?'on':''}">${i}</span>`).join('')}</div>`}
@@ -1296,6 +1317,7 @@ function saengBox(u){
   return `<div class="rsec"><h4>📋 학생부(생기부) 반영 <span class="sb">${esc(s[1])}</span></h4>
     <div class="tags" style="margin-bottom:6px"><span>${esc(s[0])}</span>${s[3]!=null?`<span>내신 만점 ${fmt(s[3],0)}점</span>`:''}${s[4]!=null?`<span>비교내신(기본값) ${fmt(s[4],1)}</span>`:''}${(()=>{const v=naeValueOf(u);return v!==undefined&&v!==''?`<span style="background:var(--accent-s);color:var(--accent);font-weight:700">학생 내신 ${esc(v)} 적용</span>`:'<span>학생 내신 미입력 · 기본값 적용</span>'})()}</div>
     <p style="margin:0;font-size:13px">${esc(s[2])}</p>
+    ${(s[1]==='교과평가'||s[1]==='비교과·출결')?(()=>{const a=qualAvg(),b=qualAbsent(),m=(S.qual||{}).memo;return `<p class="status" style="margin:6px 0 0">학생 정성 자료 · ${a?`학기 평균 ${fmt(a.avg,2)}등급`:'학기별 내신 미입력'} · ${b!=null?`무단결석 ${b}일`:'출결 미입력'}${m?` · 특이사항: ${esc(m.slice(0,60))}${m.length>60?'…':''}`:''}</p>`})():''}
     <p class="status" style="margin:6px 0 0">고속성장분석기에 반영된 정보 기준이에요. 세부 반영비율·평가요소는 해당 대학 모집요강으로 꼭 확인하세요.</p></div>`;
 }
 function bodyHtml(i){
