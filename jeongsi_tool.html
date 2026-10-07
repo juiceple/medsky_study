@@ -797,6 +797,7 @@ const CATS=['의대','치대','한의대','약대','수의대','교대','과기�
 const KIST=['한국과학기술원','광주과학기술원','대구경북과학기술원','울산과학기술원'];
 const UNIV_GROUPS=[
   {label:'의치한약수', cats:['의대','치대','한의대','약대','수의대']},
+  {label:'교대', cats:['교대'], unis:['서울교육대학교','경인교육대학교','춘천교육대학교','청주교육대학교','공주교육대학교','대구교육대학교','부산교육대학교','전주교육대학교','광주교육대학교','진주교육대학교','한국교원대학교']},
   {label:'서연고', unis:['서울대학교','연세대학교','고려대학교']},
   {label:'서성한', unis:['서강대학교','성균관대학교','한양대학교']},
   {label:'중경외시', unis:['중앙대학교','경희대학교','한국외국어대학교','서울시립대학교','이화여자대학교']},
@@ -1213,7 +1214,8 @@ function rBrowse(){
   w.innerHTML=`<div class="bar"><span class="lbl">현재 학생</span><b>${esc(S.name||'새 학생')}</b><span class="status">${esc(MODEL_META.title||'')}</span><span class="sep"></span>${basisSeg()}</div>
   <p class="intro" style="margin-top:12px">그룹별 대학을 누르면 해당 대학의 군·학과·입결을 한 번에 볼 수 있어요. 카드의 색 막대는 판정 분포(초록 적정 → 빨강 위험)예요.</p>
   ${UNIV_GROUPS.map(g=>{
-    if(g.cats) return `<div class="gsec"><div class="gtitle">${g.label} <small>계열별로 전국 모집단위를 모아봐요</small></div><div class="ugrid">${g.cats.map(c=>card(c+' 전체',unitsOf({cat:c}),c)).join('')}</div></div>`;
+    if(g.cats){ const avU=(g.unis||[]).filter(n=>byU.has(n));
+      return `<div class="gsec"><div class="gtitle">${g.label} <small>${avU.length?'교대 전체(이화여대·제주대 초등교육과 포함)와 교육대학교별로 볼 수 있어요':'계열별로 전국 모집단위를 모아봐요'}</small></div><div class="ugrid">${g.cats.map(c=>card(c+' 전체',unitsOf({cat:c}),c)).join('')}${avU.map(n=>card(n,byU.get(n))).join('')}</div></div>` }
     const av=g.unis.filter(n=>byU.has(n));
     return `<div class="gsec"><div class="gtitle">${g.label}${av.length<g.unis.length?` <small>(데이터 있는 ${av.length}/${g.unis.length}개교)</small>`:''}</div><div class="ugrid">${av.map(n=>card(n,byU.get(n))).join('')}</div></div>`}).join('')}
   <div class="gsec allsec"><div class="gtitle">전체 대학 <small>${all.length}개교</small>
