@@ -198,6 +198,10 @@ def apply_med():
     miss3 = hb_b3_spec.build_b3(UNIV, SRC, LV_COPY, R)
     if miss3:
         print("지거국·교대 규칙 누락(검증 JSON 없음):", miss3)
+    import hb_b4_spec
+    miss4 = hb_b4_spec.build_b4(UNIV, SRC, LV_COPY, R)
+    if miss4:
+        print("서울과기대·경기권 규칙 누락(검증 JSON 없음):", miss4)
 
 def build():
     data = {"asOf": ASOF, "src": SRC, "univ": UNIV}
