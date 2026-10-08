@@ -1076,10 +1076,10 @@ function posFlag(i){
   const m=repMid();if(!m)return null;const r=b[1]/m;
   if(r>=POS_K)return {k:'low',r,m};if(r<=1/POS_K)return {k:'high',r,m};return null;
 }
-function posTip(i,f){
+function posTip(i,f,forReport){
   const u=U[i],b=B[basis][i],fm=sysFormula(u[20]);
   return f.k==='low'
-   ?`이 대학 환산 공식(${u[20]})에서는 학생 누백이 상위 ${fmt(b[1],2)}%로, 학생의 대표 누백(상위 ${fmt(f.m,2)}%)보다 ${fmt(f.r,1)}배 낮게 나와요.\n영어·한국사 등급 환산처럼 상위권 점수가 촘촘히 몰리는 공식일 수 있어요.${fm?'\n공식 유형: '+fm:''}\n판정은 이 공식 기준이라 맞지만, 학생 수준에 비해 낮은 대학일 수 있으니 대학 수준(적정 누백)도 함께 보세요.`
+   ?`이 대학 환산 공식(${u[20]})에서는 학생 누백이 상위 ${fmt(b[1],2)}%로, 학생의 대표 누백(상위 ${fmt(f.m,2)}%)보다 ${fmt(f.r,1)}배 낮게 나와요.\n영어·한국사 등급 환산처럼 상위권 점수가 촘촘히 몰리는 공식일 수 있어요.${fm?'\n공식 유형: '+fm:''}${forReport?'':'\n판정은 이 공식 기준이라 맞지만, 학생 수준에 비해 낮은 대학일 수 있으니 대학 수준(적정 누백)도 함께 보세요.'}`
    :`이 대학 환산 공식(${u[20]})에서는 학생 누백이 상위 ${fmt(b[1],2)}%로, 학생의 대표 누백(상위 ${fmt(f.m,2)}%)보다 ${fmt(1/f.r,1)}배 높게 나와요.\n학생에게 유리한 공식(과목 가중 등)일 수 있어요.${fm?'\n공식 유형: '+fm:''}`;
 }
 function posBadge(i){
@@ -1788,7 +1788,7 @@ function rpS4(){
   const mix=l=>{const c={};l.forEach(i=>{const j=B[basis][i][0];c[j]=(c[j]||0)+1});return [4,3,2,1].filter(j=>c[j]).map(j=>`<span class="jb j${j}">${JL[j]} ${c[j]}</span>`).join(' ')};
   const anyPos=ids.some(i=>posFlag(i));
   return [...GUNS.map(g=>[g+'군',by[g]]),['그 외 (수시이월·군외·전문대)',by.etc]].filter(x=>x[1].length).map(([lab,l])=>`<div class="rp-gun">${rpSub(lab,l.length+'개')}<div class="rp-mix">${mix(l)}</div>${tbl(l)}</div>`).join('')
-   +`<p class="rp-hint">누백은 숫자가 작을수록 상위권이에요. 학생 누백이 적정·소신 누백보다 작으면 그 선을 넘은 거예요. 펑크예측은 최근 입결 변화와 정원으로 본 참고 지표예요.${anyPos?' <b>환산 불리/유리</b>는 그 대학 환산 공식에서 학생 누백이 학생의 대표 누백보다 2.5배 이상 낮게/높게 계산되는 모집단위예요. 판정은 그 공식 기준이라 정확하지만, 불리로 표시된 대학은 학생 전체 수준보다 낮은 대학일 수 있어요.':''}</p>`
+   +`<p class="rp-hint">누백은 숫자가 작을수록 상위권이에요. 학생 누백이 적정·소신 누백보다 작으면 그 선을 넘은 거예요. 펑크예측은 최근 입결 변화와 정원으로 본 참고 지표예요.${anyPos?' <b>환산 불리/유리</b>는 그 대학 환산 공식에서 학생 누백이 학생의 대표 누백보다 2.5배 이상 낮게/높게 계산되는 모집단위예요. 판정은 그 공식 기준으로 계산한 결과예요.':''}</p>`
    +rpCm('s4','모집단위 종합 소견','지원희망 모집단위 전체에 대한 종합 판단을 적어주세요',5);
 }
 function rpS5(){
@@ -1803,7 +1803,7 @@ function rpS5(){
 }
 /* 최종 지원 상세: 군마다 한 장. 펑크 예측(근거·리스크)은 뺀다 */
 function posNoteHtml(i){const f=posFlag(i);if(!f)return '';
-  return `<div class="rp-pos ${f.k}"><b>${f.k==='low'?'환산 불리':'환산 유리'}</b> ${esc(posTip(i,f)).replace(/\n/g,'<br>')}</div>`}
+  return `<div class="rp-pos ${f.k}"><b>${f.k==='low'?'환산 불리':'환산 유리'}</b> ${esc(posTip(i,f,true)).replace(/\n/g,'<br>')}</div>`}
 function rpApp(i,g,n,head){
   const u=U[i],b=B[basis][i],k=keyOf(i),P=bodyParts(i),h=hitOf(i),c=(S.notes[k]||{}).comment;
   return `<div class="rp-page rp-apppage" data-g="${g}">${head||''}
