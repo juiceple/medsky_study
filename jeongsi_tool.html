@@ -158,6 +158,8 @@ table.dt{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
 .dt td.dim{color:var(--muted)}
 .jb{display:inline-block;padding:2px 8px;border-radius:5px;font-size:12px;font-weight:700}
 .j4{background:var(--j4s);color:var(--j4)}.j3{background:var(--j3s);color:var(--j3)}.j2{background:var(--j2s);color:var(--j2)}.j1{background:var(--j1s);color:var(--j1)}.j0{background:var(--j0s);color:var(--j0)}
+.pf{display:inline-block;margin-left:5px;padding:0 6px;border-radius:9px;font-size:10.5px;font-weight:700;line-height:17px;border:1px solid;white-space:nowrap;cursor:help;vertical-align:1px}
+.pf.low{color:var(--j1);background:var(--j1s);border-color:var(--j1)}.pf.high{color:var(--j3);background:var(--j3s);border-color:var(--j3)}
 .fk{display:inline-block;padding:2px 7px;border-radius:10px;font-size:11.5px;font-weight:700;border:1px solid}
 .fk.strong{color:#a4451f;border-color:#e8bfa0;background:#fbeee6}
 .fk.candidate{color:#b06a1a;border-color:#efd3a6;background:#fdf5e7}
@@ -844,7 +846,7 @@ function useModel(model){
     [45,46,47].map(c=>{const v=raw(sA,r,c);return typeof v==='number'?numOr(v,3):v}),[48,49,50,51,52,53,54,55,56].map(c=>numOr(raw(sA,r,c),2)),null,null,numOr(raw(sA,r,9),2),numOr(raw(sA,r,10),2),numOr(raw(sA,r,11),2),raw(sA,r,34)]);
   for(const k in RS){const s=EN.sheet(RS[k]);
     B[k]=ROWS[k].map(r=>[0,null,null,numOr(raw(s,r,12)),numOr(raw(s,r,13)),numOr(raw(s,r,14)),[15,16,17,18,19].map(c=>numOr(cleanV(raw(s,r,c)))),[20,21,22,23,24].map(c=>numOr(cleanV(raw(s,r,c)))),'']);}
-  reindex(); FUNK_CACHE.clear();
+  reindex(); FUNK_CACHE.clear(); POS_CLEAR();
 }
 /* ===== 학생부(내신) 직접입력: 분석기 '내신입력' 시트의 대학별 입력칸(직접입력 열) ===== */
 const NAE_GROUPS=[['고려','고려대 (교과우수전형)'],['연세','연세대'],['중앙','중앙대 (비교과 출결)'],['대구대','대구대'],['덕성','덕성여대'],['동남','동남보건대'],['서울','서울대 (교과평가)']];
@@ -897,7 +899,7 @@ function calcAll(){
         if(k==='all'){U[i][15]=typeof g==='number'?g:null; const f=EN.cell(name,r,5); U[i][16]=typeof f==='number'?f:null}
       }}
   }catch(e){CALC_ERR=e.message||String(e);console.error(e)}
-  FUNK_CACHE.clear(); LAST_MS=Math.round(performance.now()-t0);
+  FUNK_CACHE.clear(); POS_CLEAR(); LAST_MS=Math.round(performance.now()-t0);
 }
 let calcT=null;
 function scheduleCalc(delay=500){
@@ -1047,6 +1049,34 @@ let KEYIDX=new Map(); function reindex(){KEYIDX=new Map(U.map((u,i)=>[u[0]+'|'+u
 const idxOf=k=>KEYIDX.get(k);
 
 /* ===== 펑크 예측 (정시판) ===== */
+
+/* ===== 환산 위치 배지 =====
+   학생 누백은 대학 환산 공식마다 달라진다. 어떤 공식에서 학생 누백이 학생의 대표 누백(일반대·과기원 가·나·다군 모집단위 누백의 중앙값)의
+   POS_K배 이상이면 '환산 불리', 1/POS_K배 이하면 '환산 유리'로 표시한다. 판정은 바꾸지 않고 배지·툴팁만 붙인다.
+   예) 신한대: 국·수·영·탐·한국사 중 상위 3개를 5:3.5:1.5로 합산하고 영어·한국사는 등급 환산이라, 1등급이 몰린 상위권 점수대가 촘촘해 2등급 학생의 누백이 크게 낮게 나온다. */
+const POS_K=2.5, REPMID={}, SYSF={};
+function POS_CLEAR(){for(const k in REPMID)delete REPMID[k]}
+function repMid(){
+  if(REPMID[basis]!==undefined) return REPMID[basis];
+  const a=[];U.forEach((u,i)=>{const b=B[basis][i];if(!b[0]||!(b[1]>0))return;const c=catOf(u);if(c!=='일반대'&&c!=='과기원')return;if(GUNS.includes(gunOf(u)))a.push(b[1])});
+  a.sort((x,y)=>x-y);return REPMID[basis]=a.length?a[(a.length-1)>>1]:null;
+}
+function sysFormula(name){
+  if(!SYSF._built){SYSF._built=1;try{for(let c=0;c<600;c++){const h=EN.cell('COMPUTE',1,c);if(h&&SYSF[h]===undefined){const g=EN.cell('COMPUTE',67,c);SYSF[h]=g||''}}}catch(e){}}
+  return SYSF[name]||'';
+}
+function posFlag(i){
+  const u=U[i],b=B[basis][i];if(!b[0]||!(b[1]>0)||isPro(u)||HB_MED.has(catOf(u)))return null;
+  const m=repMid();if(!m)return null;const r=b[1]/m;
+  if(r>=POS_K)return {k:'low',r,m};if(r<=1/POS_K)return {k:'high',r,m};return null;
+}
+function posBadge(i){
+  const f=posFlag(i);if(!f)return '';const u=U[i],b=B[basis][i],fm=sysFormula(u[20]);
+  const tip=f.k==='low'
+   ?`이 대학 환산 공식(${u[20]})에서는 학생 누백이 상위 ${fmt(b[1],2)}%로, 학생의 대표 누백(상위 ${fmt(f.m,2)}%)보다 ${fmt(f.r,1)}배 낮게 나와요.\n영어·한국사 등급 환산처럼 상위권 점수가 촘촘히 몰리는 공식일 수 있어요.${fm?'\n공식 유형: '+fm:''}\n판정은 이 공식 기준이라 맞지만, 학생 수준에 비해 낮은 대학일 수 있으니 대학 수준(적정 누백)도 함께 보세요.`
+   :`이 대학 환산 공식(${u[20]})에서는 학생 누백이 상위 ${fmt(b[1],2)}%로, 학생의 대표 누백(상위 ${fmt(f.m,2)}%)보다 ${fmt(1/f.r,1)}배 높게 나와요.\n학생에게 유리한 공식(과목 가중 등)일 수 있어요.${fm?'\n공식 유형: '+fm:''}`;
+  return `<span class="pf ${f.k}" title="${esc(tip)}">${f.k==='low'?'환산 불리':'환산 유리'}</span>`;
+}
 const FUNK_CACHE=new Map();
 function funkOf(i){
   const ck=basis+i; if(FUNK_CACHE.has(ck)) return FUNK_CACHE.get(ck);
@@ -1158,7 +1188,7 @@ function cellHtml(k,i){
     case 'cat':return `<td class="dim">${esc(catOf(u))}</td>`;
     case 'hb':return `<td>${hbBadge(i)}</td>`;
     case 'judge':return `<td><span class="jb j${b[0]}" title="${JD[b[0]]}">${JL[b[0]]}</span></td>`;
-    case 'my':return `<td class="num"><b>${pct(b[1])}</b></td>`;
+    case 'my':return `<td class="num"><b>${pct(b[1])}</b>${posBadge(i)}</td>`;
     case 'margin':{const m=marginOf(i);return `<td class="num" style="color:${m>=0?'var(--j4)':'var(--j1)'}">${m===-999?'–':(m>=0?'+':'')+fmt(m,2)}</td>`}
     case 'jn':return `<td class="num">${pct(b[3])}</td>`;
     case 'yn':return `<td class="num">${pct(b[4])}</td>`;
@@ -1826,7 +1856,7 @@ function rWish(){
   if(WV==='board') return drawBoard(host,ids);
   host.innerHTML=`<div class="twrap" style="max-height:none"><table class="dt"><thead><tr><th>#</th><th>군</th><th>대학교</th><th>학과</th><th>전형 유형</th><th>정원</th><th>판정</th><th>학생 누백</th><th>적정</th><th>소신</th><th>합격권</th><th>펑크예측</th><th style="min-width:200px">메모</th><th></th></tr></thead><tbody>
   ${ids.map((i,n)=>{const u=U[i],b=B[basis][i],k=keyOf(i),h=hitOf(i),g=gunOf(u);return `<tr data-i="${i}"><td class="dim">${n+1}</td><td><span class="${gunCls(g)}">${esc(GUNS.includes(g)?g:gunLabel(g))}</span></td><td class="nm">${esc(u[0])}${S.finals[g]===k?' <span class="jb j3">최종</span>':''}</td><td>${esc(u[1])}</td><td>${trkTag(u)}</td><td class="num">${cap(u[4])}</td>
-    <td><span class="jb j${b[0]}">${JL[b[0]]}</span></td><td class="num"><b>${pct(b[1])}</b></td><td class="num">${pct(b[3])}</td><td class="num">${pct(b[5])}</td><td class="num">${h.d?h.n+'/'+h.d:'–'}</td><td>${funkHtml(funkOf(i))}</td>
+    <td><span class="jb j${b[0]}">${JL[b[0]]}</span></td><td class="num"><b>${pct(b[1])}</b>${posBadge(i)}</td><td class="num">${pct(b[3])}</td><td class="num">${pct(b[5])}</td><td class="num">${h.d?h.n+'/'+h.d:'–'}</td><td>${funkHtml(funkOf(i))}</td>
     <td><input class="memo-in" data-memo="${esc(k)}" value="${esc(S.notes[k]?.memo||'')}" placeholder="메모"></td>
     <td><button class="btn sm navy" data-rep="${i}">리포트</button> <button class="btn sm" data-del="${i}">빼기</button></td></tr>`}).join('')}</tbody></table></div>`;
   host.onclick=e=>{const r=e.target.closest('[data-rep]');if(r){e.stopPropagation();openReport(+r.dataset.rep);return}
@@ -1891,7 +1921,7 @@ function bodyParts(i){
   const lv=[['적정',u[17],b[3],4],['예상',u[18],b[4],3],['소신',u[19],b[5],2]], mx=Math.max(b[1]||0,...lv.map(x=>x[2]||0))||1;
   const li=a=>a.length?`<ul class="rl">${a.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:'<p class="status" style="margin:2px 0">해당 없음</p>';
   return {
-  strip:`<div class="rs"><div><small>판정 (${BASIS[basis]} 기준)</small><b><span class="jb j${b[0]}" style="font-size:14px">${JL[b[0]]}</span></b></div><div><small>학생 누백</small><b>${pct(b[1])}%</b></div><div><small>환산점수</small><b>${fmt(u[15],2)}</b></div><div><small>${b[2]?'전국 등수':'과거 합격권'}</small><b style="font-size:14px">${b[2]?esc(b[2]):(h.d?h.n+'/'+h.d+'년':'–')}</b></div></div>`,
+  strip:`<div class="rs"><div><small>판정 (${BASIS[basis]} 기준)</small><b><span class="jb j${b[0]}" style="font-size:14px">${JL[b[0]]}</span></b></div><div><small>학생 누백</small><b>${pct(b[1])}%</b>${posBadge(i)}</div><div><small>환산점수</small><b>${fmt(u[15],2)}</b></div><div><small>${b[2]?'전국 등수':'과거 합격권'}</small><b style="font-size:14px">${b[2]?esc(b[2]):(h.d?h.n+'/'+h.d+'년':'–')}</b></div></div>`,
   ladder:`<div class="rsec"><h4>📊 합격선 사다리</h4>
     ${lv.map(([n,s,p,j])=>`<div class="lad"><span>${n} ${fmt(s,1)}점</span><div class="b" style="width:${Math.max(3,(p||0)/mx*100)}%;background:var(--j${j})"></div><span style="text-align:right">${pct(p)}%</span></div>`).join('')}
     <div class="lad"><b style="color:var(--accent)">학생 ${fmt(u[15],1)}점</b><div class="b" style="width:${Math.max(3,(b[1]||0)/mx*100)}%;background:var(--accent)"></div><b style="text-align:right;color:var(--accent)">${pct(b[1])}%</b></div>
