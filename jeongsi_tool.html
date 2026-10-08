@@ -1559,7 +1559,8 @@ function chRow(label,idxs,key,sub){
 /* 학생 요약(상단 카드): 기준(전체·이과·문과)만 반영하고 아래 필터와는 무관
    - 대표 누백 = 일반대·과기원 가·나·다군 모집단위(결격 제외) 전체에서 학생 누백의 중앙값
    - 전국 등수 = 대표 누백 × 해당 기준 응시자 수
-   - 추천 대학: 대학별로 모집단위 (적정 누백 ÷ 학생 누백)의 중앙값을 구해 구간을 나눈다
+   - 추천 대학: 대학별 모집단위 적정 누백의 중앙값 ÷ 학생 대표 누백으로 구간을 나눈다. 모집단위별 학생 누백은 환산 만점에 걸리면(예: 신한대 970점)
+     실제보다 나쁘게 계산돼 하위권 대학이 '적정'으로 잡히므로 쓰지 않는다
      (1.6 이상 안정 · 0.9~1.6 적정 · 0.6~0.9 소신/도전 · 0.35~0.6 상향 도전). 같은 구간 안에서는 선발 수준이 높은 대학(적정 누백이 작은 순)부터 */
 function chProfile(){
   const bb=B[basis],st=[],byU=new Map();let total=0;
@@ -1573,8 +1574,8 @@ function chProfile(){
   const inG=new Set(UNIV_GROUPS.flatMap(g=>g.unis||[]));
   const recs=[];
   byU.forEach((ids,n)=>{if(ids.length<2&&!inG.has(n))return;
-    const r=medOf(ids.map(i=>bb[i][3]/bb[i][1])),s=chStats(ids);if(r==null||!s)return;
-    recs.push({n,r,md:s.md,s,ids})});
+    const s=chStats(ids);if(!s||mid==null)return;
+    recs.push({n,r:s.md/mid,md:s.md,s,ids})});
   const tier=(lo,hi)=>recs.filter(x=>x.r>=lo&&x.r<hi).sort((a,b)=>a.md-b.md);
   return {mid,lo:st.length?qOf(st,.1):null,hi:st.length?qOf(st,.9):null,rank:mid!=null&&total?Math.round(mid/100*total):null,total,units:st.length,
     tiers:[['상향 도전',tier(.35,.6),'j1','학생 점수가 대학 적정선보다 다소 낮은 구간이에요. 소신 지원 후보'],['소신',tier(.6,.9),'j2','적정선에 조금 못 미치는 대학이에요'],['적정 추천',tier(.9,1.6),'j4','학생 점수가 적정선 근처이거나 조금 위인 대학이에요 (핵심 후보)'],['안정',tier(1.6,1e9),'j3','학생 점수가 적정선보다 크게 위인 대학이에요 (하향·안정)']]};
@@ -1719,7 +1720,7 @@ function rpS2(P){
   const tiers=P.tiers.map(([lab,list,cls])=>`<div class="rp-tier"><div><span class="jb ${cls}">${lab}</span> <small>${list.length}개교</small></div><div class="rp-chips">${list.slice(0,12).map(x=>`<span class="rp-chip">${esc(x.n.replace(/대학교$/,'대'))}<small>${x.s.c[4]+x.s.c[3]}/${x.s.n}</small></span>`).join('')||'<small>해당 없음</small>'}</div></div>`).join('');
   const pick=[...P.tiers[0][1].slice(0,8).map(x=>[x,'상향 도전']),...P.tiers[1][1].slice(0,8).map(x=>[x,'소신']),...P.tiers[2][1].slice(0,10).map(x=>[x,'적정']),...P.tiers[3][1].slice(0,5).map(x=>[x,'안정'])];
   const rows=pick.map(([x,l])=>chRow(x.n,x.ids,'r:'+x.n,l)).join('').replace(/▸ /g,'');
-  return rpSub('추천 구간')+`<div class="rp-tiers">${tiers}</div><p class="rp-hint">칩의 숫자는 적정+예상 판정 모집단위 수 / 전체 모집단위 수예요. 구간은 대학 모집단위의 적정 누백 ÷ 학생 누백의 중앙값으로 나눴어요.</p>
+  return rpSub('추천 구간')+`<div class="rp-tiers">${tiers}</div><p class="rp-hint">칩의 숫자는 적정+예상 판정 모집단위 수 / 전체 모집단위 수예요. 구간은 대학 모집단위 적정 누백의 중앙값 ÷ 학생 대표 누백으로 나눴어요.</p>
    ${rpSub('대학별 성적대 위치')}<div class="rp-chart">${chBlock('추천 대학 (누백 축)',rows,pick.length)}</div>
    <p class="rp-hint">가로축은 누백(상위 몇 %)이고 왼쪽일수록 상위권이에요. 초록 막대는 대학 모집단위의 적정 누백 25~75% 구간, ◆는 학생 누백이에요. ◆가 막대보다 왼쪽이면 적정선 위, 오른쪽이면 상향이에요.</p>
    ${rpCm('s2','추천 대학 소견','추천 구간에 대한 해석, 학생 요청사항과의 연결, 지역·계열 조건 등을 적어주세요',5)}`;
