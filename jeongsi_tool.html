@@ -374,6 +374,8 @@ table.dt{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
 .rp-appbar .gl{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:#bbb}.rp-appbar .nm{font-family:var(--serif);font-size:20px;margin:4px 0 4px}.rp-appbar .nm b{font-weight:900}
 .rp-appbar .mt{font-size:11.5px;color:#aaa}.rp-appbar .jd{position:absolute;right:18px;top:16px}.rp-appbar .jd .jb{font-size:15px;padding:5px 14px}
 .rp-appbar .trk{filter:saturate(.9)}
+.rp-pos{margin-top:12px;padding:9px 14px;border-radius:4px;font-size:11.5px;line-height:1.7;border:1px solid;break-inside:avoid}.rp-pos.low{background:#fbece6;border-color:#e3b3a3;color:#7a2f1c}.rp-pos.high{background:#e8f0fa;border-color:#b0c7e6;color:#1f4a80}.rp-pos b{margin-right:6px}
+.rp-fig .pf{margin-left:6px;font-size:10px}
 .rp-two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;align-items:start}
 .rp-apppage .rsec{margin-top:12px;break-inside:avoid;border:1px solid #e2e2e2;border-radius:6px;padding:12px 14px;background:#fff}.rp-two .rsec{margin-top:0}
 .rp-apppage .rsec h4{font-family:var(--serif);font-size:13.5px;margin:0 0 8px}
@@ -1065,17 +1067,24 @@ function sysFormula(name){
   if(!SYSF._built){SYSF._built=1;try{for(let c=0;c<600;c++){const h=EN.cell('COMPUTE',1,c);if(h&&SYSF[h]===undefined){const g=EN.cell('COMPUTE',67,c);SYSF[h]=g||''}}}catch(e){}}
   return SYSF[name]||'';
 }
+/* 학생 계열(이과: 미적·기하 + 과탐 2과목). 이과·문과 응시자 기준은 학생 계열과 같을 때만 의미가 있다.
+   다른 계열 풀과 비교하면(예: 이과 학생 × 문과 기준) 경쟁자가 없어 누백이 0 근처로 나오는 등 배지가 무의미해서 숨긴다. */
+const studentTrack=()=>(S.math.sub!=='확통'&&SCI.includes(S.t1.sub)&&SCI.includes(S.t2.sub))?'sci':'hum';
 function posFlag(i){
+  if(basis!=='all'&&basis!==studentTrack())return null;
   const u=U[i],b=B[basis][i];if(!b[0]||!(b[1]>0)||isPro(u)||HB_MED.has(catOf(u)))return null;
   const m=repMid();if(!m)return null;const r=b[1]/m;
   if(r>=POS_K)return {k:'low',r,m};if(r<=1/POS_K)return {k:'high',r,m};return null;
 }
-function posBadge(i){
-  const f=posFlag(i);if(!f)return '';const u=U[i],b=B[basis][i],fm=sysFormula(u[20]);
-  const tip=f.k==='low'
+function posTip(i,f){
+  const u=U[i],b=B[basis][i],fm=sysFormula(u[20]);
+  return f.k==='low'
    ?`이 대학 환산 공식(${u[20]})에서는 학생 누백이 상위 ${fmt(b[1],2)}%로, 학생의 대표 누백(상위 ${fmt(f.m,2)}%)보다 ${fmt(f.r,1)}배 낮게 나와요.\n영어·한국사 등급 환산처럼 상위권 점수가 촘촘히 몰리는 공식일 수 있어요.${fm?'\n공식 유형: '+fm:''}\n판정은 이 공식 기준이라 맞지만, 학생 수준에 비해 낮은 대학일 수 있으니 대학 수준(적정 누백)도 함께 보세요.`
    :`이 대학 환산 공식(${u[20]})에서는 학생 누백이 상위 ${fmt(b[1],2)}%로, 학생의 대표 누백(상위 ${fmt(f.m,2)}%)보다 ${fmt(1/f.r,1)}배 높게 나와요.\n학생에게 유리한 공식(과목 가중 등)일 수 있어요.${fm?'\n공식 유형: '+fm:''}`;
-  return `<span class="pf ${f.k}" title="${esc(tip)}">${f.k==='low'?'환산 불리':'환산 유리'}</span>`;
+}
+function posBadge(i){
+  const f=posFlag(i);if(!f)return '';
+  return `<span class="pf ${f.k}" title="${esc(posTip(i,f))}">${f.k==='low'?'환산 불리':'환산 유리'}</span>`;
 }
 const FUNK_CACHE=new Map();
 function funkOf(i){
@@ -1721,7 +1730,7 @@ function rpSums(){
   const ps=I.reduce((a,x)=>a+(x?.pct||0),0),ss=[S.kor.s,S.math.s,S.t1.s,S.t2.s].reduce((a,x)=>a+(+x||0),0);
   return {ps:ps?Math.round(ps):null,ss:ss||null};
 }
-function rpTrack(){const sci=s=>SCI.includes(s);return (S.math.sub!=='확통'&&sci(S.t1.sub)&&sci(S.t2.sub))?'이과 (미적·기하 + 과탐)':'문과 (확통 또는 사탐 포함)'}
+function rpTrack(){return studentTrack()==='sci'?'이과 (미적·기하 + 과탐)':'문과 (확통 또는 사탐 포함)'}
 
 function rpScores(){
   const row=(a,sub,s,info,g)=>`<tr><td>${a}</td><td>${esc(sub||'')}</td><td class="num">${s!=null&&s!==''?esc(s):'–'}</td><td class="num">${info&&info.pct!=null?fmt(info.pct,0):'–'}</td><td class="num">${info&&info.grade?info.grade+'등급':(g?g+'등급':'–')}</td><td class="num">${info&&info.cum!=null?'상위 '+fmt(info.cum,2)+'%':'–'}</td></tr>`;
@@ -1770,15 +1779,16 @@ function rpS3(){
 function rpUnitRow(i){
   const u=U[i],b=B[basis][i],k=keyOf(i),n=S.notes[k]||{},f=funkOf(i),g=gunOf(u),fin=S.finals[g]===k;
   const memo=[n.memo,n.comment].filter(x=>x&&String(x).trim()).map(rpPara).join('<br>');
-  return `<tr${fin?' class="fin"':''}><td class="l"><b>${esc(u[0])}</b> ${esc(u[1])}${fin?' <span class="jb j3">최종</span>':''}<br><small>${trkTag(u)}</small></td><td class="num">${cap(u[4])}</td><td><span class="jb j${b[0]}">${JL[b[0]]}</span></td><td class="num">${pct(b[1])}</td><td class="num">${pct(b[3])}</td><td class="num">${pct(b[5])}</td><td>${funkHtml(f)}</td><td>${haksaengOf(u).cls}</td><td class="l">${memo||'<small class="dim">–</small>'}</td></tr>`;
+  return `<tr${fin?' class="fin"':''}><td class="l"><b>${esc(u[0])}</b> ${esc(u[1])}${fin?' <span class="jb j3">최종</span>':''}<br><small>${trkTag(u)}</small></td><td class="num">${cap(u[4])}</td><td><span class="jb j${b[0]}">${JL[b[0]]}</span></td><td class="num">${pct(b[1])}${posBadge(i)}</td><td class="num">${pct(b[3])}</td><td class="num">${pct(b[5])}</td><td>${funkHtml(f)}</td><td>${haksaengOf(u).cls}</td><td class="l">${memo||'<small class="dim">–</small>'}</td></tr>`;
 }
 function rpS4(){
   const ids=rpIds();if(!ids.length)return '<p class="rp-hint">지원희망 목록이 비어 있어요. "대학 둘러보기"·"정밀 매칭 도구"에서 모집단위를 담으면 여기 자동으로 들어와요.</p>';
   const by={가:[],나:[],다:[],etc:[]};ids.forEach(i=>{const g=gunOf(U[i]);(by[g]||by.etc).push(i)});
   const tbl=l=>`<table class="rp-t rp-wide"><thead><tr><th>대학 / 학과</th><th>정원</th><th>판정</th><th>학생 누백</th><th>적정</th><th>소신</th><th>펑크예측</th><th>학생부</th><th>메모·코멘트</th></tr></thead><tbody>${l.map(rpUnitRow).join('')}</tbody></table>`;
   const mix=l=>{const c={};l.forEach(i=>{const j=B[basis][i][0];c[j]=(c[j]||0)+1});return [4,3,2,1].filter(j=>c[j]).map(j=>`<span class="jb j${j}">${JL[j]} ${c[j]}</span>`).join(' ')};
+  const anyPos=ids.some(i=>posFlag(i));
   return [...GUNS.map(g=>[g+'군',by[g]]),['그 외 (수시이월·군외·전문대)',by.etc]].filter(x=>x[1].length).map(([lab,l])=>`<div class="rp-gun">${rpSub(lab,l.length+'개')}<div class="rp-mix">${mix(l)}</div>${tbl(l)}</div>`).join('')
-   +`<p class="rp-hint">누백은 숫자가 작을수록 상위권이에요. 학생 누백이 적정·소신 누백보다 작으면 그 선을 넘은 거예요. 펑크예측은 최근 입결 변화와 정원으로 본 참고 지표예요.</p>`
+   +`<p class="rp-hint">누백은 숫자가 작을수록 상위권이에요. 학생 누백이 적정·소신 누백보다 작으면 그 선을 넘은 거예요. 펑크예측은 최근 입결 변화와 정원으로 본 참고 지표예요.${anyPos?' <b>환산 불리/유리</b>는 그 대학 환산 공식에서 학생 누백이 학생의 대표 누백보다 2.5배 이상 낮게/높게 계산되는 모집단위예요. 판정은 그 공식 기준이라 정확하지만, 불리로 표시된 대학은 학생 전체 수준보다 낮은 대학일 수 있어요.':''}</p>`
    +rpCm('s4','모집단위 종합 소견','지원희망 모집단위 전체에 대한 종합 판단을 적어주세요',5);
 }
 function rpS5(){
@@ -1792,12 +1802,15 @@ function rpS5(){
    ${rpCm('s5n','유의 사항','지원 시 유의 사항(원서접수 일정, 면접·실기 유무, 수능 영역별 가중치 등)을 적어주세요',4)}`;
 }
 /* 최종 지원 상세: 군마다 한 장. 펑크 예측(근거·리스크)은 뺀다 */
+function posNoteHtml(i){const f=posFlag(i);if(!f)return '';
+  return `<div class="rp-pos ${f.k}"><b>${f.k==='low'?'환산 불리':'환산 유리'}</b> ${esc(posTip(i,f)).replace(/\n/g,'<br>')}</div>`}
 function rpApp(i,g,n,head){
   const u=U[i],b=B[basis][i],k=keyOf(i),P=bodyParts(i),h=hitOf(i),c=(S.notes[k]||{}).comment;
   return `<div class="rp-page rp-apppage" data-g="${g}">${head||''}
     <div class="rp-appbar g${g}"><div class="gl">최종 지원 ${'①②③'[n]||''} · ${g}군</div><div class="nm"><b>${esc(u[0])}</b> ${esc(u[1])}${trkTag(u)}</div>
       <div class="mt">${gunLabel(gunOf(u))} · 정원 ${cap(u[4])} · ${esc(u[5])} · ${esc(u[7])} · ${BASIS[basis]} 응시자 기준</div><div class="jd"><span class="jb j${b[0]}">${JL[b[0]]}</span></div></div>
-    ${rpFigs([rpFig('학생 누백',pct(b[1])+'%'),rpFig('적정 누백',pct(b[3])+'%'),rpFig('소신 누백',pct(b[5])+'%'),rpFig('과거 합격권',h.d?h.n+'/'+h.d+'년':'–','학생이 합격권 안이었던 해')])}
+    ${rpFigs([rpFig('학생 누백',pct(b[1])+'%'+posBadge(i)),rpFig('적정 누백',pct(b[3])+'%'),rpFig('소신 누백',pct(b[5])+'%'),rpFig('과거 합격권',h.d?h.n+'/'+h.d+'년':'–','학생이 합격권 안이었던 해')])}
+    ${posNoteHtml(i)}
     <div class="rp-cm key"><div class="rp-cmh">✎ 컨설턴트 코멘트</div>${rpTa(`data-rpn="${esc(k)}"`,c,'이 모집단위에 대한 판단과 전략을 적어주세요',3)}${rpTw(`data-rpnt="${esc(k)}"`,c)}</div>
     <div class="rp-two">${P.ladder}<div>${P.ratio}${P.eng}</div></div>
     ${P.chart}
