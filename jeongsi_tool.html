@@ -1389,7 +1389,7 @@ function rStudentStats(){
   const c={};for(const k in B){c[k]=[0,0,0,0,0];B[k].forEach(b=>c[k][b[0]]++)}
   const reasons={};B[basis].forEach(b=>{if(b[0]===0&&b[8])reasons[b[8]]=(reasons[b[8]]||0)+1});
   const top=k=>{const l=[];B[k].forEach((b,i)=>{if(b[0]>=3)l.push(i)});return l};
-  box.innerHTML=`<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px">${basisSeg()}<span class="status" style="margin-left:auto">${esc(MODEL_META.title||'')}</span></div>
+  box.innerHTML=`<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px">${basisSeg()}</div>
    <div class="dist" style="margin-bottom:10px">${[4,3,2,1,0].map(j=>`<span class="jb j${j}" style="font-size:13px;padding:4px 10px">${JL[j]} ${c[basis][j].toLocaleString()}</span>`).join('')}</div>
    ${Object.keys(reasons).length?`<div class="status">결격·제외 사유: ${Object.entries(reasons).sort((a,b)=>b[1]-a[1]).map(([r,n])=>`${esc(r)} ${n}`).join(' · ')}</div>`:''}
    <div class="status" style="margin-top:6px">판정은 환산점수를 적정·예상·소신점수와 비교해서 정해지고, 기준(전체·이과·문과)에 따라 누백과 등수가 달라져요.</div>
@@ -1413,7 +1413,7 @@ function rBrowse(){
       :BR.all?`<div class="ugrid">${all.map(n=>card(n,byU.get(n))).join('')}</div>`
       :`<div class="status">찾는 대학 이름을 검색하거나 '전체 펼치기'를 누르세요. 쉼표로 여러 개 찾을 수 있어요.</div>`;
   const bindCards=root=>{root.querySelectorAll('[data-open-univ]').forEach(b=>b.onclick=()=>openUniv({univ:b.dataset.openUniv}));root.querySelectorAll('[data-open-cat]').forEach(b=>b.onclick=()=>openUniv({cat:b.dataset.openCat}))};
-  w.innerHTML=`<div class="bar"><span class="lbl">현재 학생</span><b>${esc(S.name||'새 학생')}</b><span class="status">${esc(MODEL_META.title||'')}</span><span class="sep"></span>${basisSeg()}</div>
+  w.innerHTML=`<div class="bar"><span class="lbl">현재 학생</span><b>${esc(S.name||'새 학생')}</b><span class="sep"></span>${basisSeg()}</div>
   <p class="intro" style="margin-top:12px">그룹별 대학을 누르면 해당 대학의 군·학과·입결을 한 번에 볼 수 있어요. 카드의 색 막대는 판정 분포(초록 적정 → 빨강 위험)예요.</p>
   ${UNIV_GROUPS.map(g=>{
     if(g.cats){ const avU=(g.unis||[]).filter(n=>byU.has(n));
