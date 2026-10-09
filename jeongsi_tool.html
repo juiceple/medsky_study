@@ -295,15 +295,15 @@ table.dt{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
 .hbbox .src a{color:var(--navy2);text-decoration:underline;word-break:break-all}
 :root[data-theme="dark"] .hbbox .src a{color:#8db5ee}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .hbbox .src a{color:#8db5ee}}
-/* 군(가·나·다)은 색 대신 글자로 구분한다: 한 화면에 색이 너무 많아 어수선해서 중립 톤으로 통일 */
-.gunc.g-ga,.gunc.g-na,.gunc.g-da{border-color:var(--navy2);color:var(--navy2)}
-.gt.g-ga,.gt.g-na,.gt.g-da{color:var(--navy2)}
-.chip.gt[aria-pressed="true"]{background:var(--navy2);border-color:var(--navy2);color:#fff}
-.colh:has(.gunc){border-bottom-color:var(--navy2)}
+.gunc.g-ga{border-color:#2a5bd7;color:#2a5bd7}.gunc.g-na{border-color:#1e8a4c;color:#1e8a4c}.gunc.g-da{border-color:#8b3fc4;color:#8b3fc4}
+.gt.g-ga{color:#2a5bd7}.gt.g-na{color:#1e8a4c}.gt.g-da{color:#8b3fc4}
+.chip.gt[aria-pressed="true"].g-ga{background:#2a5bd7;border-color:#2a5bd7;color:#fff}.chip.gt[aria-pressed="true"].g-na{background:#1e8a4c;border-color:#1e8a4c;color:#fff}.chip.gt[aria-pressed="true"].g-da{background:#8b3fc4;border-color:#8b3fc4;color:#fff}
+.colh:has(.g-ga){border-bottom-color:#2a5bd7}.colh:has(.g-na){border-bottom-color:#1e8a4c}.colh:has(.g-da){border-bottom-color:#8b3fc4}
 .allsec .gtitle{align-items:center;flex-wrap:wrap}
-:root[data-theme="dark"] .gunc.g-ga,:root[data-theme="dark"] .gunc.g-na,:root[data-theme="dark"] .gunc.g-da,:root[data-theme="dark"] .gt{color:#9db8e8;border-color:#9db8e8}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .gunc.g-ga,:root:not([data-theme="light"]) .gunc.g-na,:root:not([data-theme="light"]) .gunc.g-da,:root:not([data-theme="light"]) .gt{color:#9db8e8;border-color:#9db8e8}}
-.seg button.gt[aria-pressed="true"]{color:#fff;background:var(--navy2)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .gunc.g-ga,:root:not([data-theme="light"]) .gt.g-ga{color:#7fa6ff;border-color:#7fa6ff}:root:not([data-theme="light"]) .gunc.g-na,:root:not([data-theme="light"]) .gt.g-na{color:#62c98d;border-color:#62c98d}:root:not([data-theme="light"]) .gunc.g-da,:root:not([data-theme="light"]) .gt.g-da{color:#c08af0;border-color:#c08af0}}
+:root[data-theme="dark"] .gunc.g-ga,:root[data-theme="dark"] .gt.g-ga{color:#7fa6ff;border-color:#7fa6ff}:root[data-theme="dark"] .gunc.g-na,:root[data-theme="dark"] .gt.g-na{color:#62c98d;border-color:#62c98d}:root[data-theme="dark"] .gunc.g-da,:root[data-theme="dark"] .gt.g-da{color:#c08af0;border-color:#c08af0}
+.seg button.gt[aria-pressed="true"]{color:#fff}
+.seg button.gt.g-ga[aria-pressed="true"]{background:#2a5bd7}.seg button.gt.g-na[aria-pressed="true"]{background:#1e8a4c}.seg button.gt.g-da[aria-pressed="true"]{background:#8b3fc4}
 .calcstat{color:var(--j4);font-weight:600}
 .calcstat.busy{color:var(--accent)}
 
@@ -315,9 +315,9 @@ table.dt{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
 .chips2{display:flex;flex-wrap:wrap;gap:5px}.uchip{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:3px 10px;font-size:12.5px;font-weight:600;cursor:pointer}.uchip:hover{border-color:var(--navy2)}.uchip small{margin-left:5px;color:var(--muted);font-weight:500}
 .trk{display:inline-block;font-size:10.5px;font-weight:700;border-radius:4px;padding:0 5px;margin-left:5px;vertical-align:1px;line-height:16px;white-space:nowrap}
 .twrap .trk,.dt .trk,td .trk{margin-left:0}
-.trk{border:1px solid var(--line)}
-.trk.gen{color:var(--muted);background:transparent;font-weight:600}
-.trk.reg,.trk.gyo,.trk.spc,.trk.car,.trk.num{color:var(--ink);background:var(--line2)}
+.trk.gen{color:var(--muted);background:var(--line2);font-weight:600}
+.trk.reg{color:var(--j4);background:var(--j4s)}.trk.gyo{color:var(--j3);background:var(--j3s)}.trk.spc{color:#7a3e9d;background:#efe1f7}.trk.car{color:var(--j2);background:var(--j2s)}.trk.num{color:var(--ink2);background:var(--line)}
+:root[data-theme="dark"] .trk.spc{color:#d3a8ec;background:#35214a}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .trk.spc{color:#d3a8ec;background:#35214a}}
 /* ===== 보고서 탭 (수시 보고서 틀) ===== */
 .rp-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin-bottom:12px}
 .rp-body{display:flex;border:1px solid #222;border-radius:10px;overflow:hidden;background:#e4e6ea;height:calc(100vh - 230px);min-height:480px}
