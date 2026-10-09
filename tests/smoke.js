@@ -48,6 +48,8 @@ const ok=(c,m)=>{console.log((c?'  ✓ ':'  ✗ ')+m);if(!c)fail++};
 
   console.log('9. 열 설정 저장');
   await p.click('[data-tab=match]');await p.waitForSelector('#mt tbody tr');
+  const heads=(await p.locator('#mt thead th').allInnerTexts()).join('|');
+  ok(heads.includes('과거 합격권 누백')&&['25','24','23','22','21'].every(y=>heads.includes(y)),'과거 5개년 합격권 누백 열이 기본으로 보임');
   const before=(await p.locator('#mt thead th').allInnerTexts()).length;
   await p.click('#mCols');await p.check('.colmenu [data-cm=region]');await p.waitForTimeout(300);
   ok((await p.locator('#mt thead th').allInnerTexts()).length===before+1,'열 추가');

@@ -1150,7 +1150,8 @@ function busy(on,msg){$('loading').classList.toggle('on',on);if(msg)$('loadingMs
 
 /* ===== table component (수시 정밀매칭 표 스타일) ===== */
 /* ===== 열 설정: 표에서 보일 열을 고르고 브라우저에 기억한다 ===== */
-const COLSET_KEY='medsky_cols_v1', COL_DEFAULT_HIDE=['region','trait','cat','yn','h','ratio','eng'];
+/* 과거 5개년 합격권 누백('h')은 컨설턴트가 직접 확인하는 핵심 정보라 기본으로 보이게 한다 */
+const COLSET_KEY='medsky_cols_v2', COL_DEFAULT_HIDE=['region','trait','cat','yn','ratio','eng'];
 function loadHide(id,def){try{const o=JSON.parse(localStorage.getItem(COLSET_KEY)||'{}');if(Array.isArray(o[id]))return o[id]}catch(e){}return [...def]}
 function saveHide(id,h){try{const o=JSON.parse(localStorage.getItem(COLSET_KEY)||'{}');o[id]=h;localStorage.setItem(COLSET_KEY,JSON.stringify(o))}catch(e){}}
 let CM=null;
