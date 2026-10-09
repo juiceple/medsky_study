@@ -99,6 +99,10 @@ h2.sec{margin:22px 0 6px;font-size:16px;color:var(--navy2);display:flex;align-it
 .gsec{margin-top:18px}
 .gtitle{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:8px;display:flex;align-items:baseline;gap:8px}
 .gtitle small{font-weight:500;color:var(--muted);font-size:12px}
+.gtitle{flex-wrap:wrap;row-gap:2px}.gtitle .gl{white-space:nowrap}
+.gcol{cursor:pointer;user-select:none}.gcol:hover .gl{text-decoration:underline}.gcol .car{width:14px;color:var(--muted);font-size:11px}
+.legend{display:flex;gap:12px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--muted);margin:0 0 4px}.legend i{font-style:normal;font-size:9px;margin-right:3px}
+.ucard .cdist{display:flex;gap:8px;flex-wrap:wrap}.ucard .cdist i{font-style:normal;font-size:9px;margin-right:2px}
 .ugrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:8px}
 .ucard{all:unset;box-sizing:border-box;cursor:pointer;background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:10px 12px;display:flex;flex-direction:column;gap:6px}
 .ucard:hover{border-color:var(--navy2);box-shadow:0 2px 8px rgba(19,42,76,.08)}
@@ -128,6 +132,8 @@ h2.sec{margin:22px 0 6px;font-size:16px;color:var(--navy2);display:flex;align-it
 .hint{font-size:11px;color:var(--muted);margin-top:3px}
 .adv{border-top:1px solid var(--line);margin-top:14px;padding-top:10px}
 .adv .chk{margin:6px 0 2px}
+.colmenu{position:absolute;z-index:70;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:10px;box-shadow:0 12px 32px rgba(0,0,0,.22);padding:10px 14px;min-width:210px;max-height:70vh;overflow:auto}
+.colmenu .cmh{font-size:12px;font-weight:700;color:var(--muted);margin-bottom:6px}.colmenu .chk{display:flex;padding:3px 0}.colmenu .cmf{margin-top:8px;text-align:right}
 .fbtns{display:flex;flex-direction:column;gap:8px;margin-top:16px}
 .fbtns .btn{width:100%;padding:9px}
 .summary{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
@@ -160,7 +166,7 @@ table.dt{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
 .jb{display:inline-block;padding:2px 8px;border-radius:5px;font-size:12px;font-weight:700}
 .j4{background:var(--j4s);color:var(--j4)}.j3{background:var(--j3s);color:var(--j3)}.j2{background:var(--j2s);color:var(--j2)}.j1{background:var(--j1s);color:var(--j1)}.j0{background:var(--j0s);color:var(--j0)}
 .pf{display:inline-block;margin-left:5px;padding:0 6px;border-radius:9px;font-size:10.5px;font-weight:700;line-height:17px;border:1px solid;white-space:nowrap;cursor:help;vertical-align:1px}
-.pf.low{color:var(--j1);background:var(--j1s);border-color:var(--j1)}.pf.high{color:var(--j3);background:var(--j3s);border-color:var(--j3)}
+.pf.low,.pf.high{color:var(--ink2);background:transparent;border:1px dashed var(--muted)}
 .fk{display:inline-block;padding:2px 7px;border-radius:10px;font-size:11.5px;font-weight:700;border:1px solid}
 .fk.strong{color:#a4451f;border-color:#e8bfa0;background:#fbeee6}
 .fk.candidate{color:#b06a1a;border-color:#efd3a6;background:#fdf5e7}
@@ -235,7 +241,7 @@ table.dt{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
 .yt{border-collapse:collapse;font-size:12.5px;margin-top:8px}
 .yt th,.yt td{border:1px solid var(--line);padding:4px 10px;text-align:right}
 .yt th{background:var(--paper);font-weight:600}
-.toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--panel);padding:9px 16px;border-radius:8px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:120}
+.toast{position:fixed;right:24px;bottom:calc(22px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--panel);padding:9px 16px;border-radius:8px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:120}
 .toast.show{opacity:1}
 .rules{font-size:12px;color:var(--muted);margin-top:24px}
 .rules li{margin:3px 0}
@@ -289,15 +295,15 @@ table.dt{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
 .hbbox .src a{color:var(--navy2);text-decoration:underline;word-break:break-all}
 :root[data-theme="dark"] .hbbox .src a{color:#8db5ee}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .hbbox .src a{color:#8db5ee}}
-.gunc.g-ga{border-color:#2a5bd7;color:#2a5bd7}.gunc.g-na{border-color:#1e8a4c;color:#1e8a4c}.gunc.g-da{border-color:#8b3fc4;color:#8b3fc4}
-.gt.g-ga{color:#2a5bd7}.gt.g-na{color:#1e8a4c}.gt.g-da{color:#8b3fc4}
-.chip.gt[aria-pressed="true"].g-ga{background:#2a5bd7;border-color:#2a5bd7;color:#fff}.chip.gt[aria-pressed="true"].g-na{background:#1e8a4c;border-color:#1e8a4c;color:#fff}.chip.gt[aria-pressed="true"].g-da{background:#8b3fc4;border-color:#8b3fc4;color:#fff}
-.colh:has(.g-ga){border-bottom-color:#2a5bd7}.colh:has(.g-na){border-bottom-color:#1e8a4c}.colh:has(.g-da){border-bottom-color:#8b3fc4}
+/* 군(가·나·다)은 색 대신 글자로 구분한다: 한 화면에 색이 너무 많아 어수선해서 중립 톤으로 통일 */
+.gunc.g-ga,.gunc.g-na,.gunc.g-da{border-color:var(--navy2);color:var(--navy2)}
+.gt.g-ga,.gt.g-na,.gt.g-da{color:var(--navy2)}
+.chip.gt[aria-pressed="true"]{background:var(--navy2);border-color:var(--navy2);color:#fff}
+.colh:has(.gunc){border-bottom-color:var(--navy2)}
 .allsec .gtitle{align-items:center;flex-wrap:wrap}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .gunc.g-ga,:root:not([data-theme="light"]) .gt.g-ga{color:#7fa6ff;border-color:#7fa6ff}:root:not([data-theme="light"]) .gunc.g-na,:root:not([data-theme="light"]) .gt.g-na{color:#62c98d;border-color:#62c98d}:root:not([data-theme="light"]) .gunc.g-da,:root:not([data-theme="light"]) .gt.g-da{color:#c08af0;border-color:#c08af0}}
-:root[data-theme="dark"] .gunc.g-ga,:root[data-theme="dark"] .gt.g-ga{color:#7fa6ff;border-color:#7fa6ff}:root[data-theme="dark"] .gunc.g-na,:root[data-theme="dark"] .gt.g-na{color:#62c98d;border-color:#62c98d}:root[data-theme="dark"] .gunc.g-da,:root[data-theme="dark"] .gt.g-da{color:#c08af0;border-color:#c08af0}
-.seg button.gt[aria-pressed="true"]{color:#fff}
-.seg button.gt.g-ga[aria-pressed="true"]{background:#2a5bd7}.seg button.gt.g-na[aria-pressed="true"]{background:#1e8a4c}.seg button.gt.g-da[aria-pressed="true"]{background:#8b3fc4}
+:root[data-theme="dark"] .gunc.g-ga,:root[data-theme="dark"] .gunc.g-na,:root[data-theme="dark"] .gunc.g-da,:root[data-theme="dark"] .gt{color:#9db8e8;border-color:#9db8e8}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .gunc.g-ga,:root:not([data-theme="light"]) .gunc.g-na,:root:not([data-theme="light"]) .gunc.g-da,:root:not([data-theme="light"]) .gt{color:#9db8e8;border-color:#9db8e8}}
+.seg button.gt[aria-pressed="true"]{color:#fff;background:var(--navy2)}
 .calcstat{color:var(--j4);font-weight:600}
 .calcstat.busy{color:var(--accent)}
 
@@ -309,9 +315,9 @@ table.dt{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
 .chips2{display:flex;flex-wrap:wrap;gap:5px}.uchip{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:3px 10px;font-size:12.5px;font-weight:600;cursor:pointer}.uchip:hover{border-color:var(--navy2)}.uchip small{margin-left:5px;color:var(--muted);font-weight:500}
 .trk{display:inline-block;font-size:10.5px;font-weight:700;border-radius:4px;padding:0 5px;margin-left:5px;vertical-align:1px;line-height:16px;white-space:nowrap}
 .twrap .trk,.dt .trk,td .trk{margin-left:0}
-.trk.gen{color:var(--muted);background:var(--line2);font-weight:600}
-.trk.reg{color:var(--j4);background:var(--j4s)}.trk.gyo{color:var(--j3);background:var(--j3s)}.trk.spc{color:#7a3e9d;background:#efe1f7}.trk.car{color:var(--j2);background:var(--j2s)}.trk.num{color:var(--ink2);background:var(--line)}
-:root[data-theme="dark"] .trk.spc{color:#d3a8ec;background:#35214a}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .trk.spc{color:#d3a8ec;background:#35214a}}
+.trk{border:1px solid var(--line)}
+.trk.gen{color:var(--muted);background:transparent;font-weight:600}
+.trk.reg,.trk.gyo,.trk.spc,.trk.car,.trk.num{color:var(--ink);background:var(--line2)}
 /* ===== 보고서 탭 (수시 보고서 틀) ===== */
 .rp-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin-bottom:12px}
 .rp-body{display:flex;border:1px solid #222;border-radius:10px;overflow:hidden;background:#e4e6ea;height:calc(100vh - 230px);min-height:480px}
@@ -1143,6 +1149,24 @@ let tt; function toast(m){const t=$('toast');t.textContent=m;t.classList.add('sh
 function busy(on,msg){$('loading').classList.toggle('on',on);if(msg)$('loadingMsg').textContent=msg}
 
 /* ===== table component (수시 정밀매칭 표 스타일) ===== */
+/* ===== 열 설정: 표에서 보일 열을 고르고 브라우저에 기억한다 ===== */
+const COLSET_KEY='medsky_cols_v1', COL_DEFAULT_HIDE=['region','trait','cat','yn','h','ratio','eng'];
+function loadHide(id,def){try{const o=JSON.parse(localStorage.getItem(COLSET_KEY)||'{}');if(Array.isArray(o[id]))return o[id]}catch(e){}return [...def]}
+function saveHide(id,h){try{const o=JSON.parse(localStorage.getItem(COLSET_KEY)||'{}');o[id]=h;localStorage.setItem(COLSET_KEY,JSON.stringify(o))}catch(e){}}
+let CM=null;
+function closeColMenu(){if(CM){CM.remove();CM=null}}
+function colMenu(T,anchor,rerender){
+  closeColMenu();
+  const opt=COLS.filter(c=>!['add','univ','major'].includes(c.k)&&!T.fixed.includes(c.k));
+  CM=document.createElement('div');CM.className='colmenu';
+  CM.innerHTML=`<div class="cmh">보일 열 선택</div>${opt.map(c=>`<label class="chk"><input type="checkbox" data-cm="${c.k}" ${T.hide.includes(c.k)?'':'checked'}> ${esc(c.t)}</label>`).join('')}<div class="cmf"><button class="btn sm ghost" data-cmreset>기본값</button></div>`;
+  const r=anchor.getBoundingClientRect();CM.style.top=(scrollY+r.bottom+6)+'px';CM.style.left=Math.max(8,Math.min(scrollX+r.left,innerWidth-240))+'px';
+  document.body.appendChild(CM);
+  CM.onclick=e=>e.stopPropagation();
+  CM.querySelectorAll('[data-cm]').forEach(i=>i.onchange=()=>{const k=i.dataset.cm;T.hide=i.checked?T.hide.filter(x=>x!==k):[...T.hide,k];saveHide(T.id,T.hide);rerender()});
+  CM.querySelector('[data-cmreset]').onclick=()=>{T.hide=[...COL_DEFAULT_HIDE];saveHide(T.id,T.hide);rerender();colMenu(T,anchor,rerender)};
+}
+document.addEventListener('click',closeColMenu);
 const COLS=[
   {k:'add',t:'담기'},
   {k:'univ',t:'대학교',f:i=>U[i][0],filter:true,sort:i=>U[i][0]},
@@ -1172,7 +1196,7 @@ function ratioTxt(u){const r=u[13];return r.every(x=>typeof x==='number')?r.map(
 function engTxt(u){const g=+S.eng;if(!g)return '–';const v=u[14][g-1];return v==null?'–':(v===0?'0':fmt(v,1))}
 
 function makeTable(id,opts={}){
-  return {id,sortKey:opts.sortKey||'margin',dir:opts.dir??-1,cf:{},limit:200,hide:opts.hide||[]};
+  return {id,sortKey:opts.sortKey||'margin',dir:opts.dir??-1,cf:{},limit:200,hide:opts.hide||[],fixed:opts.fixed||[]};
 }
 function applyColFilters(T,list){
   const ks=Object.keys(T.cf).filter(k=>T.cf[k]&&T.cf[k].size);
@@ -1214,7 +1238,7 @@ function cellHtml(k,i){
   }
 }
 function renderTable(T,list,host){
-  const cols=COLS.filter(c=>!T.hide.includes(c.k));
+  const cols=COLS.filter(c=>!T.hide.includes(c.k)&&!T.fixed.includes(c.k));
   const rows=sortList(T,applyColFilters(T,list));
   T.last=rows;
   const th=c=>{
@@ -1411,27 +1435,31 @@ function rStudentStats(){
 
 /* ===== browse ===== */
 let BR={mode:'groups',target:null,gun:'all',q:'',down:true,downK:2.5,up:false,upK:2,funk:false};
-const TB=makeTable('browse',{sortKey:'margin',dir:-1,hide:['univ','cat']});
-const TBC=makeTable('browseCat',{sortKey:'margin',dir:-1,hide:['cat']});
+const TB=makeTable('browse',{sortKey:'margin',dir:-1,fixed:['univ','cat'],hide:loadHide('browse',COL_DEFAULT_HIDE)});
+const TBC=makeTable('browseCat',{sortKey:'margin',dir:-1,fixed:['cat'],hide:loadHide('browseCat',COL_DEFAULT_HIDE)});
 function unitsOf(t){const out=[];U.forEach((u,i)=>{if(t.univ?u[0]===t.univ:catOf(u)===t.cat)out.push(i)});return out}
 function miniDist(list){const c=[0,0,0,0,0];list.forEach(i=>c[B[basis][i][0]]++);const n=list.length||1;return [4,3,2,1,0].map(j=>c[j]?`<span style="flex:${c[j]};background:var(--j${j})"></span>`:'').join('')}
 function rBrowse(){
   const w=$('browseWrap');
   if(BR.mode==='detail') return rUnivDetail();
   const byU=new Map(); U.forEach((u,i)=>{if(!byU.has(u[0]))byU.set(u[0],[]);byU.get(u[0]).push(i)});
-  const card=(name,list,label)=>`<button class="ucard" data-open-${label?'cat':'univ'}="${esc(label||name)}"><b>${esc(name)}</b><div class="mini">${miniDist(list)}</div><small>모집단위 ${list.length}개 · 적정 ${list.filter(i=>B[basis][i][0]===4).length}</small></button>`;
+  BR.col=BR.col||new Set();
+  const cdist=list=>{const c=[0,0,0,0,0];list.forEach(i=>c[B[basis][i][0]]++);return [4,3,2,1].filter(j=>c[j]).map(j=>`<span><i style="color:var(--j${j})">●</i>${JL[j]} ${c[j]}</span>`).join('')};
+  const card=(name,list,label)=>`<button class="ucard" data-open-${label?'cat':'univ'}="${esc(label||name)}"><b>${esc(name)}</b><div class="mini">${miniDist(list)}</div><small>모집단위 ${list.length}개</small><small class="cdist">${cdist(list)||'<span>판정 가능 단위 없음</span>'}</small></button>`;
+  const grp=(label,sm,inner)=>{const open=!BR.col.has(label);return `<div class="gsec"><div class="gtitle gcol" data-gcol="${esc(label)}" role="button" tabindex="0" aria-expanded="${open}"><span class="car">${open?'▾':'▸'}</span><span class="gl">${label}</span>${sm}</div>${open?`<div class="ugrid">${inner}</div>`:''}</div>`};
   const all=[...byU.keys()].sort((a,b)=>a.localeCompare(b,'ko'));
   const allRes=()=>BR.q?(()=>{const ws=BR.q.split(/[,\s]+/).filter(Boolean);const hit=all.filter(n=>ws.some(w=>n.includes(w)));return `<div class="status" style="margin-bottom:8px">'${esc(BR.q)}' 검색 결과 ${hit.length}개교</div><div class="ugrid">${hit.map(n=>card(n,byU.get(n))).join('')||'<div class="status">일치하는 대학이 없어요</div>'}</div>`})()
       :BR.all?`<div class="ugrid">${all.map(n=>card(n,byU.get(n))).join('')}</div>`
       :`<div class="status">찾는 대학 이름을 검색하거나 '전체 펼치기'를 누르세요. 쉼표로 여러 개 찾을 수 있어요.</div>`;
   const bindCards=root=>{root.querySelectorAll('[data-open-univ]').forEach(b=>b.onclick=()=>openUniv({univ:b.dataset.openUniv}));root.querySelectorAll('[data-open-cat]').forEach(b=>b.onclick=()=>openUniv({cat:b.dataset.openCat}))};
-  w.innerHTML=`<div class="bar"><span class="lbl">현재 학생</span><b>${esc(S.name||'새 학생')}</b><span class="sep"></span>${basisSeg()}</div>
-  <p class="intro" style="margin-top:12px">그룹별 대학을 누르면 해당 대학의 군·학과·입결을 한 번에 볼 수 있어요. 카드의 색 막대는 판정 분포(초록 적정 → 빨강 위험)예요.</p>
+  w.innerHTML=`<div class="bar"><span class="lbl">현재 학생</span><b>${esc(S.name||'새 학생')}</b><span class="sep"></span>${basisSeg()}<button class="btn sm ghost" id="gAll" style="margin-left:auto">${BR.col.size>=UNIV_GROUPS.length?'모두 펼치기':'모두 접기'}</button></div>
+  <p class="intro" style="margin:12px 0 2px">그룹별 대학을 누르면 해당 대학의 군·학과·입결을 한 번에 볼 수 있어요.</p>
+  <div class="legend">카드의 색 막대는 모집단위의 판정 분포예요 <span><i style="color:var(--j4)">●</i>적정</span><span><i style="color:var(--j3)">●</i>예상</span><span><i style="color:var(--j2)">●</i>소신</span><span><i style="color:var(--j1)">●</i>위험</span></div>
   ${UNIV_GROUPS.map(g=>{
     if(g.cats){ const avU=(g.unis||[]).filter(n=>byU.has(n));
-      return `<div class="gsec"><div class="gtitle">${g.label} <small>${avU.length?'교대 전체(이화여대·제주대 초등교육과 포함)와 교육대학교별로 볼 수 있어요':'계열별로 전국 모집단위를 모아봐요'}</small></div><div class="ugrid">${g.cats.map(c=>card(c+' 전체',unitsOf({cat:c}),c)).join('')}${avU.map(n=>card(n,byU.get(n))).join('')}</div></div>` }
+      return grp(g.label,`<small>${avU.length?'교대 전체(이화여대·제주대 초등교육과 포함)와 교육대학교별로 볼 수 있어요':'계열별로 전국 모집단위를 모아봐요'}</small>`,g.cats.map(c=>card(c+' 전체',unitsOf({cat:c}),c)).join('')+avU.map(n=>card(n,byU.get(n))).join('')) }
     const av=g.unis.filter(n=>byU.has(n));
-    return `<div class="gsec"><div class="gtitle">${g.label}${av.length<g.unis.length?` <small>(데이터 있는 ${av.length}/${g.unis.length}개교)</small>`:''}</div><div class="ugrid">${av.map(n=>card(n,byU.get(n))).join('')}</div></div>`}).join('')}
+    return grp(g.label,av.length<g.unis.length?`<small>(데이터 있는 ${av.length}/${g.unis.length}개교)</small>`:'',av.map(n=>card(n,byU.get(n))).join(''))}).join('')}
   <div class="gsec allsec"><div class="gtitle">전체 대학 <small>${all.length}개교</small>
     <input id="bq" type="search" placeholder="대학명 검색 (예: 인천, 한국외대는 '외국어')" value="${esc(BR.q)}" style="margin-left:auto;width:260px;font-weight:400" aria-label="전체 대학 검색">
     <button class="btn sm ghost" id="bAll">${BR.all?'접기':'전체 펼치기'}</button></div>
@@ -1440,6 +1468,8 @@ function rBrowse(){
   let t;$('bq').oninput=e=>{clearTimeout(t);t=setTimeout(()=>{BR.q=e.target.value.trim();$('allRes').innerHTML=allRes();bindCards($('allRes'))},150)};
   $('bAll').onclick=()=>{BR.all=!BR.all;$('bAll').textContent=BR.all?'접기':'전체 펼치기';$('allRes').innerHTML=allRes();bindCards($('allRes'))};
   bindCards(w);
+  w.querySelectorAll('[data-gcol]').forEach(el=>{const f=()=>{const y=scrollY,k=el.dataset.gcol;BR.col.has(k)?BR.col.delete(k):BR.col.add(k);rBrowse();scrollTo(0,y)};el.onclick=f;el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();f()}}});
+  $('gAll').onclick=()=>{if(BR.col.size>=UNIV_GROUPS.length)BR.col.clear();else UNIV_GROUPS.forEach(g=>BR.col.add(g.label));rBrowse()};
 }
 function openUniv(t,focusIdx){BR.mode='detail';BR.target=t;BR.gun='all';BR.q2='';BR.funk=false;TB.cf={};TBC.cf={};TB.limit=TBC.limit=200;if(tab!=='browse')go('browse');else rBrowse();if(focusIdx!=null)setTimeout(()=>openDetail(focusIdx),50)}
 function overFilter(list){
@@ -1462,7 +1492,7 @@ function rUnivDetail(){
   <div class="bar" style="margin-bottom:12px">${basisSeg()}<span class="sep"></span>
     <label class="chk"><input type="checkbox" id="cDown" ${BR.down?'checked':''}> 과도한 하향 제외</label><input type="number" id="nDown" value="${BR.downK}" step="0.5" min="1.5" style="width:58px" aria-label="하향 기준 배수"><span class="status">배</span>
     <label class="chk"><input type="checkbox" id="cUp" ${BR.up?'checked':''}> 과도한 상향 제외</label><input type="number" id="nUp" value="${BR.upK}" step="0.5" min="1.2" style="width:58px" aria-label="상향 기준 배수"><span class="status">배</span>
-    <span class="sep"></span><button class="btn pri" id="funkBtn">펑크 예측 실행</button></div>
+    <span class="sep"></span><button class="btn sm" id="colBtn">열 설정</button><button class="btn pri" id="funkBtn">펑크 예측 실행</button></div>
   <div id="funkPanel"></div><div id="udt"></div>`;
   const rows=renderTable(T,list,$('udt'));
   $('cntLine').textContent=`${rows.length.toLocaleString()}개 표시${before>list.length?` · 하향/상향 기준으로 ${before-list.length}개 숨김`:''}`;
@@ -1474,6 +1504,7 @@ function rUnivDetail(){
   $('cDown').onchange=e=>{BR.down=e.target.checked;rBrowse()};$('cUp').onchange=e=>{BR.up=e.target.checked;rBrowse()};
   $('nDown').onchange=e=>{BR.downK=+e.target.value||2.5;rBrowse()};$('nUp').onchange=e=>{BR.upK=+e.target.value||2;rBrowse()};
   $('funkBtn').onclick=()=>{BR.funk=true;drawFunk(T.last||rows)};
+  $('colBtn').onclick=e=>{e.stopPropagation();colMenu(T,e.currentTarget,()=>renderTable(T,list,$('udt')))};
 }
 function drawFunk(rows){
   const hits=rows.filter(i=>funkOf(i).badgeClass!=='none').sort((a,b)=>funkOf(b).score-funkOf(a).score);
@@ -1486,7 +1517,7 @@ function drawFunk(rows){
 
 /* ===== match ===== */
 const MF={region:new Set(),trait:new Set(),gun:new Set(),cat:new Set(),judge:new Set(),hb:new Set(),major:'',univ:'',excl0:true,noSaeng:false,noHbU:false,noPro:true};
-const TM=makeTable('match',{sortKey:'judge',dir:1});
+const TM=makeTable('match',{sortKey:'judge',dir:1,hide:loadHide('match',COL_DEFAULT_HIDE)});
 let filtersBuilt=false;
 function chipRow(key,vals,lab){return `<div class="chips">${vals.map(v=>`<button class="chip ${key==='gun'&&GUNS.includes(v)?gunCls(v).replace('gunc ','gt '):''}" aria-pressed="${MF[key].has(v)}" data-mf="${key}" data-v="${esc(v)}">${esc(lab?lab(v):v)}</button>`).join('')}</div>`}
 function rFilters(){
@@ -1549,7 +1580,7 @@ function rMatch(){ rFilters(); rMatchMain(); }
 function rMatchMain(){
   const list=matchList(); const m=$('mmain');
   m.innerHTML=`<div class="summary"><div><span class="count" id="mCount">-</span> <span class="status">건 매칭 · ${BASIS[basis]} 응시자 기준${MF.noPro?' · 전문대 제외':''}${BR.down?' · 과도한 하향 제외':''}</span></div><div class="dist" id="mDist"></div>
-    <div class="sortc"><label for="mSort">정렬 기준</label><select id="mSort">${COLS.filter(c=>c.sort).map(c=>`<option value="${c.k}" ${TM.sortKey===c.k?'selected':''}>${c.t}</option>`).join('')}</select><button class="btn sm ghost" id="mDir">${TM.dir>0?'오름차순 ▲':'내림차순 ▼'}</button></div></div>
+    <div class="sortc"><label for="mSort">정렬 기준</label><select id="mSort">${COLS.filter(c=>c.sort).map(c=>`<option value="${c.k}" ${TM.sortKey===c.k?'selected':''}>${c.t}</option>`).join('')}</select><button class="btn sm ghost" id="mDir">${TM.dir>0?'오름차순 ▲':'내림차순 ▼'}</button><button class="btn sm" id="mCols">열 설정</button></div></div>
     <div id="mt"></div>
     <ul class="rules"><b>적용 규칙</b>
       <li>판정은 분석기의 적정점수(합격률 80%)·예상점수·소신점수를 기준으로 해요. 누백은 숫자가 작을수록 상위권이에요.</li>
@@ -1564,6 +1595,7 @@ function rMatchMain(){
   $('mDist').querySelectorAll('[data-dj]').forEach(b=>b.onclick=()=>{const v=b.dataset.dj;MF.judge.has(v)?MF.judge.delete(v):MF.judge.add(v);rFilters();rMatchMain()});
   $('mSort').onchange=e=>{TM.sortKey=e.target.value;rMatchMain()};
   $('mDir').onclick=()=>{TM.dir*=-1;rMatchMain()};
+  $('mCols').onclick=e=>{e.stopPropagation();colMenu(TM,e.currentTarget,rMatchMain)};
 }
 function exportCsv(){
   const rows=TM.last||[]; if(!rows.length){toast('저장할 결과가 없어요');return}
@@ -1992,10 +2024,8 @@ function bodyParts(i){
     ${lv.map(([n,s,p,j])=>`<div class="lad"><span>${n} ${fmt(s,1)}점</span><div class="b" style="width:${Math.max(3,(p||0)/mx*100)}%;background:var(--j${j})"></div><span style="text-align:right">${pct(p)}%</span></div>`).join('')}
     <div class="lad"><b style="color:var(--accent)">학생 ${fmt(u[15],1)}점</b><div class="b" style="width:${Math.max(3,(b[1]||0)/mx*100)}%;background:var(--accent)"></div><b style="text-align:right;color:var(--accent)">${pct(b[1])}%</b></div>
     <p class="status" style="margin:6px 0 0">막대는 누백이에요. 학생 막대가 위 막대보다 짧으면 그 선을 넘은 거예요.</p></div>`,
-  funk:`<div class="rsec"><h4>펑크 예측 ${funkHtml(f)}</h4>
-    <div class="status" style="font-weight:700;color:#9c1f1f">펑크 근거</div>${li(f.reasons)}
-    <div class="status" style="font-weight:700;color:#1a4a7a;margin-top:6px">반대 근거 / 리스크</div>${li(f.risks)}
-    <div class="status" style="font-weight:700;margin-top:6px">참고</div>${li(f.notes)}</div>`,
+  funk:(()=>{const bl=[['펑크 근거','#9c1f1f',f.reasons],['반대 근거 / 리스크','#1a4a7a',f.risks],['참고','',f.notes]].filter(x=>x[2].length);
+    return `<div class="rsec"><h4>펑크 예측 ${funkHtml(f)}</h4>${bl.length?bl.map(([n,c,l],k)=>`<div class="status" style="font-weight:700;${c?'color:'+c+';':''}${k?'margin-top:6px':''}">${n}</div>${li(l)}`).join(''):'<p class="status" style="margin:2px 0">근거·리스크로 볼 만한 특이 사항이 없어요.</p>'}</div>`})(),
   chart:`<div class="rsec chart"><h4>5개년 입결 추이</h4>${histChart(i)}
     <table class="yt"><thead><tr><th>학년도</th>${['25','24','23','22','21'].map(y=>`<th>${y}</th>`).join('')}</tr></thead><tbody><tr><th>합격권</th>${b[6].map(v=>`<td>${pct(v)}</td>`).join('')}</tr><tr><th>상위 70%</th>${b[7].map(v=>`<td>${pct(v)}</td>`).join('')}</tr></tbody></table></div>`,
   trk:trkBox(u),
@@ -2008,7 +2038,7 @@ function bodyParts(i){
 }
 function bodyHtml(i){
   const P=bodyParts(i);
-  return `${P.strip}<div class="rgrid">${P.ladder}${P.funk}</div>${P.chart}${P.trk}${P.hb}<div class="rgrid">${P.ratio}${P.eng}</div>`;
+  return `${P.strip}<div class="rgrid">${P.ladder}${P.ratio}</div>${P.chart}${P.hb}${P.trk}<div class="rgrid">${P.eng}${P.funk}</div>`;
 }
 let curDetail=null;
 function openDrawer(html,wide){const d=$('drawer');d.innerHTML=html;d.classList.toggle('wide',!!wide);d.classList.add('open');d.setAttribute('aria-hidden','false');$('scrim').classList.add('open');d.scrollTop=0}
