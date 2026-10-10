@@ -23,6 +23,28 @@ details .pop label{display:flex;gap:6px;padding:3px 0}details .pop p{margin:0 0 
 .tk{position:absolute;top:5px;font-size:11px;color:var(--muted);transform:translateX(-50%)}
 .leg{margin-left:auto;display:flex;gap:12px;font-size:11.5px;color:var(--muted);align-items:center}.leg i{display:inline-block;vertical-align:middle;margin-right:4px}
 .l-box{width:16px;height:9px;background:var(--box);border:1px solid var(--boxl);border-radius:2px}.l-ln{width:16px;height:0;border-top:1.5px solid var(--boxl)}.l-di{width:9px;height:9px;background:var(--navy);transform:rotate(45deg)}
+
+.prof{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin:0 0 22px}
+.ph{display:flex;align-items:baseline;gap:12px;margin-bottom:12px}.ph .nm{font-size:20px;font-weight:800}.ph .k{font-size:13px;color:var(--muted)}
+.subj{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.sb{background:var(--paper);border:1px solid var(--line2);border-radius:12px;padding:10px 12px}
+.sb .sn{font-size:12.5px;font-weight:700;color:var(--ink2);margin-bottom:8px;display:flex;justify-content:space-between}.sb .sn i{font-style:normal;font-weight:500;color:var(--muted)}
+.sb .tri{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;text-align:center}
+.sb .tri small{display:block;font-size:10.5px;color:var(--muted)}.sb .tri b{font-size:22px;font-weight:800;line-height:1.15;letter-spacing:-.5px}.sb .tri .g b{color:var(--navy2)}
+.sb.one .tri{grid-template-columns:1fr}.sb.one .tri b{font-size:26px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0 18px}
+.kp{border:1px solid var(--line);border-radius:12px;padding:12px 16px}.kp small{display:block;font-size:12px;color:var(--muted)}.kp b{display:block;font-size:26px;font-weight:800;line-height:1.25;letter-spacing:-.5px}.kp b.sm{font-size:18px;line-height:1.9}.kp b em{font-style:normal;font-size:15px;font-weight:600;margin-left:2px;color:var(--ink2)}.kp span{font-size:12px;color:var(--muted)}
+.rh{margin-bottom:8px;font-size:13px}.rh b{font-size:14px}.rh span{color:var(--muted);margin-left:8px;font-size:12px}.rh span b{font-size:12px;color:var(--ink2)}
+.tiers{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0}
+.tb{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--panel)}
+.tb .th{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.tb .tl{border:0;border-radius:6px;padding:2px 10px;font-size:13px;font-weight:800;background:var(--cs);color:var(--c)}.tb .tl[aria-pressed=true]{outline:2px solid var(--c)}
+.tb .tn{font-size:12px;color:var(--muted)}
+.tb .td{font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.4;min-height:34px}
+.tb .cs{display:flex;flex-wrap:wrap;gap:6px}
+.cp{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:2px 10px;font-size:12.5px;font-weight:700}.cp small{color:var(--muted);font-weight:500;margin-left:4px}
+.cp:hover{border-color:var(--navy2)}
+.tool{margin-bottom:6px}
 /* student */
 .stu{margin:14px 0 10px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
 .stu .l1{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap}.stu .nm{font-size:17px;font-weight:800}.stu .k{font-size:13px;color:var(--ink2)}.stu .k b{font-size:18px;color:var(--ink);margin-left:3px}
@@ -53,11 +75,22 @@ details .pop label{display:flex;gap:6px;padding:3px 0}details .pop p{margin:0 0 
 .pos{border-radius:10px;padding:1px 9px;font-size:12px;font-weight:700}.p-a{background:var(--j4s);color:var(--j4)}.p-s{background:var(--j3s);color:var(--j3)}.p-u{background:var(--j2s);color:var(--j2)}
 .cn{font-size:11px;border-radius:9px;padding:0 6px;font-weight:600}.c4{background:var(--j4s);color:var(--j4)}.c3{background:var(--j3s);color:var(--j3)}.c2{background:var(--j2s);color:var(--j2)}.c1{background:var(--j1s);color:var(--j1)}
 .gb.off{display:none}
-@media(max-width:900px){.tiers{grid-template-columns:1fr 1fr}.ur{grid-template-columns:130px 1fr}.rt{display:none}.ruler .inner{left:calc(14px + 130px);right:14px}}
+@media(max-width:1000px){.subj{grid-template-columns:repeat(3,1fr)}.kpis{grid-template-columns:1fr}.tiers{grid-template-columns:1fr 1fr}}@media(max-width:900px){.tiers{grid-template-columns:1fr 1fr}.ur{grid-template-columns:130px 1fr}.rt{display:none}.ruler .inner{left:calc(14px + 130px);right:14px}}
 </style></head><body>
 <div class="note">시안(정적 데모 · 샘플 값) — 도구 막대, 구간 카드, 그룹 접기, '학생 근처 대학만'은 눌러볼 수 있습니다. 실제 프로그램과는 연결되지 않았습니다.</div>
 <div class="wrap">
 
+<section class="prof">
+ <div class="ph"><b class="nm">예시 학생 (9월 모평)</b><span class="k">이과 계열 · 전체 응시자 기준</span></div>
+ <div class="subj" id="subj"></div>
+ <div class="kpis">
+  <div class="kp"><small>전국 등수 (추정)</small><b>약 14,228<em>등</em></b><span>455,745명 중</span></div>
+  <div class="kp"><small>대표 누백</small><b>상위 3.12<em>%</em></b><span>모집단위별 범위 상위 2.09~6.32%</span></div>
+  <div class="kp"><small>산출 근거</small><b class="sm">3,936개 모집단위</b><span>일반대·과기원 가·나·다군 학생 누백의 중앙값</span></div>
+ </div>
+ <div class="rh"><b>추천 대학 목록</b><span>대학 단위 참고용 · 칩의 숫자는 <b>적정+예상 모집단위 수 / 전체</b> · 구간 이름을 누르면 아래 차트에서 해당 대학이 강조됩니다</span></div>
+ <div class="tiers" id="tiers"></div>
+</section>
 <div class="tool">
  <div class="row">
   <span class="lb">응시 기준</span><span class="seg"><button aria-pressed="true">전체</button><button aria-pressed="false">이과</button><button aria-pressed="false">문과</button></span>
@@ -75,17 +108,6 @@ details .pop label{display:flex;gap:6px;padding:3px 0}details .pop p{margin:0 0 
  <div class="ruler"><div class="inner" id="ruler"></div></div>
 </div>
 
-<div class="stu"><div class="l1"><span class="nm">예시 학생 (9월 모평)</span><span class="k">이과 계열</span><span class="k">전국 약<b>14,228</b>등</span><span class="k">대표 누백 상위<b>3.12%</b></span></div>
- <div class="chips">
-  <div class="sj"><b>국어 (언매)</b><span>표 <span class="big">134</span> · 백 <span class="big">98</span> · <span class="big">1</span>등급</span></div>
-  <div class="sj"><b>수학 (미적)</b><span>표 <span class="big">127</span> · 백 <span class="big">94</span> · <span class="big">2</span>등급</span></div>
-  <div class="sj"><b>영어</b><span><span class="big">2</span>등급</span></div>
-  <div class="sj"><b>한국사</b><span><span class="big">2</span>등급</span></div>
-  <div class="sj"><b>탐구1 (화학 Ⅰ)</b><span>표 <span class="big">63</span> · 백 <span class="big">87</span> · <span class="big">3</span>등급</span></div>
-  <div class="sj"><b>탐구2 (생명과학 Ⅰ)</b><span>표 <span class="big">62</span> · 백 <span class="big">89</span> · <span class="big">2</span>등급</span></div>
- </div></div>
-
-<div class="tiers" id="tiers"></div><div class="tlist" id="tlist"></div>
 <div id="groups"></div>
 </div>
 <script>
@@ -101,9 +123,13 @@ const G=[
 ];
 const pos=(s,q1,q3)=>s<q1?['안정','p-s','var(--j3)']:s<=q3?['적정권','p-a','var(--j4)']:['상향','p-u','var(--j2)'];
 const TIER={u:['상향 도전','var(--j1)','var(--j1s)'],s:['소신','var(--j2)','var(--j2s)'],a:['적정 추천','var(--j4)','var(--j4s)'],d:['안정','var(--j3)','var(--j3s)'],x:null};
-document.getElementById('ruler').innerHTML=[.1,.5,1,3,5,10,20,40,70].map(v=>`<span class="tk" style="left:${L(v)}%">${v}%</span>`).join('');
+
+const SUBJ=[['국어','언매',134,98,1],['수학','미적',127,94,2],['영어','',null,null,2],['한국사','',null,null,2],['탐구1','화학 Ⅰ',63,87,3],['탐구2','생명과학 Ⅰ',62,89,2]];
+document.getElementById('subj').innerHTML=SUBJ.map(x=>x[2]==null?`<div class="sb one"><div class="sn">${x[0]}</div><div class="tri"><div class="g"><small>등급</small><b>${x[4]}</b></div></div></div>`:`<div class="sb"><div class="sn">${x[0]}<i>${x[1]}</i></div><div class="tri"><div><small>표준점수</small><b>${x[2]}</b></div><div><small>백분위</small><b>${x[3]}</b></div><div class="g"><small>등급</small><b>${x[4]}</b></div></div></div>`).join('');
 const tc={u:[],s:[],a:[],d:[]};G.forEach(g=>g[1].forEach(r=>{if(tc[r[6]])tc[r[6]].push(r)}));
-document.getElementById('tiers').innerHTML=['u','s','a','d'].map(k=>`<button class="tier" data-k="${k}" aria-pressed="false" style="--c:${TIER[k][1]};--cs:${TIER[k][2]}"><span class="t">${TIER[k][0]}</span><b>${tc[k].length}<small> 개교</small></b><small>${tc[k].slice(0,3).map(r=>r[0].replace(/대학교$/,'대')).join(' · ')}${tc[k].length>3?' …':''}</small></button>`).join('');
+const TD={u:'학생 점수가 대학 적정선보다 다소 낮은 구간입니다. 소신 지원 후보',s:'적정선에 조금 못 미치는 대학입니다',a:'학생 점수가 적정선 근처이거나 조금 위인 대학입니다 (핵심 후보)',d:'학생 점수가 적정선보다 크게 위인 대학입니다 (하향·안정)'};
+document.getElementById('tiers').innerHTML=['u','s','a','d'].map(k=>`<div class="tb" style="--c:${TIER[k][1]};--cs:${TIER[k][2]}"><div class="th"><button class="tl" data-k="${k}" aria-pressed="false">${TIER[k][0]}</button><span class="tn">${tc[k].length}개교</span></div><div class="td">${TD[k]}</div><div class="cs">${tc[k].map(r=>`<button class="cp">${r[0].replace(/대학교$/,'대')}<small>${r[11]}/${r[12]}</small></button>`).join('')}</div></div>`).join('');
+document.getElementById('ruler').innerHTML=[.1,.5,1,3,5,10,20,40,70].map(v=>`<span class="tk" style="left:${L(v)}%">${v}%</span>`).join('');
 document.getElementById('groups').innerHTML=G.map((g,gi)=>{const a=g[1].reduce((s,r)=>s+r[7],0),e=g[1].reduce((s,r)=>s+r[8],0);
 return `<section class="grp"><div class="gh" data-g="${gi}"><span class="car">▾</span><h2>${g[0]}</h2><span class="gs">${g[1].length}개교 · 적정 ${a} · 예상 ${e}</span></div><div class="gb" id="gb${gi}">${g[1].map(r=>{const p=pos(r[5],r[2],r[3]);
 return `<div class="ur" data-n="${r[0]}" data-t="${r[6]}" data-p="${p[0]}"><span class="un">${r[0]}</span>
@@ -111,9 +137,7 @@ return `<div class="ur" data-n="${r[0]}" data-t="${r[6]}" data-p="${p[0]}"><span
 <div class="rt"><span class="pos ${p[1]}">${p[0]}</span>${r[7]?`<span class="cn c4">적정 ${r[7]}</span>`:''}${r[8]?`<span class="cn c3">예상 ${r[8]}</span>`:''}${r[9]?`<span class="cn c2">소신 ${r[9]}</span>`:''}${r[10]?`<span class="cn c1">위험 ${r[10]}</span>`:''}</div></div>`}).join('')}</div></section>`}).join('');
 document.querySelectorAll('.gh').forEach(h=>h.onclick=()=>{const b=document.getElementById('gb'+h.dataset.g);b.classList.toggle('off');h.querySelector('.car').textContent=b.classList.contains('off')?'▸':'▾'});
 let sel=null;
-document.querySelectorAll('.tier').forEach(b=>b.onclick=()=>{const k=b.dataset.k;sel=sel===k?null:k;document.querySelectorAll('.tier').forEach(x=>x.setAttribute('aria-pressed',x.dataset.k===sel));
- const tl=document.getElementById('tlist');tl.classList.toggle('on',!!sel);if(sel)tl.innerHTML=`<p><b>${TIER[sel][0]}</b> · 칩의 숫자는 <b>적정+예상 모집단위 수 / 전체 모집단위 수</b>입니다. 누르면 대학 상세가 열립니다.</p>`+tc[sel].map(r=>`<span class="it"><b>${r[0].replace(/대학교$/,'대')}</b><small>${r[11]} / ${r[12]}</small></span>`).join('');
- apply()});
+document.querySelectorAll('.tl').forEach(b=>b.onclick=()=>{const k=b.dataset.k;sel=sel===k?null:k;document.querySelectorAll('.tl').forEach(x=>x.setAttribute('aria-pressed',x.dataset.k===sel));apply()});
 function apply(){const q=document.getElementById('q').value.trim(),near=document.getElementById('near').checked;
  document.querySelectorAll('.ur').forEach(r=>{const hide=(q&&!r.dataset.n.includes(q))||(near&&(r.dataset.t==='x'||r.dataset.t==='d'));r.style.display=hide?'none':'';r.classList.toggle('dim',!!sel&&r.dataset.t!==sel)})}
 document.getElementById('q').oninput=apply;document.getElementById('near').onchange=apply;
