@@ -110,7 +110,21 @@ const ok=(c,m)=>{console.log((c?'  ✓ ':'  ✗ ')+m);if(!c)fail++};
   ok((await p.$$('#sumBox .rec')).length>=1,'추천 대학 목록 표시');
   ok(errs.length===0,'v32 화면 오류 없음');
 
-  console.log('14. 데이터 관리');
+  console.log('14. v34 성적대 위치');
+  await p.click('[data-tab=chart]');await p.waitForSelector('.chsc');
+  const cs=await p.$$eval('.chsc tbody tr',r=>r.map(x=>x.textContent.replace(/\s+/g,' ').trim()));
+  ok(cs.length===3&&cs[0].includes('134')&&!/%/.test(cs.join('')),'학생 성적 표: 표준점수·백분위·등급만(상위 % 없음)');
+  ok((await p.$$eval('.uchip small',e=>e.length))===0,'추천 대학 칩에 0/74 같은 숫자 없음');
+  const ax=await p.$$eval('.chsec .chr.hd',e=>e.length),gs=await p.$$eval('.chsec',e=>e.length);
+  ok(ax===gs&&gs>5,'그룹(대학 카테고리)마다 누백 가로축이 있음');
+  ok((await p.$$eval('.chd .pos',e=>e.length))>0&&(await p.$$eval('.cht .rf',e=>e.length))>0,'위치 칩과 대표 누백 점선 표시');
+  const r0=(await p.$$('.chr[data-ck]')).length;await p.check('#chNear');await p.waitForTimeout(400);
+  ok((await p.$$('.chr[data-ck]')).length<r0,'학생 근처 대학만 옵션으로 목록이 줄어듦(기본은 꺼짐)');await p.uncheck('#chNear');await p.waitForTimeout(300);
+  const e1=(await p.$$('.chr[data-ck]')).length;await p.click('.chgh');await p.waitForTimeout(300);
+  ok((await p.$$('.chr[data-ck]')).length<e1,'그룹 제목을 누르면 접힘');await p.click('.chgh');await p.waitForTimeout(200);
+  ok(errs.length===0,'v34 화면 오류 없음');
+
+  console.log('15. 데이터 관리');
   await p.click('[data-tab=data]');await p.waitForSelector('#xdz');
   ok(await p.locator('#xf').count()===1&&await p.locator('#xgo').isDisabled(),'파일 선택 영역과 분석 버튼(처음엔 비활성)');
 
