@@ -28,7 +28,11 @@ input.sc{width:76px;text-align:right}
 /* summary card */
 .side{position:sticky;top:64px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:14px}
-.card h3{margin:0 0 12px;font-size:13px;color:var(--muted);font-weight:700;display:flex;justify-content:space-between}
+.card h3{margin:0 0 14px;font-size:15px;color:var(--ink);font-weight:800;display:flex;justify-content:space-between;align-items:baseline}.card h3 .h3n{font-size:11.5px;color:var(--muted);font-weight:500}
+.kpi{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--line2)}.kpi small{display:block;font-size:11.5px;color:var(--muted)}.kpi b{display:block;font-size:30px;font-weight:800;line-height:1.15;letter-spacing:-.5px}.kpi b em{font-style:normal;font-size:14px;font-weight:600;color:var(--ink2);margin-left:2px}
+.grp{font-size:11.5px;font-weight:700;color:var(--muted);margin:14px 0 4px;display:flex;gap:6px;align-items:center}.grp .grpnote{font-weight:500;border:1px solid var(--line);border-radius:8px;padding:0 6px;font-size:10.5px}
+dl{margin:0;display:grid;grid-template-columns:auto 1fr;row-gap:6px;column-gap:12px;font-size:13px}dt{color:var(--ink2)}dd{margin:0;text-align:right;font-weight:700}.trend{font-weight:500;font-size:11.5px;color:var(--ok);margin-left:4px}
+
 .big{display:flex;gap:18px}.big div{flex:1}.big small{font-size:11.5px;color:var(--muted)}.big b{display:block;font-size:26px;font-weight:800;line-height:1.15}
 .big .rk small:last-child{display:block}
 .mini2{display:flex;justify-content:space-between;padding:8px 0;border-top:1px solid var(--line2);margin-top:12px;font-size:12.5px;color:var(--ink2)}.mini2 b{color:var(--ink)}
@@ -63,29 +67,32 @@ input.sc{width:76px;text-align:right}
 <div class="sec"><div class="sh"><span class="num">2</span><h2>상담 메모</h2><span class="tip" title="상담 중 파악한 학생 요청사항과 컨설턴트 의견. 학생을 저장하면 함께 저장됩니다">i</span></div>
 <div class="memo"><div><label>학생 요청사항</label><textarea placeholder="예: 가군은 무조건 안정, 다군은 지방 의대 소신 지원 원함"></textarea></div><div><label>컨설턴트 코멘트</label><textarea placeholder="예: 탐구 변환표준점수 유리한 대학 위주로 검토"></textarea></div></div></div>
 
+<div class="sec opt" id="o2"><div class="sh"><h2>정성 평가 정보 (내신·출결)</h2><span class="tag">선택 입력</span><span class="sumline">평균 2.75등급 · 무단 결석 0일</span></div>
+<div class="body"><table><thead><tr><th>학기</th><th>산출 내신 (전 교과 평균 등급)</th></tr></thead><tbody>
+<tr><td><b>1학년 1학기</b></td><td><input class="sc" placeholder="예: 2.85"> 등급</td></tr><tr><td><b>1학년 2학기</b></td><td><input class="sc" placeholder="예: 2.85"> 등급</td></tr></tbody></table><div class="sub">… 2·3학년 학기, 출결 상황, 특이 사항</div></div></div>
 <div class="sec opt" id="o1"><div class="sh"><h2>대학별 내신 환산점수</h2><span class="tag">선택 입력</span><span class="sumline">입력 0/7 · 미입력 시 비교내신(기본값) 적용</span></div>
 <div class="body"><table><thead><tr><th>대학</th><th>내신 환산점수</th><th>미입력 시 적용값</th><th>적용 모집단위</th></tr></thead><tbody>
 <tr><td><b>고려대 (교과우수전형)</b></td><td><input class="sc" placeholder="0~200"> / 200점</td><td>196점 (비교내신)</td><td>59개</td></tr>
 <tr><td><b>연세대</b></td><td><input class="sc" placeholder="0~50"> / 50점</td><td>48.5점 (비교내신)</td><td>64개</td></tr>
 <tr><td><b>중앙대 (비교과 출결)</b></td><td><input class="sc" placeholder="0~100"> / 100점</td><td>100점 (비교내신)</td><td>62개</td></tr></tbody></table><div class="sub">… 이하 4개 대학 (대구대, 덕성여대, 동남보건대, 서울대 교과평가)</div></div></div>
 
-<div class="sec opt" id="o2"><div class="sh"><h2>정성 평가 정보 (내신·출결)</h2><span class="tag">선택 입력</span><span class="sumline">평균 내신 미입력 · 무단결석 0일</span></div>
-<div class="body"><table><thead><tr><th>학기</th><th>산출 내신 (전 교과 평균 등급)</th></tr></thead><tbody>
-<tr><td><b>1학년 1학기</b></td><td><input class="sc" placeholder="예: 2.85"> 등급</td></tr><tr><td><b>1학년 2학기</b></td><td><input class="sc" placeholder="예: 2.85"> 등급</td></tr></tbody></table><div class="sub">… 2·3학년 학기, 출결 상황, 특이 사항</div></div></div>
 </main>
 
 <aside class="side">
-<div class="card"><h3><span>이 학생 한눈에</span><span style="font-weight:500">성적 수정 시 즉시 갱신</span></h3>
-<div class="big"><div class="rk"><small>전국 등수</small><b>1,248위</b><small>/ 42,310명</small></div><div><small>대표 누백</small><b>2.06%</b><small>상위</small></div></div>
-<div class="mini2"><span>국수탐 백분위 합</span><b>368</b></div><div class="mini2" style="margin-top:0"><span>응시 유형</span><b>이과 (미적·기하+과탐)</b></div></div>
+<div class="card"><h3>학생 요약</h3>
+<div class="kpi"><div><small>전국 등수</small><b>1,248<em>위</em></b><small>42,310명 중</small></div><div><small>대표 누백</small><b>2.06<em>%</em></b><small>상위 기준</small></div></div>
+<div class="grp">수능</div>
+<dl><dt>국수탐 백분위 합</dt><dd>368</dd><dt>응시 유형</dt><dd>이과</dd></dl>
+<div class="grp">내신 <span class="grpnote">정성 평가용</span></div>
+<dl><dt>평균 내신</dt><dd>2.75등급</dd><dt>무단 결석</dt><dd>0일</dd><dt>최근 학기</dt><dd>2.70등급 <span class="trend">▲ 0.10 개선</span></dd></dl></div>
 
-<div class="card"><h3><span>판정 분포</span><span style="font-weight:500">전문대 제외</span></h3>
+<div class="card"><h3>판정 분포 <span class="h3n">전문대 제외</span></h3>
 <div class="seg" id="seg"><button aria-pressed="true" data-v="236,12,40,5656">전체</button><button aria-pressed="false" data-v="214,10,31,0">이과</button><button aria-pressed="false" data-v="168,9,22,0">문과</button></div>
 <div class="dist"><a class="d4"><b id="n4">236</b><small>적정</small></a><a class="d3"><b id="n3">12</b><small>예상</small></a><a class="d2"><b id="n2">40</b><small>소신</small></a></div>
-<div class="sub">숫자를 누르면 해당 판정이 걸린 정밀 매칭으로 이동합니다 · 전문대 포함 시 적정 5,656</div>
-<div class="goto"><button class="btn">정밀 매칭 →</button><button class="btn">대학 둘러보기 →</button></div></div>
+<div class="sub">숫자를 누르면 정밀 매칭에서 해당 판정만 볼 수 있습니다. (전문대 포함 시 적정 5,656)</div>
+<div class="goto"><button class="btn">정밀 매칭</button><button class="btn">대학 둘러보기</button></div></div>
 
-<div class="card"><h3><span>추천 대학 TOP 5</span><span style="font-weight:500">대표 누백 기준</span></h3>
+<div class="card"><h3>추천 대학 <span class="h3n">대표 누백 기준</span></h3>
 <div class="rec"><span class="rn">1</span><span class="t">서울시립대<small>서울</small></span><span class="g ga">가</span></div>
 <div class="rec"><span class="rn">2</span><span class="t">중앙대<small>서울</small></span><span class="g na">나</span></div>
 <div class="rec"><span class="rn">3</span><span class="t">경희대<small>서울</small></span><span class="g ga">가</span></div>
