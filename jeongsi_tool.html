@@ -103,11 +103,11 @@ h2.sec{margin:22px 0 6px;font-size:16px;color:var(--navy2);display:flex;align-it
 .gcol{cursor:pointer;user-select:none}.gcol:hover .gl{text-decoration:underline}.gcol .car{width:14px;color:var(--muted);font-size:11px}
 .legend{display:flex;gap:12px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--muted);margin:0 0 4px}.legend i{font-style:normal;font-size:9px;margin-right:3px}
 .ucard .cdist{display:flex;gap:8px;flex-wrap:wrap}.ucard .cdist i{font-style:normal;font-size:9px;margin-right:2px}
-.ugrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
-.ucard{all:unset;box-sizing:border-box;cursor:pointer;background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--bc,var(--line));border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:0;transition:box-shadow .15s,transform .15s}
+.ugrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(224px,1fr));gap:12px}
+.ucard{all:unset;box-sizing:border-box;cursor:pointer;background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--bc,var(--line));border-radius:11px;padding:12px 14px;display:flex;flex-direction:column;gap:0;transition:box-shadow .15s,transform .15s}
 .ucard:hover{box-shadow:0 4px 14px rgba(19,42,76,.16);transform:translateY(-2px)}.ucard:focus-visible{outline:2px solid var(--navy2);outline-offset:2px}
-.ucard b{font-size:17px;font-weight:800;line-height:1.25}
-.ucard .mini{display:flex;height:8px;border-radius:4px;overflow:hidden;background:var(--line2);margin:14px 0 10px}
+.ucard b{font-size:15px;font-weight:800;line-height:1.25}
+.ucard .mini{display:flex;height:8px;border-radius:4px;overflow:hidden;background:var(--line2);margin:11px 0 8px}
 .ucard small{font-size:11.5px;color:var(--muted)}
 .dhead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
 .dhead h2{margin:0;font-size:19px}
@@ -119,13 +119,13 @@ h2.sec{margin:22px 0 6px;font-size:16px;color:var(--navy2);display:flex;align-it
 .chk input[type=number]{width:54px;padding:3px 6px}
 /* match layout */
 /* v30 cards / filters */
-.ucard .utop{display:flex;gap:12px;align-items:center}
-.ucard .av{flex:none;min-width:50px;height:50px;padding:0 6px;border-radius:14px;display:grid;place-items:center;color:#fff;font-weight:800;text-align:center;line-height:1.1;background:var(--ac,#555)}
+.ucard .utop{display:flex;gap:10px;align-items:center}
+.ucard .av{flex:none;min-width:44px;height:44px;padding:0 5px;border-radius:12px;display:grid;place-items:center;color:#fff;font-weight:800;text-align:center;line-height:1.1;background:var(--ac,#555)}
 .ucard .usub{font-size:12px;color:var(--muted);margin-top:3px;display:flex;gap:5px;align-items:center;flex-wrap:wrap}
 .ucard .usub .gunc{width:19px;height:19px;font-size:10.5px}
-.ucard .unums{display:flex;gap:16px}.ucard .unums div{font-size:11px;color:var(--muted);line-height:1.2}.ucard .unums b{display:block;font-size:20px;font-weight:800}
-.ucard .ufoot{margin-top:10px;padding-top:8px;border-top:1px solid var(--line2);font-size:12px;color:var(--ink2);display:flex;justify-content:space-between}
-#browseWrap .gtitle{font-size:21px;font-weight:800;margin:26px 0 12px;padding-left:12px;border-left:5px solid var(--accent);align-items:center}
+.ucard .unums{display:flex;gap:14px}.ucard .unums div{font-size:11px;color:var(--muted);line-height:1.2}.ucard .unums b{display:block;font-size:17px;font-weight:800}
+.ucard .ufoot{margin-top:8px;padding-top:7px;border-top:1px solid var(--line2);font-size:12px;color:var(--ink2);display:flex;justify-content:space-between}
+#browseWrap .gsec{margin-top:44px}#browseWrap .gsec:first-of-type{margin-top:22px}#browseWrap .gtitle{font-size:21px;font-weight:800;margin:0 0 14px;padding-left:12px;border-left:5px solid var(--accent);align-items:center}
 #browseWrap .gtitle small{font-size:13px}
 #browseWrap .gtitle .car{font-size:14px;color:var(--muted)}
 #browseWrap .gtitle .gsum{font-size:13px;font-weight:500;color:var(--muted)}
@@ -996,18 +996,18 @@ const CATS=['의대','치대','한의대','약대','수의대','교대','과기�
 const KIST=['한국과학기술원','광주과학기술원','대구경북과학기술원','울산과학기술원'];
 const UNIV_GROUPS=[
   {label:'의치한약수', cats:['의대','치대','한의대','약대','수의대']},
-  {label:'교대', cats:['교대'], unis:['서울교육대학교','경인교육대학교','춘천교육대학교','청주교육대학교','공주교육대학교','대구교육대학교','부산교육대학교','전주교육대학교','광주교육대학교','진주교육대학교','한국교원대학교']},
   {label:'서연고', unis:['서울대학교','연세대학교','고려대학교']},
   {label:'서성한', unis:['서강대학교','성균관대학교','한양대학교']},
   {label:'중경외시', unis:['중앙대학교','경희대학교','한국외국어대학교','서울시립대학교','이화여자대학교']},
   {label:'건동홍숙', unis:['건국대학교','동국대학교','홍익대학교','숙명여자대학교']},
   {label:'국숭세단성', unis:['국민대학교','숭실대학교','세종대학교','단국대학교','성신여자대학교']},
   {label:'광명상가', unis:['광운대학교','명지대학교','명지대학교(자연)','상명대학교','가톨릭대학교','서울과학기술대학교']},
+  {label:'한서삼', unis:['한성대학교','서경대학교','삼육대학교']},
+  {label:'여대라인', unis:['이화여자대학교','숙명여자대학교','성신여자대학교','동덕여자대학교','서울여자대학교','덕성여자대학교']},
   {label:'경기권 주요대학', unis:['가천대학교','경기대학교','아주대학교','인하대학교','인천대학교','한양대학교(ERICA)']},
   {label:'지거국', unis:['강원대학교','전남대학교','전북대학교','충남대학교','충북대학교','경북대학교','부산대학교','경상국립대학교','제주대학교']},
-  {label:'한서삼', unis:['한성대학교','서경대학교','삼육대학교']},
   {label:'과기원', unis:KIST},
-  {label:'여대라인', unis:['이화여자대학교','숙명여자대학교','성신여자대학교','동덕여자대학교','서울여자대학교','덕성여자대학교']},
+  {label:'교대', cats:['교대'], unis:['서울교육대학교','경인교육대학교','춘천교육대학교','청주교육대학교','공주교육대학교','대구교육대학교','부산교육대학교','전주교육대학교','광주교육대학교','진주교육대학교','한국교원대학교']},
 ];
 const isPro=u=>['2년제','3년제','4년제'].includes(u[3]);
 function catOf(u){ if(String(u[2]).startsWith('★')) return u[2].slice(1); if(KIST.includes(u[0])) return '과기원'; return isPro(u)?'전문대':'일반대'; }
@@ -1523,7 +1523,7 @@ function rBrowse(){
   const cdist=list=>{const c=[0,0,0,0,0];list.forEach(i=>c[B[basis][i][0]]++);return [4,3,2,1].filter(j=>c[j]).map(j=>`<span><i style="color:var(--j${j})">●</i>${JL[j]} ${c[j]}</span>`).join('')};
   const bestJ=list=>{const c=[0,0,0,0,0];list.forEach(i=>c[B[basis][i][0]]++);return [4,3,2,1].find(j=>c[j])};
   const avTxt=(n,raw)=>{const t=raw?n:(n.replace(/\(.*\)$/,'').replace(/(대학교|대학|대)$/,'')||n);const ch=[...t];let h,fs;
-    if(ch.length<=2){h=t;fs=19}else if(ch.length===3){h=t;fs=15}else{const k=Math.ceil(ch.length/2);h=ch.slice(0,k).join('')+'<br>'+ch.slice(k).join('');fs=ch.length>=7?11:13}
+    if(ch.length<=2){h=t;fs=17}else if(ch.length===3){h=t;fs=14}else{const k=Math.ceil(ch.length/2);h=ch.slice(0,k).join('')+'<br>'+ch.slice(k).join('');fs=ch.length>=7?10:12}
     return `<span style="font-size:${fs}px">${h}</span>`};
   const regColor=r=>r==='서울'?'#2a5bd7':(r==='경기'||r==='인천')?'#1e8a4c':'#b07a1c';
   const card=(name,list,label)=>{const c=[0,0,0,0,0];list.forEach(i=>c[B[basis][i][0]]++);
