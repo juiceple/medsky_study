@@ -63,6 +63,7 @@ const ok=(c,m)=>{console.log((c?'  ✓ ':'  ✗ ')+m);if(!c)fail++};
   ok(!txt.includes('펑크 근거'),'보고서에 펑크 근거 없음');
   await p.emulateMedia({media:'print'});const pdf=await p.pdf({format:'A4',printBackground:true});
   ok(pdf.length>20000,'PDF 생성');
+  ok(await p.evaluate(()=>/counter\(page\)/.test((document.getElementById('rpPageStyle')||{}).textContent||'')),'보고서 인쇄에 쪽 번호 규칙이 들어감');
   await p.emulateMedia({media:'screen'});
 
   console.log('11. 지원희망 화면');
@@ -71,6 +72,10 @@ const ok=(c,m)=>{console.log((c?'  ✓ ':'  ✗ ')+m);if(!c)fail++};
   ok(w.sums===3&&w.secs>=3,'군별 요약 띠(3칸)와 군별 구역');ok(w.fin===Object.keys(await p.evaluate(()=>S.finals)).length,'최종 지원 행이 강조됨');ok(w.hdr,'지원희망 표에 과거 5개년 합격권 누백 표시');
   const k0=await p.evaluate(()=>Object.keys(S.finals).length);await p.locator('[data-fin]').first().click();await p.waitForTimeout(300);
   ok(Math.abs((await p.evaluate(()=>Object.keys(S.finals).length))-k0)===1,'최종 지정 버튼이 최종 지원을 켜고 끔');
+
+  console.log('12. 데이터 관리');
+  await p.click('[data-tab=data]');await p.waitForSelector('#xdz');
+  ok(await p.locator('#xf').count()===1&&await p.locator('#xgo').isDisabled(),'파일 선택 영역과 분석 버튼(처음엔 비활성)');
 
   console.log('\n오류:',errs.length?errs:'없음');
   await b.close();

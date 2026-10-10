@@ -134,6 +134,10 @@ h2.sec{margin:22px 0 6px;font-size:16px;color:var(--navy2);display:flex;align-it
 .adv .chk{margin:6px 0 2px}
 .colmenu{position:absolute;z-index:70;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:10px;box-shadow:0 12px 32px rgba(0,0,0,.22);padding:10px 14px;min-width:210px;max-height:70vh;overflow:auto}
 .colmenu .cmh{font-size:12px;font-weight:700;color:var(--muted);margin-bottom:6px}.colmenu .chk{display:flex;padding:3px 0}.colmenu .cmf{margin-top:8px;text-align:right}
+.dz{margin-top:14px;border:2px dashed var(--line);border-radius:12px;padding:22px 18px;text-align:center;cursor:pointer;background:var(--paper);transition:border-color .15s,background .15s}
+.dz:hover,.dz:focus-visible{border-color:var(--navy2);outline:none}.dz.over{border-color:var(--accent);background:var(--accent-s)}
+.dz .dzt{font-weight:700;font-size:14px;color:var(--ink)}.dz .dzs{margin-top:8px;display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap}
+.dz .dzf{margin-top:10px;font-size:12.5px;color:var(--muted)}.dz.has{border-style:solid;border-color:var(--j4);background:var(--j4s)}.dz.has .dzf{color:var(--ink);font-weight:600}
 .fbtns{display:flex;flex-direction:column;gap:8px;margin-top:16px}
 .fbtns .btn{width:100%;padding:9px}
 .summary{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
@@ -1924,6 +1928,14 @@ function rpS6(){
   return fin.map(([g,i],n)=>rpApp(i,g,n,n===0?rpHead(RP_SECS[6]):''));
 }
 const rpHead=s=>`<div class="rp-sh"><div class="n">${s.n||'★'}</div><div><div class="e">${s.n?'SECTION 0'+s.n:'SUMMARY'}</div><h3>${esc(s.t)}</h3><p>${esc(s.lead)}</p></div></div>`;
+/* 인쇄(PDF) 쪽 번호: 크롬의 @page 여백 상자(@bottom-*)를 쓴다. 학생 이름은 보고서를 그릴 때 문서에 넣는다 */
+function rpPageStyle(name){
+  let s=document.getElementById('rpPageStyle');if(!s){s=document.createElement('style');s.id='rpPageStyle';document.head.appendChild(s)}
+  const q=String(name).replace(/[\\"]/g,'').replace(/[\r\n]+/g,' ');
+  s.textContent=`@media print{@page{size:A4;margin:14mm 13mm 18mm;
+    @bottom-left{content:"MEDSKY · ${q} 학생 정시 지원 전략 보고서";font-size:8.5pt;color:#8a8a8a;font-family:'IBM Plex Sans KR',sans-serif}
+    @bottom-right{content:counter(page) " / " counter(pages);font-size:9pt;color:#555;font-family:'IBM Plex Mono',monospace}}}`;
+}
 function rReport(){
   const w=$('reportWrap'),R=rpR();
   const name=S.name||'(학생 이름 미입력)',date=new Date().toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'});
@@ -1941,7 +1953,7 @@ function rReport(){
   if(!secs.some(s=>s.id==='s0'))pages=`<section class="rp-page firstp">${cover}</section>`+pages;
   w.innerHTML=`<div class="rp-head no-print"><b>보고서</b><span class="status">학생 정보·성적·지원희망 목록이 자동으로 들어가요. 소견만 직접 입력하세요.</span><span class="sep"></span>${basisSeg()}<span style="margin-left:auto;display:flex;gap:6px"><button class="btn" id="rpSave">저장</button><button class="btn navy" id="rpPrint">PDF로 저장 (인쇄)</button></span></div>
   <div class="rp-body"><nav class="rp-nav no-print">${RP_SECS.map(s=>`<label class="rp-navi"><input type="checkbox" data-rpoff="${s.id}" ${R.off[s.id]?'':'checked'} aria-label="${esc(s.t)} 포함"><a href="#" data-rpgo="${s.id}">${s.n?s.n+'. ':''}${esc(s.t)}</a></label>`).join('')}
-      <div class="rp-navh">체크를 끄면 그 장은 보고서에서 빠져요.<br><br>인쇄 창에서 '대상: PDF로 저장'을 고르고 '배경 그래픽'을 켜세요. 장마다 새 페이지에서 시작해요.</div></nav>
+      <div class="rp-navh">체크를 끄면 그 장은 보고서에서 빠져요.<br><br>인쇄 창에서 '대상: PDF로 저장'을 고르고 '배경 그래픽'을 켜세요. '머리글 및 바닥글'은 끄세요(쪽 번호는 보고서가 넣어요). 장마다 새 페이지에서 시작해요.</div></nav>
     <div class="rp-scroll" id="rpScroll"><div class="rp-doc" id="rpDoc">${pages}
       <div class="rp-foot">본 보고서는 MEDSKY 정시 합격 분석 도구의 계산 결과와 컨설턴트 소견을 정리한 자료이며, 최종 지원은 확정된 모집요강을 확인한 뒤 결정하세요.</div></div></div></div>`;
   bindBasis(w,rReport);
@@ -1951,6 +1963,7 @@ function rReport(){
   w.querySelectorAll('[data-rpoff]').forEach(c=>c.onchange=()=>{const R2=rpR();c.checked?delete R2.off[c.dataset.rpoff]:R2.off[c.dataset.rpoff]=true;autosave();rReport()});
   w.querySelectorAll('[data-rpgo]').forEach(a=>a.onclick=e=>{e.preventDefault();const el=$('rps-'+a.dataset.rpgo)||(a.dataset.rpgo==='s6'?w.querySelector('.rp-apppage'):null);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})});
   rpFormalize($('rpDoc'));
+  rpPageStyle(name);
   $('rpSave').onclick=()=>saveStudent(true);
   $('rpPrint').onclick=()=>{requestAnimationFrame(()=>window.print())};
 }
@@ -2130,11 +2143,28 @@ function rData(){
     <ol class="rl" style="font-size:13px"><li>새 고속성장분석기 파일을 고르고 <b>파일 분석</b>을 눌러요. 파일이 커서 30초~1분 정도 걸려요.</li>
       <li>파일 안의 예시 성적으로 다시 계산해서, 엑셀이 저장해 둔 결과와 똑같은지 자동으로 검증해요.</li>
       <li>검증 결과를 보고 <b>이 데이터로 적용</b>을 누르면 ${ASSETS?'저장돼서 이 도구를 쓰는 모든 사람에게 다음 접속부터 반영돼요.':(LOCAL?'이 브라우저에 저장돼요. 다른 사람·다른 컴퓨터에는 HTML 파일을 직접 전달해야 해요.':'이번 접속에 반영돼요. (편집 권한이 있는 계정에서 올리면 모두에게 저장돼요)')}</li></ol>
-    <div class="bar" style="margin-top:14px"><input type="file" id="xf" accept=".xlsb,.xlsx,.xlsm,.xls"><button class="btn pri" id="xgo" disabled>파일 분석</button><span class="status" id="xst"></span></div>
+    <div class="dz" id="xdz" tabindex="0" role="button" aria-label="고속성장분석기 파일 선택">
+      <div class="dzt">고속성장분석기 파일을 여기로 끌어다 놓으세요</div>
+      <div class="dzs">또는 <button class="btn" id="xpick" type="button">파일 선택</button> <span class="status">.xlsb · .xlsx · .xlsm</span></div>
+      <div class="dzf" id="xname">선택된 파일 없음</div>
+    </div>
+    <input type="file" id="xf" hidden accept=".xlsb,.xlsx,.xlsm,.xls">
+    <div class="bar" style="margin-top:12px"><button class="btn pri" id="xgo" disabled>파일 분석</button><span class="status" id="xst"></span></div>
     <div id="xrep"></div>
   </div>`;
-  const f=$('xf'),g=$('xgo'); f.onchange=()=>{g.disabled=!f.files[0];$('xrep').innerHTML='';PENDING=null};
-  g.onclick=()=>analyzeFile(f.files[0]);
+  const f=$('xf'),g=$('xgo'),dz=$('xdz');let xfile=null;
+  const pick=fl=>{
+    if(fl&&!/\.(xlsb|xlsx|xlsm|xls)$/i.test(fl.name)){$('xst').textContent='엑셀 파일(.xlsb·.xlsx)만 올릴 수 있어요.';return}
+    xfile=fl||null;g.disabled=!xfile;$('xrep').innerHTML='';PENDING=null;$('xst').textContent='';
+    dz.classList.toggle('has',!!xfile);
+    $('xname').textContent=xfile?`${xfile.name} · ${(xfile.size/1048576).toFixed(1)}MB${xfile.lastModified?' · 수정 '+new Date(xfile.lastModified).toLocaleDateString('ko-KR'):''}`:'선택된 파일 없음'};
+  f.onchange=()=>pick(f.files[0]);
+  $('xpick').onclick=e=>{e.stopPropagation();f.click()};
+  dz.onclick=()=>f.click();dz.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();f.click()}};
+  ['dragenter','dragover'].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.add('over')}));
+  ['dragleave','drop'].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.remove('over')}));
+  dz.addEventListener('drop',e=>pick(e.dataTransfer.files[0]));
+  g.onclick=()=>analyzeFile(xfile);
 }
 async function analyzeFile(file){
   if(!file) return; const st=$('xst'); const step=async t=>{busy(true,t);st.textContent=t;await new Promise(r=>setTimeout(r,40))};
