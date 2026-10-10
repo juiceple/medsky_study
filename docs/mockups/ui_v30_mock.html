@@ -1,0 +1,139 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MEDSKY UI v30 시안</title>
+<style>
+:root{--navy:#132a4c;--ink:#1b2230;--ink2:#4d5868;--muted:#6b7480;--paper:#f6f7f9;--panel:#fff;--line:#dde2ea;--line2:#eef1f5;--accent:#c0562f;--accent-s:#fbeee8;
+--j4:#2f7a46;--j4s:#d3e6d0;--j3:#2a5a9c;--j3s:#d9e6f6;--j2:#8a6510;--j2s:#fbe9b8;--j1:#a8432a;--j1s:#f6d8cc;
+--ga:#2a5bd7;--na:#1e8a4c;--da:#8b3fc4}
+@media (prefers-color-scheme:dark){:root{--ink:#e6eaf1;--ink2:#b3bccb;--muted:#8d97a8;--paper:#11151c;--panel:#1a1f28;--line:#2d3542;--line2:#232a35;--accent:#e07a52;--accent-s:#3a2419;--j4:#7fcf95;--j4s:#1f3a29;--j3:#8db5ee;--j3s:#1c2d47;--j2:#e8c26a;--j2s:#3d3218;--j1:#f09a80;--j1s:#432519;--ga:#7fa6ff;--na:#62c98d;--da:#c08af0}}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.5 system-ui,"Noto Sans KR",sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:16px}
+h1{font-size:20px;margin:8px 0 2px}.note{color:var(--muted);font-size:13px;margin:0 0 14px}
+.tabs{display:flex;gap:8px;margin:12px 0 18px}.tabs button{padding:8px 16px;border:1px solid var(--line);background:var(--panel);color:var(--ink2);border-radius:20px;font:inherit;font-weight:600;cursor:pointer}
+.tabs button[aria-pressed=true]{background:var(--navy);color:#fff;border-color:var(--navy)}
+.scr{display:none}.scr.on{display:block}
+/* ---- 대학 둘러보기 ---- */
+.gh{display:flex;align-items:baseline;gap:12px;margin:26px 0 12px;padding-left:12px;border-left:5px solid var(--accent)}
+.gh h2{font-size:21px;margin:0;font-weight:800}.gh .sum{color:var(--muted);font-size:13px}
+.gh.seoul{border-color:#2a5bd7}.gh.gg{border-color:#1e8a4c}.gh.loc{border-color:#b07a1c}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--bc);border-radius:12px;padding:14px 16px;cursor:pointer;transition:.15s}
+.card:hover{box-shadow:0 4px 14px rgba(0,0,0,.12);transform:translateY(-2px)}
+.top{display:flex;gap:12px;align-items:center}
+.av{flex:none;width:46px;height:46px;border-radius:14px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:21px;background:var(--ac)}
+.nm{font-size:17px;font-weight:800;line-height:1.25}
+.sub{font-size:12px;color:var(--muted);margin-top:3px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.g{display:inline-grid;place-items:center;width:20px;height:20px;border:1.5px solid;border-radius:50%;font-size:11px;font-weight:800}
+.g.ga{color:var(--ga)}.g.na{color:var(--na)}.g.da{color:var(--da)}
+.bar{display:flex;height:8px;border-radius:4px;overflow:hidden;margin:14px 0 10px;background:var(--line2)}
+.bar i{display:block}.b4{background:var(--j4)}.b3{background:var(--j3)}.b2{background:var(--j2)}.b1{background:var(--j1)}
+.nums{display:flex;gap:14px}.nums div{font-size:11px;color:var(--muted);line-height:1.2}.nums b{display:block;font-size:20px;font-weight:800}
+.nums .n4 b{color:var(--j4)}.nums .n3 b{color:var(--j3)}.nums .n2 b{color:var(--j2)}
+.foot{margin-top:10px;padding-top:9px;border-top:1px solid var(--line2);font-size:12px;color:var(--ink2);display:flex;justify-content:space-between}
+/* ---- 정밀 매칭 ---- */
+.lay{display:grid;grid-template-columns:300px 1fr;gap:16px;align-items:start}
+.fp{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;position:sticky;top:8px}
+.fp-h{display:flex;justify-content:space-between;align-items:center;padding:14px 16px 8px}
+.fp-h b{font-size:16px}.lnk{background:none;border:0;color:var(--accent);font:inherit;font-size:12.5px;font-weight:600;cursor:pointer}
+.srch{margin:0 16px 10px;position:relative}.srch input{width:100%;padding:9px 10px 9px 32px;border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink);font:inherit}
+.srch:before{content:"🔍";position:absolute;left:10px;top:8px;font-size:13px}
+.act{padding:0 16px 10px;display:flex;flex-wrap:wrap;gap:6px}
+.act .t{font-size:11px;color:var(--muted);width:100%}
+.ac{background:var(--accent-s);color:var(--accent);border:0;border-radius:14px;padding:3px 10px;font-size:12px;font-weight:600;cursor:pointer}
+.ac:after{content:" ×";opacity:.7}
+.sec{border-top:1px solid var(--line2)}
+.sec>button{width:100%;display:flex;justify-content:space-between;align-items:center;padding:11px 16px;background:none;border:0;color:var(--ink);font:inherit;font-weight:700;cursor:pointer}
+.sec>button .bd{background:var(--accent);color:#fff;border-radius:9px;font-size:11px;padding:0 7px;margin-left:8px;margin-right:auto}
+.sec>button:after{content:"▾";color:var(--muted)}.sec.c>button:after{content:"▸"}
+.sec .bd2{padding:0 16px 12px;display:flex;flex-wrap:wrap;gap:6px}.sec.c .bd2{display:none}
+.pill{border:1px solid var(--line);background:var(--panel);color:var(--ink2);border-radius:16px;padding:4px 11px;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer}
+.pill small{color:var(--muted);font-weight:500;margin-left:3px}
+.pill[aria-pressed=true]{background:var(--navy);border-color:var(--navy);color:#fff}.pill[aria-pressed=true] small{color:#cfd8e6}
+.pill.ga[aria-pressed=true]{background:var(--ga);border-color:var(--ga)}.pill.na[aria-pressed=true]{background:var(--na);border-color:var(--na)}.pill.da[aria-pressed=true]{background:var(--da);border-color:var(--da)}
+.pill.j4[aria-pressed=true]{background:var(--j4);border-color:var(--j4)}.pill.j3[aria-pressed=true]{background:var(--j3);border-color:var(--j3)}.pill.j2[aria-pressed=true]{background:var(--j2);border-color:var(--j2)}
+.tg{display:flex;align-items:center;gap:8px;padding:5px 16px;font-size:13px}.tg input{accent-color:var(--accent)}
+.pre{padding:12px 16px;background:var(--paper);border-top:1px solid var(--line2)}
+.pre .t{font-size:11px;color:var(--muted);margin-bottom:6px;display:flex;justify-content:space-between}
+.pre .pill{margin:0 4px 4px 0}.pre .pill.save{border-style:dashed;color:var(--accent);border-color:var(--accent)}
+.fp-f{padding:12px 16px;border-top:1px solid var(--line);background:var(--panel)}
+.go{width:100%;padding:11px;background:var(--navy);color:#fff;border:0;border-radius:10px;font:inherit;font-weight:700;cursor:pointer}
+/* table */
+.tb{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.tb .bar2{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line)}
+.tb table{width:100%;border-collapse:collapse}.tb th{font-size:12px;color:var(--muted);text-align:left;padding:8px 12px;background:var(--paper)}
+.tb td{padding:10px 12px;border-top:1px solid var(--line2)}
+.jb{border-radius:10px;padding:2px 9px;font-size:12px;font-weight:700}.jb.j4{background:var(--j4s);color:var(--j4)}.jb.j3{background:var(--j3s);color:var(--j3)}.jb.j2{background:var(--j2s);color:var(--j2)}
+.wb{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:3px 10px;font:inherit;font-size:12px;font-weight:600;color:var(--ink2);cursor:pointer}
+.wb.on{background:var(--accent-s);border-color:var(--accent);color:var(--accent)}
+.sel{position:sticky;bottom:0;background:var(--navy);color:#fff;padding:10px 16px;display:flex;justify-content:space-between;align-items:center}
+.sel button{background:var(--accent);color:#fff;border:0;border-radius:8px;padding:7px 14px;font:inherit;font-weight:700;cursor:pointer}
+@media(max-width:820px){.lay{grid-template-columns:1fr}.fp{position:static}}
+</style></head><body><div class="wrap">
+<h1>UI v30 시안 (정적 데모 · 샘플 데이터)</h1>
+<p class="note">실제 프로그램 로직과 연결되지 않은 시안입니다. 칩·접기·버튼은 눌러볼 수 있습니다. 색 의미(군/판정/전형/환산/5개년)는 기존 그대로 유지됩니다.</p>
+<div class="tabs"><button aria-pressed="true" data-s="s1">① 대학 둘러보기</button><button aria-pressed="false" data-s="s2">② 정밀 매칭 도구</button></div>
+
+<section class="scr on" id="s1">
+ <div class="gh seoul"><h2>서울권 주요 대학</h2><span class="sum">대학 4개 · 적정 9 · 예상 14</span></div>
+ <div class="cards" id="cards1"></div>
+ <div class="gh gg"><h2>경기·인천권</h2><span class="sum">대학 4개 · 적정 6 · 예상 11</span></div>
+ <div class="cards" id="cards2"></div>
+ <div class="gh loc"><h2>지방 거점 · 의약</h2><span class="sum">대학 3개 · 적정 2 · 예상 5</span></div>
+ <div class="cards" id="cards3"></div>
+</section>
+
+<section class="scr" id="s2"><div class="lay">
+<aside class="fp">
+ <div class="fp-h"><b>필터</b><button class="lnk" id="clr">전체 초기화</button></div>
+ <div class="srch"><input placeholder="대학·학과 검색"></div>
+ <div class="act" id="act"><div class="t">적용 중인 필터</div></div>
+ <div class="sec"><button>판정<span class="bd" id="bd1">2</span></button><div class="bd2" data-k="판정">
+  <span class="pill j4" aria-pressed="true">적정<small>12</small></span><span class="pill j3" aria-pressed="true">예상<small>20</small></span><span class="pill j2" aria-pressed="false">소신<small>8</small></span></div></div>
+ <div class="sec"><button>모집군</button><div class="bd2" data-k="군">
+  <span class="pill ga" aria-pressed="false">가군<small>31</small></span><span class="pill na" aria-pressed="false">나군<small>29</small></span><span class="pill da" aria-pressed="false">다군<small>22</small></span></div></div>
+ <div class="sec"><button>지역<span class="bd">1</span></button><div class="bd2" data-k="지역">
+  <span class="pill" aria-pressed="true">서울<small>18</small></span><span class="pill" aria-pressed="false">경기<small>14</small></span><span class="pill" aria-pressed="false">인천<small>6</small></span><span class="pill" aria-pressed="false">지방<small>44</small></span></div></div>
+ <div class="sec c"><button>계열 · 전형</button><div class="bd2"><span class="pill">일반</span><span class="pill">지역인재</span><span class="pill">특수</span></div></div>
+ <div class="sec c"><button>환산 유불리</button><div class="bd2"><span class="pill">유리</span><span class="pill">보통</span><span class="pill">불리</span></div></div>
+ <div class="sec c"><button>고급 (정원 · 누백 범위)</button><div class="bd2"><span class="pill">정원 10명 이상</span><span class="pill">누백 5% 이내</span></div></div>
+ <div style="padding:6px 0 10px;border-top:1px solid var(--line2)">
+  <label class="tg"><input type="checkbox" checked> 전문대 제외</label><label class="tg"><input type="checkbox" checked> 환산 불리 숨김</label></div>
+ <div class="pre"><div class="t"><span>내 필터 프리셋</span><span>학생별 저장</span></div>
+  <span class="pill" aria-pressed="false">안정 위주</span><span class="pill" aria-pressed="false">소신 도전</span><span class="pill" aria-pressed="false">경기권 가군</span><span class="pill save" id="savePre">＋ 현재 필터 저장</span></div>
+ <div class="fp-f"><button class="go">결과 <span id="cnt">32</span>개 보기</button></div>
+</aside>
+<div class="tb"><div class="bar2"><b>결과 32개</b><span style="color:var(--muted);font-size:12px">정렬: 판정 → 적정 누백</span></div>
+<table><thead><tr><th><input type="checkbox"></th><th>대학 · 학과</th><th>군</th><th>판정</th><th>5개년 누백</th><th></th></tr></thead><tbody id="rows"></tbody></table>
+<div class="sel"><span id="selc">선택 0개</span><button id="addw">선택 항목 지원희망에 담기</button></div></div>
+</div></section>
+
+<script>
+const AC={서울:'#2a5bd7',경기:'#1e8a4c',지방:'#b07a1c'};
+const U=[['서울과학기술대','서','서울 · 노원',['ga','na'],5,3,6,'적정 4 · 소신 2','서울'],['서울시립대','시','서울 · 동대문',['ga'],3,5,4,'예상 5','서울'],['광운대','광','서울 · 노원',['ga','na'],2,4,5,'적정 2','서울'],['세종대','세','서울 · 광진',['na'],4,2,7,'적정 3','서울'],
+['아주대','아','경기 · 수원',['ga','da'],3,4,3,'예상 4','경기'],['가천대','가','경기 · 성남',['na'],2,3,5,'적정 2','경기'],['한양대 ERICA','한','경기 · 안산',['ga'],1,5,6,'예상 5','경기'],['인하대','인','인천 · 미추홀',['na','da'],2,4,4,'적정 2','경기'],
+['충북대','충','충북 · 청주',['ga'],2,3,2,'적정 2','지방'],['전북대','전','전북 · 전주',['na'],1,2,3,'소신 3','지방'],['경북대','경','대구 · 북구',['ga'],1,2,1,'예상 2','지방']];
+const nm={ga:'가',na:'나',da:'다'};
+function card(u){const[n,ini,loc,gs,a,e,s,ft,r]=u,t=a+e+s;
+return `<div class="card" style="--bc:${a?'var(--j4)':e?'var(--j3)':'var(--j2)'}"><div class="top"><div class="av" style="--ac:${AC[r]}">${ini}</div><div><div class="nm">${n}</div><div class="sub">${loc} ${gs.map(g=>`<span class="g ${g}">${nm[g]}</span>`).join('')}</div></div></div>
+<div class="bar"><i class="b4" style="width:${a/t*100}%"></i><i class="b3" style="width:${e/t*100}%"></i><i class="b2" style="width:${s/t*100}%"></i></div>
+<div class="nums"><div class="n4"><b>${a}</b>적정</div><div class="n3"><b>${e}</b>예상</div><div class="n2"><b>${s}</b>소신</div></div>
+<div class="foot"><span>대표 누백 ${(3+a*1.7+e*.6).toFixed(1)}%</span><span>학과 ${t+2}개 ›</span></div></div>`}
+document.getElementById('cards1').innerHTML=U.slice(0,4).map(card).join('');
+document.getElementById('cards2').innerHTML=U.slice(4,8).map(card).join('');
+document.getElementById('cards3').innerHTML=U.slice(8).map(card).join('');
+const R=[['서울과학기술대 기계공학','가',4,'3.2 · 4.1 · 2.8 · 3.9 · 3.5'],['서울시립대 전자전기','가',3,'5.1 · 4.4 · 5.8 · 4.9 · 5.0'],['아주대 소프트웨어','가',3,'6.2 · 5.9 · 6.8 · 6.0 · 6.4'],['세종대 컴퓨터공학','나',4,'4.8 · 5.2 · 4.5 · 5.0 · 4.7'],['가천대 전기공학','나',3,'7.1 · 6.5 · 7.8 · 6.9 · 7.3']];
+const JB={4:'적정',3:'예상',2:'소신'};
+document.getElementById('rows').innerHTML=R.map((r,i)=>`<tr><td><input type="checkbox" class="ck"></td><td><b>${r[0]}</b></td><td><span class="g ${r[1]=='가'?'ga':'na'}">${r[1]}</span></td><td><span class="jb j${r[2]}">${JB[r[2]]}</span></td><td style="color:var(--muted);font-size:12px">${r[3]}</td><td>${i==1?'<button class="wb on">✓ 담김</button>':'<button class="wb">＋ 희망</button>'}</td></tr>`).join('');
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(x=>x.setAttribute('aria-pressed',x==b));document.querySelectorAll('.scr').forEach(s=>s.classList.toggle('on',s.id==b.dataset.s))});
+document.querySelectorAll('.sec>button').forEach(b=>b.onclick=()=>b.parentNode.classList.toggle('c'));
+function acts(){const a=document.getElementById('act');a.innerHTML='<div class="t">적용 중인 필터</div>';
+document.querySelectorAll('.bd2[data-k] .pill[aria-pressed=true]').forEach(p=>{const c=document.createElement('button');c.className='ac';c.textContent=p.parentNode.dataset.k+' '+p.firstChild.textContent;c.onclick=()=>{p.setAttribute('aria-pressed','false');acts()};a.appendChild(c)});
+['전문대 제외','환산 불리 숨김'].forEach(()=>{});document.getElementById('cnt').textContent=Math.max(6,32-(a.children.length-3)*4)}
+document.querySelectorAll('.bd2 .pill').forEach(p=>p.onclick=()=>{p.setAttribute('aria-pressed',p.getAttribute('aria-pressed')!='true');acts()});
+document.getElementById('clr').onclick=()=>{document.querySelectorAll('.bd2[data-k] .pill').forEach(p=>p.setAttribute('aria-pressed','false'));acts()};
+document.querySelectorAll('.pre .pill:not(.save)').forEach(p=>p.onclick=()=>{document.querySelectorAll('.pre .pill').forEach(x=>x.setAttribute('aria-pressed',x==p?'true':'false'))});
+document.getElementById('savePre').onclick=()=>alert('시안: 이름을 입력해 프리셋으로 저장합니다 (학생별 저장).');
+function sel(){const n=document.querySelectorAll('.ck:checked').length;document.getElementById('selc').textContent='선택 '+n+'개'}
+document.querySelectorAll('.ck').forEach(c=>c.onchange=sel);
+document.querySelectorAll('.wb').forEach(b=>b.onclick=()=>{b.classList.toggle('on');b.textContent=b.classList.contains('on')?'✓ 담김':'＋ 희망'});
+acts();
+</script></div></body></html>
