@@ -64,6 +64,13 @@ const ok=(c,m)=>{console.log((c?'  ✓ ':'  ✗ ')+m);if(!c)fail++};
   await p.emulateMedia({media:'print'});const pdf=await p.pdf({format:'A4',printBackground:true});
   ok(pdf.length>20000,'PDF 생성');
 
+  console.log('11. 지원희망 화면');
+  await p.click('[data-tab=wish]');await p.waitForTimeout(400);
+  const w=await p.evaluate(()=>({sums:document.querySelectorAll('.wsum').length,secs:document.querySelectorAll('.wgun').length,fin:document.querySelectorAll('.wt tr.fin').length,hdr:[...document.querySelectorAll('.wt thead')][0]?.innerText.includes('과거 합격권 누백')}));
+  ok(w.sums===3&&w.secs>=3,'군별 요약 띠(3칸)와 군별 구역');ok(w.fin===Object.keys(await p.evaluate(()=>S.finals)).length,'최종 지원 행이 강조됨');ok(w.hdr,'지원희망 표에 과거 5개년 합격권 누백 표시');
+  const k0=await p.evaluate(()=>Object.keys(S.finals).length);await p.locator('[data-fin]').filter({hasText:'최종으로'}).first().click();await p.waitForTimeout(300);
+  ok(await p.evaluate(()=>Object.keys(S.finals).length)>=k0,'최종으로 버튼 동작');
+
   console.log('\n오류:',errs.length?errs:'없음');
   await b.close();
   if(fail||errs.length){console.log(`\n실패 ${fail}건`);process.exit(1)}

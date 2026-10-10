@@ -402,6 +402,24 @@ table.dt{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
   .rp-figs{grid-template-columns:repeat(4,1fr)}.rp-tiers{grid-template-columns:1fr 1fr}.rp-fins{grid-template-columns:repeat(3,1fr)}.rp-two{grid-template-columns:1fr 1fr}
   .rp-foot{display:none}
 }
+/* 지원희망: 요약 띠 + 군별 구역 */
+.wsums{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:10px 0 8px}
+.wsum{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.wsum.on{border:2px solid var(--navy2)}.wsum.warn{border:1.5px dashed var(--j2);background:var(--j2s)}
+.wsum .wh{display:flex;align-items:center;gap:8px}.wsum .wh small{margin-left:auto;color:var(--muted);font-size:12px}
+.wsum .wn{margin-top:10px;font-weight:700;color:var(--muted)}.wsum.warn .wn{color:var(--j2)}
+.wsum .wu{margin-top:8px}.wsum .wu b{display:block;font-size:15px}.wsum .wu span{font-size:13px;color:var(--ink2)}
+.wsum .wj{margin-top:8px;display:flex;align-items:center;gap:8px}.wsum .wj small{color:var(--muted);font-size:12px}
+.wline{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:12.5px;margin:6px 0 4px}
+.wgun{margin-top:20px}.wgh{display:flex;align-items:center;gap:10px;padding:0 2px 8px;border-bottom:2px solid var(--navy2);margin-bottom:8px}
+.wgh b{font-size:15px}.wgh small{color:var(--muted);font-size:12px}.wgh .wmix{margin-left:auto;display:flex;gap:6px}
+.wgh .gunc{width:28px;height:28px;font-size:13px}
+.whint{padding:14px;color:var(--muted);font-size:13px;border:1px dashed var(--line);border-radius:8px}
+.wt tr.fin td{background:var(--j3s)}.wt tr.fin td:first-child{box-shadow:inset 4px 0 0 var(--navy2)}
+#wishWrap.wrap{max-width:1560px}
+.wgun .twrap{min-height:0;height:auto;max-height:none!important}
+.wt .memo-in{min-width:130px}
+@media(max-width:900px){.wsums{grid-template-columns:1fr}}
 /* ===== 성적대 위치 차트 ===== */
 .chs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0}
 .chs>div{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
@@ -1937,45 +1955,46 @@ function rReport(){
   $('rpPrint').onclick=()=>{requestAnimationFrame(()=>window.print())};
 }
 /* ===== wish ===== */
-let WV='list';
+/* 지원희망: 군별 구역 하나로 목록과 보드를 합쳤다. 위 요약 띠에서 군별 최종 지원을 확인하고, 아래 표에서 근거(5개년 누백 포함)를 본다 */
 function rWish(){
   const w=$('wishWrap');
   const keys=Object.keys(S.picks).sort((a,b)=>S.picks[a]-S.picks[b]);
   const ids=keys.map(idxOf).filter(i=>i!=null); const missing=keys.length-ids.length;
-  w.innerHTML=`<div class="bar"><span class="lbl">현재 학생</span><b>${esc(S.name||'새 학생')}</b><span class="status">학생을 저장하면 이 목록도 함께 저장돼요.</span><span class="sep"></span>${basisSeg()}
-    <span class="seg" style="margin-left:auto"><button aria-pressed="${WV==='list'}" data-wv="list">목록</button><button aria-pressed="${WV==='board'}" data-wv="board">가·나·다 보드</button></span></div>
-  <h2 class="sec">지원희망 모집단위 <span class="status" style="font-weight:500">${ids.length}개</span></h2>
-  <p class="intro">대학 둘러보기·정밀 매칭 도구에서 "담기"를 누르면 여기 모여요. 리포트를 열면 모집단위별 분석과 컨설턴트 코멘트를 정리해 이미지로 저장할 수 있어요.</p>
-  ${missing?`<div class="notice warn">담아둔 ${missing}개는 지금 데이터에 없는 모집단위라 표시하지 못했어요.</div>`:''}
-  <div id="wb"></div>`;
-  bindBasis(w,rWish);
-  w.querySelectorAll('[data-wv]').forEach(b=>b.onclick=()=>{WV=b.dataset.wv;rWish()});
-  const host=$('wb');
-  if(!ids.length){host.innerHTML=`<div class="card empty">아직 담은 모집단위가 없어요.<br><br><button class="btn pri" onclick="go('match')">정밀 매칭 도구로 가기</button> <button class="btn" onclick="go('browse')">대학 둘러보기</button></div>`;return}
-  if(WV==='board') return drawBoard(host,ids);
-  host.innerHTML=`<div class="twrap" style="max-height:none"><table class="dt"><thead><tr><th>#</th><th>군</th><th>대학교</th><th>학과</th><th>전형 유형</th><th>정원</th><th>판정</th><th>학생 누백</th><th>적정</th><th>소신</th><th>합격권</th><th>펑크예측</th><th style="min-width:200px">메모</th><th></th></tr></thead><tbody>
-  ${ids.map((i,n)=>{const u=U[i],b=B[basis][i],k=keyOf(i),h=hitOf(i),g=gunOf(u);return `<tr data-i="${i}"><td class="dim">${n+1}</td><td><span class="${gunCls(g)}">${esc(GUNS.includes(g)?g:gunLabel(g))}</span></td><td class="nm">${esc(u[0])}${S.finals[g]===k?' <span class="jb j3">최종</span>':''}</td><td>${esc(u[1])}</td><td>${trkTag(u)}</td><td class="num">${cap(u[4])}</td>
-    <td><span class="jb j${b[0]}">${JL[b[0]]}</span></td><td class="num"><b>${pct(b[1])}</b>${posBadge(i)}</td><td class="num">${pct(b[3])}</td><td class="num">${pct(b[5])}</td><td class="num">${h.d?h.n+'/'+h.d:'–'}</td><td>${funkHtml(funkOf(i))}</td>
-    <td><input class="memo-in" data-memo="${esc(k)}" value="${esc(S.notes[k]?.memo||'')}" placeholder="메모"></td>
-    <td><button class="btn sm navy" data-rep="${i}">리포트</button> <button class="btn sm" data-del="${i}">빼기</button></td></tr>`}).join('')}</tbody></table></div>`;
-  host.onclick=e=>{const r=e.target.closest('[data-rep]');if(r){e.stopPropagation();openReport(+r.dataset.rep);return}
-    const d=e.target.closest('[data-del]');if(d){e.stopPropagation();togglePick(+d.dataset.del);rWish();return}
-    if(e.target.closest('input'))return; const tr=e.target.closest('tr[data-i]');if(tr)openReport(+tr.dataset.i)};
-  host.querySelectorAll('[data-memo]').forEach(inp=>inp.oninput=()=>{const k=inp.dataset.memo;S.notes[k]={...(S.notes[k]||{}),memo:inp.value};autosave()});
-}
-function drawBoard(host,ids){
   const by={가:[],나:[],다:[],etc:[]}; ids.forEach(i=>{const g=gunOf(U[i]);(by[g]||by.etc).push(i)});
-  const card=i=>{const u=U[i],b=B[basis][i],g=gunOf(u),k=keyOf(i),fin=S.finals[g]===k;
-    return `<div class="bcard ${fin?'final':''}"><div class="t"><div><b>${esc(u[0])}</b><small>${esc(u[1])}${trkTag(u)} · 정원 ${cap(u[4])}</small></div><span class="jb j${b[0]}">${JL[b[0]]}</span></div>
-    <small style="margin-top:5px">학생 ${pct(b[1])}% · 적정 ${pct(b[3])}% · 소신 ${pct(b[5])}%</small><div style="margin-top:5px">${funkHtml(funkOf(i))} ${hbBadge(i)}</div>
-    <div class="ops">${GUNS.includes(g)?`<button class="btn sm ${fin?'navy':''}" data-fin="${i}">${fin?'최종 지원 ✓':'최종 지원으로'}</button>`:''}<button class="btn sm" data-rep="${i}">리포트</button><button class="btn sm" data-del="${i}">빼기</button></div></div>`};
-  const mix=l=>{const c=[0,0,0,0,0];l.forEach(i=>c[B[basis][i][0]]++);return [4,3,2,1].filter(j=>c[j]).map(j=>`<span class="jb j${j}">${JL[j]} ${c[j]}</span>`).join(' ')};
-  host.innerHTML=`<div class="board">${GUNS.map(g=>`<section class="card col"><div class="colh"><span class="${gunCls(g)}">${g}</span><b class="${gunCls(g).replace('gunc ','gt ')}">${g}군</b><small>${S.finals[g]?'최종 '+esc(U[idxOf(S.finals[g])]?.[0]||''):'후보 '+by[g].length+'개'}</small></div>
-    ${by[g].length?by[g].map(card).join('')+`<div style="margin:10px 12px 14px">${mix(by[g])}</div>`:`<div class="hintc">${g}군 모집단위를 담으면 여기에 모여요.</div>`}</section>`).join('')}</div>
-    ${by.etc.length?`<section class="card" style="margin-top:14px;padding:12px 14px"><b>그 외 (수시이월·군외·전문대)</b><div class="board" style="margin-top:4px">${by.etc.map(card).join('')}</div></section>`:''}`;
-  host.onclick=e=>{const f=e.target.closest('[data-fin]');if(f){const i=+f.dataset.fin,g=gunOf(U[i]),k=keyOf(i);S.finals[g]===k?delete S.finals[g]:S.finals[g]=k;autosave();drawBoard(host,ids);return}
-    const r=e.target.closest('[data-rep]');if(r){openReport(+r.dataset.rep);return}
-    const d=e.target.closest('[data-del]');if(d){togglePick(+d.dataset.del);rWish()}};
+  const finIdx=g=>S.finals[g]?idxOf(S.finals[g]):null;
+  const mix=l=>{const c={};l.forEach(i=>{const j=B[basis][i][0];c[j]=(c[j]||0)+1});return [4,3,2,1,0].filter(j=>c[j]).map(j=>`<span class="jb j${j}">${JL[j]} ${c[j]}</span>`).join(' ')};
+  const sumCard=g=>{const i=finIdx(g),n=by[g].length,b=i!=null?B[basis][i]:null;
+    return `<div class="wsum ${i!=null?'on':(n?'warn':'')}"><div class="wh"><span class="${gunCls(g)}">${g}</span><b class="${gunCls(g).replace('gunc ','gt ')}">${g}군</b><small>후보 ${n}개</small></div>
+      ${i==null?`<div class="wn">${n?'최종 지원 미지정':'후보 없음'}</div>`
+      :`<div class="wu"><b>${esc(U[i][0])}</b><span>${esc(U[i][1])}${trkTag(U[i])}</span></div><div class="wj"><span class="jb j${b[0]}">${JL[b[0]]}</span><small>학생 ${pct(b[1])}% · 적정 ${pct(b[3])}% · 소신 ${pct(b[5])}%</small></div>`}</div>`};
+  const finals=GUNS.map(finIdx).filter(i=>i!=null);
+  const row=i=>{const u=U[i],b=B[basis][i],k=keyOf(i),h=hitOf(i),g=gunOf(u),fin=S.finals[g]===k;
+    return `<tr data-i="${i}" class="${fin?'fin':''}"><td>${GUNS.includes(g)?`<button class="btn sm ${fin?'navy':''}" data-fin="${i}">${fin?'최종 ✓':'최종으로'}</button>`:''}</td>
+      <td class="nm">${esc(u[0])}</td><td>${esc(u[1])}</td><td>${trkTag(u)}</td><td class="num">${cap(u[4])}</td><td>${hbBadge(i)}</td>
+      <td><span class="jb j${b[0]}">${JL[b[0]]}</span></td><td class="num"><b>${pct(b[1])}</b>${posBadge(i)}</td><td class="num">${pct(b[3])}</td><td class="num">${pct(b[5])}</td>
+      ${cellHtml('h',i)}<td class="num">${h.d?h.n+'/'+h.d:'–'}</td><td>${funkHtml(funkOf(i))}</td>
+      <td><input class="memo-in" data-memo="${esc(k)}" value="${esc(S.notes[k]?.memo||'')}" placeholder="메모"></td>
+      <td style="white-space:nowrap"><button class="btn sm navy" data-rep="${i}">리포트</button> <button class="btn sm" data-del="${i}">빼기</button></td></tr>`};
+  const table=l=>`<div class="twrap" style="max-height:none"><table class="dt wt"><thead><tr><th rowspan="2">최종</th><th rowspan="2">대학교</th><th rowspan="2">학과</th><th rowspan="2">전형 유형</th><th rowspan="2">정원</th><th rowspan="2">학생부</th><th rowspan="2">판정</th><th rowspan="2">학생 누백(%)</th><th rowspan="2">적정(%)</th><th rowspan="2">소신(%)</th><th colspan="5" style="text-align:center">과거 합격권 누백 (25→21)</th><th rowspan="2">합격권</th><th rowspan="2">펑크예측</th><th rowspan="2" style="min-width:180px">메모</th><th rowspan="2"></th></tr>
+    <tr class="sub">${['25','24','23','22','21'].map(y=>`<th>${y}</th>`).join('')}</tr></thead><tbody>${l.map(row).join('')}</tbody></table></div>`;
+  const sec=(g,l)=>{const lab=GUNS.includes(g)?g+'군':'그 외 (수시이월·군외·전문대)';
+    if(!l.length) return GUNS.includes(g)?`<section class="wgun"><div class="wgh"><span class="${gunCls(g)}">${g}</span><b class="${gunCls(g).replace('gunc ','gt ')}">${lab}</b><small>후보 0개</small></div><div class="whint">${g}군 모집단위를 담으면 여기에 모여요.</div></section>`:'';
+    return `<section class="wgun"><div class="wgh">${GUNS.includes(g)?`<span class="${gunCls(g)}">${g}</span><b class="${gunCls(g).replace('gunc ','gt ')}">${lab}</b>`:`<b>${lab}</b>`}<small>후보 ${l.length}개</small><span class="wmix">${mix(l)}</span></div>${table(l)}</section>`};
+  w.innerHTML=`<div class="bar"><span class="lbl">현재 학생</span><b>${esc(S.name||'새 학생')}</b><span class="status">학생을 저장하면 이 목록도 함께 저장돼요.</span><span class="sep"></span>${basisSeg()}</div>
+  <h2 class="sec">지원희망 모집단위 <span class="status" style="font-weight:500">${ids.length}개</span></h2>
+  ${missing?`<div class="notice warn">담아둔 ${missing}개는 지금 데이터에 없는 모집단위라 표시하지 못했어요.</div>`:''}
+  ${ids.length?`<div class="wsums">${GUNS.map(sumCard).join('')}</div>
+    <div class="wline"><b>후보 전체</b> ${mix(ids)}${finals.length?` <span class="sep"></span><b>최종 지원 ${finals.length}개</b> ${mix(finals)}`:''}</div>
+    ${GUNS.map(g=>sec(g,by[g])).join('')}${sec('etc',by.etc)}
+    <p class="status" style="margin-top:12px">대학 둘러보기·정밀 매칭 도구에서 "담기"를 누르면 여기 모여요. 행을 누르거나 리포트를 열면 모집단위별 분석과 컨설턴트 코멘트를 정리해 이미지로 저장할 수 있어요.</p>`
+  :`<div class="card empty" style="padding:28px 20px">아직 담은 모집단위가 없어요.<br><br><button class="btn pri" onclick="go('match')">정밀 매칭 도구로 가기</button> <button class="btn" onclick="go('browse')">대학 둘러보기</button></div>`}`;
+  bindBasis(w,rWish);
+  w.onclick=e=>{
+    const f=e.target.closest('[data-fin]');if(f){e.stopPropagation();const i=+f.dataset.fin,g=gunOf(U[i]),k=keyOf(i);S.finals[g]===k?delete S.finals[g]:S.finals[g]=k;autosave();const y=scrollY;rWish();scrollTo(0,y);return}
+    const r=e.target.closest('[data-rep]');if(r){e.stopPropagation();openReport(+r.dataset.rep);return}
+    const d=e.target.closest('[data-del]');if(d){e.stopPropagation();togglePick(+d.dataset.del);const y=scrollY;rWish();scrollTo(0,y);return}
+    if(e.target.closest('input,button,a'))return; const tr=e.target.closest('tr[data-i]');if(tr)openReport(+tr.dataset.i)};
+  w.querySelectorAll('[data-memo]').forEach(inp=>inp.oninput=()=>{const k=inp.dataset.memo;S.notes[k]={...(S.notes[k]||{}),memo:inp.value};autosave()});
 }
 
 /* ===== detail & report ===== */
