@@ -96,7 +96,21 @@ const ok=(c,m)=>{console.log((c?'  ✓ ':'  ✗ ')+m);if(!c)fail++};
   ok(await p.evaluate(b=>Object.keys(S.picks).length-b,nb4)>=1&&!(await p.$('#selbar')),'선택 항목이 지원희망에 담기고 바가 사라짐');
   ok(errs.length===0,'v30 화면 오류 없음');
 
-  console.log('13. 데이터 관리');
+  console.log('13. v32 학생 정보 화면');
+  await p.click('[data-tab=student]');await p.waitForSelector('#sumBox .sc');
+  ok(await p.evaluate(()=>!$('sQual').classList.contains('open')&&!$('sNae').classList.contains('open')),'정성 평가·내신 환산점수는 기본 접힘');
+  await p.click('[data-sopt=qual]');
+  await p.fill('[data-qs="1-1"]','2.80');await p.fill('[data-qs="1-2"]','2.75');await p.fill('[data-qs="2-1"]','2.70');await p.waitForTimeout(200);
+  ok((await p.textContent('#sumNae')).includes('2.75등급')&&(await p.textContent('#sumNae')).includes('0.05'),'학생 요약에 평균 내신·최근 학기 변화 반영');
+  ok((await p.textContent('#qSumLine')).includes('평균 2.75등급'),'접힌 줄 요약이 입력값과 일치');
+  const sc=+((await p.textContent('.dd3 .d4 b')).replace(/,/g,''));
+  await p.click('.dd3 .d4');await p.waitForTimeout(400);
+  ok(await p.evaluate(()=>tab)==='match'&&+((await p.textContent('#mfCnt')).replace(/,/g,''))===sc,'학생 요약의 적정 수 = 정밀 매칭 결과 수');
+  await p.click('[data-tab=student]');await p.waitForSelector('#sumBox .rec');
+  ok((await p.$$('#sumBox .rec')).length>=1,'추천 대학 목록 표시');
+  ok(errs.length===0,'v32 화면 오류 없음');
+
+  console.log('14. 데이터 관리');
   await p.click('[data-tab=data]');await p.waitForSelector('#xdz');
   ok(await p.locator('#xf').count()===1&&await p.locator('#xgo').isDisabled(),'파일 선택 영역과 분석 버튼(처음엔 비활성)');
 

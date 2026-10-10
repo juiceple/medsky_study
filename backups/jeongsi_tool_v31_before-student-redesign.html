@@ -118,42 +118,6 @@ h2.sec{margin:22px 0 6px;font-size:16px;color:var(--navy2);display:flex;align-it
 .chk{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;color:var(--ink2)}
 .chk input[type=number]{width:54px;padding:3px 6px}
 /* match layout */
-
-/* v32 student page */
-.pbar{position:sticky;top:var(--hh,112px);z-index:30;background:var(--panel);border-bottom:1px solid var(--line);padding:9px 20px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.pbar .sp{flex:1}.pbar select{max-width:220px}
-.sstat{font-size:12.5px;font-weight:600;color:var(--muted)}.sstat.ok{color:var(--j4)}.sstat.dirty{color:var(--j2)}.sstat.warn{color:var(--j1)}
-.sstat:before{content:"● ";font-size:10px}
-.swrap{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:20px;align-items:start;max-width:1240px}
-.ssh{display:flex;align-items:center;gap:10px;margin:22px 0 10px}.ssh:first-of-type{margin-top:6px}
-.ssh h2{font-size:18px;margin:0;font-weight:800;color:var(--ink)}
-.snum{width:24px;height:24px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:800;flex:none}
-.stip{color:var(--muted);border:1px solid var(--line);border-radius:50%;width:18px;height:18px;display:inline-grid;place-items:center;font-size:11px;cursor:help}
-.sopt{margin-top:16px;overflow:hidden}
-.ssh2{display:flex;align-items:center;gap:10px;padding:14px 18px;cursor:pointer;user-select:none}.ssh2:focus-visible{outline:2px solid var(--navy2);outline-offset:-2px}
-.ssh2 h2{font-size:16px;margin:0;font-weight:800;color:var(--ink2)}
-.stag{font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:10px;padding:0 8px}
-.ssum{margin-left:auto;font-size:12.5px;color:var(--muted);text-align:right}
-.scar:after{content:"▸";color:var(--muted);margin-left:6px}.sopt.open .scar:after{content:"▾"}
-.sopt .sbody{display:none;border-top:1px solid var(--line2);padding:14px 18px 16px}.sopt.open .sbody{display:block}
-.sside{position:sticky;top:calc(var(--hh,112px) + 58px)}
-.sside .sc{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:14px}
-.sside .sc h3{margin:0 0 14px;font-size:15px;font-weight:800;color:var(--ink);display:flex;justify-content:space-between;align-items:baseline}.sside .sc h3 small{font-size:11.5px;color:var(--muted);font-weight:500}
-.sside .kpi{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--line2)}.sside .kpi small{display:block;font-size:11.5px;color:var(--muted)}.sside .kpi b{display:block;font-size:28px;font-weight:800;line-height:1.15;letter-spacing:-.5px}.sside .kpi b em{font-style:normal;font-size:14px;font-weight:600;color:var(--ink2);margin-left:2px}
-.sside .grp{font-size:11.5px;font-weight:700;color:var(--muted);margin:14px 0 4px;display:flex;gap:6px;align-items:center}.sside .grp .gn{font-weight:500;border:1px solid var(--line);border-radius:8px;padding:0 6px;font-size:10.5px}
-.sside dl{margin:0;display:grid;grid-template-columns:auto 1fr;row-gap:6px;column-gap:12px;font-size:13px}.sside dt{color:var(--ink2)}.sside dd{margin:0;text-align:right;font-weight:700}
-.sside .trend{font-weight:500;font-size:11.5px;color:var(--j4);margin-left:4px}.sside .trend.dn{color:var(--j1)}
-.sside .ng{display:flex;justify-content:space-between;align-items:baseline;padding:8px 12px;margin:6px 0 10px;background:var(--paper);border-radius:10px}.sside .ng small{font-size:12px;color:var(--ink2);font-weight:600}.sside .ng b{font-size:26px;font-weight:800;letter-spacing:-.5px}.sside .ng b em{font-style:normal;font-size:13px;font-weight:600;color:var(--ink2);margin-left:2px}
-.sside .dd3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.sside .dd3 button{all:unset;box-sizing:border-box;cursor:pointer;display:block;border-radius:10px;padding:8px 10px}.sside .dd3 button:hover{outline:2px solid currentColor}
-.sside .dd3 b{display:block;font-size:22px;font-weight:800;line-height:1.1}.sside .dd3 small{font-size:11.5px}
-.sside .dd3 .d4{background:var(--j4s);color:var(--j4)}.sside .dd3 .d3{background:var(--j3s);color:var(--j3)}.sside .dd3 .d2{background:var(--j2s);color:var(--j2)}
-.sside .sub{font-size:11.5px;color:var(--muted);margin-top:8px}
-.sside .goto{display:flex;gap:8px;margin-top:12px}.sside .goto .btn{flex:1;font-size:12.5px}
-.sside .segw{margin-bottom:12px}.sside .segw .seg{display:flex}.sside .segw .seg button{flex:1;padding:6px 4px;font-size:12.5px;text-align:center}
-.sside .rec{all:unset;box-sizing:border-box;width:100%;cursor:pointer;display:flex;align-items:center;gap:10px;padding:7px 0;border-top:1px solid var(--line2);font-size:13px}.sside .rec:first-of-type{border-top:0}.sside .rec:hover .t{text-decoration:underline}
-.sside .rec .rn{width:20px;height:20px;border-radius:50%;background:var(--line2);font-size:11px;font-weight:800;display:grid;place-items:center;color:var(--ink2);flex:none}
-.sside .rec .t{flex:1;font-weight:700}.sside .rec .t small{font-weight:400;color:var(--muted);margin-left:4px}
-@media(max-width:960px){.swrap{grid-template-columns:1fr}.sside{position:static;order:-1}.pbar{position:static}}
 /* v30 cards / filters */
 .ucard .utop{display:flex;gap:10px;align-items:center}
 .ucard .av{flex:none;min-width:44px;height:44px;padding:0 5px;border-radius:12px;display:grid;place-items:center;color:#fff;font-weight:800;text-align:center;line-height:1.1;background:var(--ac,#555)}
@@ -548,36 +512,40 @@ table.dt{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
   <div class="curstu">현재 학생 <b id="curName">새 학생</b> · <span id="calcStat" class="calcstat">불러오는 중…</span></div>
 </nav>
 
-<section class="page" id="p-student">
-  <div class="pbar">
+<section class="page" id="p-student"><div class="wrap">
+  <div class="bar">
+    <span class="lbl">학생 프로필</span>
     <select id="stuSel" aria-label="저장된 학생"><option value="">-- 새 학생 (저장 안 됨) --</option></select>
-    <input id="stuName" placeholder="학생 이름" style="width:150px;font-weight:700">
-    <span class="sstat" id="stuStatus"></span>
-    <span class="sp"></span>
+    <input id="stuName" placeholder="학생 이름" style="width:130px">
+    <button class="btn pri" id="stuSave">저장</button>
+    <button class="btn" id="stuDel">삭제</button>
+    <span class="sep"></span>
     <button class="btn" id="stuExport">내보내기</button>
     <button class="btn" id="stuImportBtn">가져오기</button>
     <input type="file" id="stuImport" accept=".json" hidden>
-    <button class="btn" id="stuDel">삭제</button>
-    <button class="btn pri" id="stuSave">저장</button>
+    <span class="status" id="stuStatus"></span>
   </div>
-  <div class="wrap swrap">
-  <main class="smain">
-    <div id="resWarn"></div>
-    <div class="ssh"><span class="snum">1</span><h2>수능 성적</h2><span class="stip" title="국어·수학·탐구는 표준점수, 영어·한국사·제2외국어는 등급을 넣으면 백분위·등급·상위 누적이 바로 계산됩니다.">i</span></div>
-    <div class="card" id="omrBox"></div>
-    <div class="ssh"><span class="snum">2</span><h2>상담 메모</h2><span class="stip" title="상담 중 파악한 학생 요청사항과 컨설턴트 의견입니다. 학생을 저장하면 함께 저장됩니다.">i</span></div>
-    <div class="card" style="padding:14px 18px"><div class="grid2">
-      <div class="field"><label for="memoReq">학생 요청사항</label><textarea id="memoReq" rows="4" placeholder="예: 가군은 무조건 안정, 다군은 지방 의대 소신 지원 원함"></textarea></div>
-      <div class="field"><label for="memoCon">컨설턴트 코멘트</label><textarea id="memoCon" rows="4" placeholder="예: 탐구 변환표준점수 유리한 대학 위주로 검토"></textarea></div>
-    </div></div>
-    <div class="card sopt" id="sQual"><div class="ssh2" data-sopt="qual" role="button" tabindex="0"><h2>정성 평가 정보 (내신·출결)</h2><span class="stag">선택 입력</span><span class="ssum" id="qSumLine"></span><span class="scar"></span></div>
-      <div class="sbody" id="qualBox"></div></div>
-    <div class="card sopt" id="sNae"><div class="ssh2" data-sopt="nae" role="button" tabindex="0"><h2>대학별 내신 환산점수</h2><span class="stag">선택 입력</span><span class="ssum" id="nSumLine"></span><span class="scar"></span></div>
-      <div class="sbody" id="naesinBox"></div></div>
-  </main>
-  <aside class="sside" id="sumBox"></aside>
+  <div id="resWarn"></div>
+  <h2 class="sec">수능 성적</h2>
+  <p class="intro">국어·수학·탐구는 표준점수, 영어·한국사·제2외국어는 등급을 넣으면 백분위·등급·상위 누적이 바로 계산돼요.</p>
+  <div class="card" id="omrBox"></div>
+  <h2 class="sec">학생부 정량 평가용 — 대학별 내신 환산점수</h2>
+  <p class="intro">진학사 등에서 산출한 학생의 대학별 내신 환산점수를 직접 입력하세요. 비워 두면 분석기의 기본값(비교내신)으로 계산돼요. 입력하면 해당 대학 모집단위의 환산점수·판정이 바로 다시 계산돼요.</p>
+  <div class="card" id="naesinBox" style="padding:14px 16px"></div>
+  <h2 class="sec">학생부 정성 평가용 — 학생 정보 정리</h2>
+  <p class="intro">교과 정량 점수가 아니라 생기부를 정성적으로 평가하는 대학(교과평가·학업충실도·출결 등)을 위해 학생 정보를 정리해 두는 칸이에요. 점수 계산에는 쓰이지 않고, 학생 저장·내보내기에 함께 담겨요.</p>
+  <div class="card" id="qualBox" style="padding:14px 16px"></div>
+  <h2 class="sec">분석 요약</h2>
+  <p class="intro">성적을 바꾸면 고속성장분석기와 같은 수식으로 전체 모집단위의 환산점수·누백·판정이 바로 다시 계산돼요.</p>
+  <div class="card" id="sumBox" style="padding:14px 16px"></div>
+  <h2 class="sec">원서 관련 메모</h2>
+  <p class="intro">상담 중 파악한 학생 요청사항과 컨설턴트 의견을 적어두세요. 학생을 저장하면 함께 저장돼요.</p>
+  <div class="grid2">
+    <div class="field"><label for="memoReq">학생 요청사항</label><textarea id="memoReq" rows="5" placeholder="예: 가군은 무조건 안정, 다군은 지방 의대 소신 지원 원함"></textarea></div>
+    <div class="field"><label for="memoCon">컨설턴트 코멘트</label><textarea id="memoCon" rows="5" placeholder="예: 탐구 변환표준점수 유리한 대학 위주로 검토"></textarea></div>
   </div>
-</section>
+  <button class="btn pri" style="margin-top:16px;padding:9px 22px" onclick="document.getElementById('stuSave').click()">학생 정보 저장</button>
+</div></section>
 
 <section class="page" id="p-browse"><div class="wrap" id="browseWrap"></div></section>
 
@@ -1414,29 +1382,10 @@ function bindBasis(host,rerender){host.querySelectorAll('[data-basis]').forEach(
 function rStudent(){
   $('stuName').value=S.name||''; $('memoReq').value=S.memoReq||''; $('memoCon').value=S.memoCon||'';
   $('stuSel').innerHTML='<option value="">-- 새 학생 (저장 안 됨) --</option>'+students.map(s=>`<option value="${s.id}" ${s.id===S.id?'selected':''}>${esc(s.name||'이름 없음')}</option>`).join('');
-  if(SOPEN_S!==S){SOPEN={};SOPEN_S=S;SAVE={s:S.id?'saved':'none',t:S.updated||null}}
+  $('stuStatus').textContent=db?(S.id?'저장된 학생이에요':''):'저장소 연결 전 · 내보내기로 파일 백업 가능';
   const miss=[];if(!S.eng)miss.push('영어');if(!S.hist)miss.push('한국사');
   $('resWarn').innerHTML=miss.length?`<div class="notice warn" style="margin-top:14px">${miss.join('·')} 등급을 넣어야 대학별 판정이 계산돼요. 비어 있으면 분석기와 똑같이 전부 '오류'로 나와요.</div>`:'';
-  rOmr(); rNaesin(); rQual(); rStudentStats(); paintSopt(); paintSave();
-}
-let SOPEN={},SOPEN_S=null,SAVE={s:'none',t:null};
-const hasNaesin=()=>Object.values(S.naesin||{}).some(v=>v!==''&&v!=null);
-const hasQual=()=>{const q=S.qual||{};return !!(String(q.finalManual||'').trim()||(q.memo||'').trim()||Object.values(q.sem||{}).some(v=>String(v).trim())||Object.values(q.absent||{}).some(v=>String(v).trim()))};
-function qualSumLine(){const f=finalGrade(),b=qualAbsent();return f?`평균 ${f.val.toFixed(2)}등급${b!=null?` · 무단 결석 ${b}일`:''}`:(b!=null?`무단 결석 ${b}일`:'입력 없음')}
-function naeSumLine(){const n=Object.values(S.naesin||{}).filter(v=>v!==''&&v!=null).length;return `입력 ${n}/${NAESIN.length} · 미입력 시 비교내신(기본값) 적용`}
-function paintSopt(){
-  [['qual','sQual',hasQual],['nae','sNae',hasNaesin]].forEach(([k,id,has])=>{const open=SOPEN[k]!=null?SOPEN[k]:has();$(id).classList.toggle('open',open)});
-  $('qSumLine').textContent=qualSumLine();$('nSumLine').textContent=naeSumLine();
-}
-document.querySelectorAll('[data-sopt]').forEach(h=>{const f=()=>{const k=h.dataset.sopt,id=k==='qual'?'sQual':'sNae';const open=!$(id).classList.contains('open');SOPEN[k]=open;paintSopt()};h.onclick=f;h.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();f()}}});
-function paintSave(){
-  const el=$('stuStatus');if(!el)return;let t='',c='';
-  if(!db){t='저장소 연결 전 · 내보내기로 백업';c=''}
-  else if(!S.name){t='이름을 입력해야 저장됩니다';c='warn'}
-  else if(SAVE.s==='dirty'){t='수정됨 · 저장 중…';c='dirty'}
-  else if(SAVE.s==='saved'){t='저장됨'+(SAVE.t?' · '+new Date(SAVE.t).toLocaleTimeString('ko',{hour:'2-digit',minute:'2-digit'}):'');c='ok'}
-  else{t='저장 안 됨 · 저장 버튼을 누르세요';c='warn'}
-  el.textContent=t;el.className='sstat '+c;
+  rOmr(); rNaesin(); rQual(); rStudentStats();
 }
 function rNaesin(){
   const box=$('naesinBox'); if(!NAESIN.length){box.innerHTML='<span class="status">이 분석기 파일에는 내신 입력칸이 없어요.</span>';return}
@@ -1450,7 +1399,7 @@ function rNaesin(){
     let v=el.value.trim(); const d=NAESIN.find(x=>x.k===el.dataset.nae);
     if(v!==''&&!d.options){ v=v.replace(/,/g,''); const n=Number(v); if(isNaN(n)||n<0||(d.max&&n>d.max)){toast(`${d.name}: 0~${d.max||''} 사이 숫자를 입력하세요`);el.value=(S.naesin||{})[d.k]??'';return} v=n }
     S.naesin={...(S.naesin||{})}; if(v===''||v==null) delete S.naesin[d.k]; else S.naesin[d.k]=v;
-    scheduleCalc(); autosave(); paintSopt();
+    scheduleCalc(); autosave();
   });
 }
 const QSEM=[['1-1','1학년 1학기'],['1-2','1학년 2학기'],['2-1','2학년 1학기'],['2-2','2학년 2학기'],['3-1','3학년 1학기'],['3-2','3학년 2학기 (선택)']];
@@ -1474,13 +1423,13 @@ function rQual(){
       <div class="hint" id="qSum" style="margin-top:6px">${sumLine()}</div>
       <div class="field" style="margin-top:12px"><label for="qMemo">특이 사항</label><textarea id="qMemo" rows="5" placeholder="예: 2학년 1학기 질병 결석(인정), 의료동아리 부장, 수학 세특 우수, 봉사 100시간, 담임 의견 등">${esc(q.memo||'')}</textarea></div></div></div>`;
   const paintFinal=()=>{const f=finalGrade();$('qFinalVal').firstChild.nodeValue=f?fmt(f.val,2):'–';$('qFinalSrc').textContent=f?(f.src==='manual'?'직접 입력한 값을 쓰고 있어요':`학기별 입력 ${f.n}개의 단순평균으로 자동 계산`):'학기별 점수를 입력하면 자동으로 계산돼요';$('qFinalVal').parentNode.parentNode.classList.toggle('man',!!f&&f.src==='manual')};
-  const touch=()=>{S.qual=S.qual||{};autosave();$('qSum').innerHTML=sumLine();paintFinal();paintSopt();if($('sumNae'))$('sumNae').innerHTML=sumNaeHtml()};
+  const touch=()=>{S.qual=S.qual||{};autosave();$('qSum').innerHTML=sumLine();paintFinal()};
   paintFinal();
   $('qFinalMan').oninput=e=>{S.qual=S.qual||{};S.qual.finalManual=e.target.value.trim();touch()};
   $('qFinalReset').onclick=()=>{S.qual=S.qual||{};S.qual.finalManual='';$('qFinalMan').value='';touch()};
   $('qualBox').querySelectorAll('[data-qs]').forEach(el=>el.oninput=()=>{S.qual=S.qual||{};S.qual.sem={...(S.qual.sem||{}),[el.dataset.qs]:el.value.trim()};touch()});
   $('qualBox').querySelectorAll('[data-qa]').forEach(el=>el.oninput=()=>{S.qual=S.qual||{};S.qual.absent={...(S.qual.absent||{}),[el.dataset.qa]:el.value.trim()};touch()});
-  $('qMemo').oninput=e=>{S.qual=S.qual||{};S.qual.memo=e.target.value;autosave();paintSopt()};
+  $('qMemo').oninput=e=>{S.qual=S.qual||{};S.qual.memo=e.target.value;autosave()};
 }
 function opt(list,sel){return list.map(x=>`<option ${x===sel?'selected':''}>${esc(x)}</option>`).join('')}
 function bubbles(g){return `<div class="bubbles">${[1,2,3,4,5,6,7,8,9].map(i=>`<span class="bub ${i===g?'on':''}">${i}</span>`).join('')}</div>`}
@@ -1511,7 +1460,7 @@ function rOmr(){
   $('omrBox').innerHTML=(warns.length?`<div class="notice warn" role="alert"><b>입력 확인이 필요해요</b><br>${warns.map(esc).join('<br>')}<br><span class="status">이 값은 점수 계산에서 빠지거나 부정확할 수 있어요.</span></div>`:'')+body;
   $('omrBox').querySelectorAll('[data-k]').forEach(el=>el.onchange=()=>{const [a,b]=el.dataset.k.split('.');let v=el.value;if(el.tagName==='INPUT')v=v===''?null:+v;if(b)S[a][b]=v;else S[a]=v;if(a==='lang'&&b==='sub'&&!v)S.lang.g=null;rStudent();scheduleCalc();autosave()});
 }
-$('stuName').oninput=e=>{S.name=e.target.value;header();paintSave()};
+$('stuName').oninput=e=>{S.name=e.target.value;header()};
 $('memoReq').oninput=e=>{S.memoReq=e.target.value};
 $('memoCon').oninput=e=>{S.memoCon=e.target.value};
 $('stuSel').onchange=e=>{const id=e.target.value; if(!id){S=BLANK();S.picks={};rStudent();header();return} loadStudent(id)};
@@ -1528,13 +1477,12 @@ async function saveStudent(manual){
   if(!db||!uid){ if(manual) toast('저장소에 연결되지 않았어요. 내보내기로 파일 백업은 가능해요'); return }
   if(!S.name){ if(manual){toast('학생 이름을 입력하세요');$('stuName').focus()} return }
   const body=JSON.parse(JSON.stringify(S)); delete body.id; body.updated=Date.now();
-  try{ const col=stuCol(); const isNew=!S.id;
+  try{ const col=stuCol();
     if(S.id) await col.doc(S.id).set(body); else {const ref=await col.add(body);S.id=ref.id}
-    SAVE={s:'saved',t:body.updated};
-    if(manual) toast(`${S.name} 저장했어요`); header(); if(tab==='student'){ if(isNew||manual) rStudent(); else paintSave() }
+    if(manual) toast(`${S.name} 저장했어요`); header(); if(tab==='student') rStudent();
   }catch(e){ console.error(e); if(manual) toast('저장하지 못했어요'+(e&&e.code?` (${e.code})`:'')+'. 잠시 후 다시 시도하세요') }
 }
-let asT; function autosave(){ if(db&&S.id){SAVE.s='dirty';if(tab==='student')paintSave();clearTimeout(asT);asT=setTimeout(()=>saveStudent(false),900)} }
+let asT; function autosave(){ if(db&&S.id){clearTimeout(asT);asT=setTimeout(()=>saveStudent(false),900)} }
 async function loadStudent(id){
   const s=students.find(x=>x.id===id); if(!s) return;
   S={...BLANK(),...JSON.parse(JSON.stringify(s)),id};
@@ -1548,41 +1496,17 @@ function togglePick(i){
   header(); autosave();
 }
 
-function sumNaeHtml(){
-  const f=finalGrade(),b=qualAbsent();
-  const sem=QSEM.map(([k])=>parseFloat(((S.qual||{}).sem||{})[k])).filter(x=>!isNaN(x));
-  let last='';
-  if(sem.length){const l=sem[sem.length-1];last=`<dt>최근 학기</dt><dd>${l.toFixed(2)}등급${sem.length>1?(()=>{const d=sem[sem.length-2]-l;return Math.abs(d)<0.005?'':`<span class="trend ${d<0?'dn':''}">${d>0?'▲':'▼'} ${fmt(Math.abs(d),2)} ${d>0?'개선':'하락'}</span>`})():''}</dd>`}
-  return `<div class="ng"><small>평균 내신</small>${f?`<b>${f.val.toFixed(2)}<em>등급</em></b>`:'<b style="font-size:15px;font-weight:600;color:var(--muted)">미입력</b>'}</div>
-    <dl><dt>무단 결석</dt><dd>${b!=null?b+'일':'–'}</dd>${last}</dl>`;
-}
 function rStudentStats(){
   const box=$('sumBox'); if(!box) return;
-  const P=chProfile(); const bb=B[basis];
-  const idx=[];U.forEach((u,i)=>{if(!isPro(u)&&bb[i][0]>0)idx.push(i)});
-  const kept=overFilter(idx),c=[0,0,0,0,0];kept.forEach(i=>c[bb[i][0]]++);
-  const cAll=[0,0,0,0,0];U.forEach((u,i)=>cAll[bb[i][0]]++);
-  const I={kor:subjInfo('국어('+S.kor.sub+')'),math:subjInfo('수학('+S.math.sub+')'),t1:subjInfo(S.t1.sub),t2:S.t2.sub!==S.t1.sub?subjInfo(S.t2.sub):null};
-  const ps=[I.kor,I.math,I.t1,I.t2].reduce((a,x)=>a+(x?.pct||0),0);
-  const sci=x=>SCI.includes(x),track=(S.math.sub!=='확통'&&sci(S.t1.sub)&&sci(S.t2.sub))?'이과':'문과';
-  const recs=[...P.tiers[2][1],...[...P.tiers[1][1]].reverse(),...P.tiers[3][1]].slice(0,5);
-  const gOf=n=>[...new Set((P.tiers.flatMap(t=>t[1]).find(x=>x.n===n)?.ids||[]).map(i=>gunOf(U[i])))].filter(g=>GUNS.includes(g));
-  box.innerHTML=`<div class="sc"><h3>학생 요약</h3>
-    <div class="kpi"><div><small>전국 등수 (추정)</small><b>${P.rank!=null?P.rank.toLocaleString():'–'}${P.rank!=null?'<em>등</em>':''}</b><small>${P.total?P.total.toLocaleString()+'명 중':''}</small></div>
-      <div><small>대표 누백</small><b>${P.mid!=null?fmt(P.mid,2):'–'}${P.mid!=null?'<em>%</em>':''}</b><small>상위 기준</small></div></div>
-    <div class="grp">수능</div><dl><dt>국수탐 백분위 합</dt><dd>${ps?fmt(ps,0):'–'}</dd><dt>응시 유형</dt><dd>${track}</dd></dl>
-    <div class="grp">내신 <span class="gn">정성 평가용</span></div><div id="sumNae">${sumNaeHtml()}</div></div>
-  <div class="sc"><h3>판정 분포 <small>전문대 제외</small></h3>
-    <div class="segw">${basisSeg(true)}</div>
-    <div class="dd3">${[4,3,2].map(j=>`<button class="d${j}" data-j="${j}"><b>${c[j].toLocaleString()}</b><small>${JL[j]}</small></button>`).join('')}</div>
-    <div class="sub">숫자를 누르면 정밀 매칭에서 해당 판정만 볼 수 있습니다. (전문대 포함 시 적정 ${cAll[4].toLocaleString()})</div>
-    <div class="goto"><button class="btn" id="sGoM">정밀 매칭</button><button class="btn" id="sGoB">대학 둘러보기</button></div></div>
-  <div class="sc"><h3>추천 대학 <small>대표 누백 기준</small></h3>
-    ${recs.length?recs.map((x,i)=>`<button class="rec" data-rec="${esc(x.n)}"><span class="rn">${i+1}</span><span class="t">${esc(x.n.replace(/대학교$/,'대'))}</span>${gOf(x.n).map(g=>`<span class="${gunCls(g)}">${g}</span>`).join('')}</button>`).join(''):'<div class="status">성적을 입력하면 추천 대학이 나옵니다.</div>'}</div>`;
-  bindBasis(box,rStudentStats);
-  box.querySelectorAll('[data-j]').forEach(b=>b.onclick=()=>{mfClear();MF.judge=new Set([b.dataset.j]);go('match')});
-  box.querySelectorAll('[data-rec]').forEach(b=>b.onclick=()=>openUniv({univ:b.dataset.rec}));
-  $('sGoM').onclick=()=>go('match');$('sGoB').onclick=()=>go('browse');
+  const c={};for(const k in B){c[k]=[0,0,0,0,0];B[k].forEach(b=>c[k][b[0]]++)}
+  const reasons={};B[basis].forEach(b=>{if(b[0]===0&&b[8])reasons[b[8]]=(reasons[b[8]]||0)+1});
+  const top=k=>{const l=[];B[k].forEach((b,i)=>{if(b[0]>=3)l.push(i)});return l};
+  box.innerHTML=`<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px">${basisSeg()}</div>
+   <div class="dist" style="margin-bottom:10px">${[4,3,2,1,0].map(j=>`<span class="jb j${j}" style="font-size:13px;padding:4px 10px">${JL[j]} ${c[basis][j].toLocaleString()}</span>`).join('')}</div>
+   ${Object.keys(reasons).length?`<div class="status">결격·제외 사유: ${Object.entries(reasons).sort((a,b)=>b[1]-a[1]).map(([r,n])=>`${esc(r)} ${n}`).join(' · ')}</div>`:''}
+   <div class="status" style="margin-top:6px">판정은 환산점수를 적정·예상·소신점수와 비교해서 정해지고, 기준(전체·이과·문과)에 따라 누백과 등수가 달라져요.</div>
+   <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn navy" onclick="go('match')">정밀 매칭 도구로 보기</button><button class="btn" onclick="go('browse')">대학 둘러보기</button></div>`;
+  bindBasis(box,()=>{rStudentStats()});
 }
 
 /* ===== browse ===== */
