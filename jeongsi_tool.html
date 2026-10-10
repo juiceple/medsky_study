@@ -1725,12 +1725,6 @@ function rFilters(){
   <div class="fpb">${basisSeg(true)}</div>
   <div class="fpb"><input type="text" id="mfUniv" placeholder="🔍 대학명 (예: 경희,중앙,부산대)" value="${esc(MF.univ)}" style="margin-bottom:6px"><input type="text" id="mfMajor" placeholder="전공 키워드 (예: 의예,약학,컴퓨터)" value="${esc(MF.major)}"></div>
   ${act.length?`<div class="fact"><div class="t">적용 중인 필터</div>${act.map(([k,t])=>`<button class="ac" data-ac="${esc(k)}">${esc(t)}</button>`).join('')}</div>`:''}
-  ${sec('judge','판정',pills('judge',['4','3','2','1'],v=>JL[v]),MF.judge.size)}
-  ${sec('gun','모집군',pills('gun',['가','나','다','이월','군외','전문'],gunLabel),MF.gun.size)}
-  ${sec('region','지역 <span style="font-weight:400;font-size:11px;color:var(--muted);margin-left:6px">미선택 시 전체</span>',pills('region',SIDO),MF.region.size)}
-  ${sec('cat','구분',pills('cat',CATS),MF.cat.size)}
-  ${sec('trait','계열',pills('trait',['자연','인문','공통']),MF.trait.size)}
-  ${sec('hb','학생부 반영 <span style="font-weight:400;font-size:11px;color:var(--muted);margin-left:6px">미선택 시 전체</span>',pills('hb',HB_CLS,v=>v==='미확인'?'미확인·미조사':v),MF.hb.size)}
   <div class="fadv"><div class="fadv-h">고급 옵션</div><label class="chk"><input type="checkbox" id="mfDown" ${BR.down?'checked':''}> 과도한 하향 자동 제외</label>
     <div class="hint" style="margin-left:22px">적정 판정이면서 적정 누백이 학생 누백의 <input type="number" id="mfDownK" value="${BR.downK}" step="0.5" min="1.5" style="width:52px;padding:2px 5px"> 배 이상이면 제외</div>
     <label class="chk"><input type="checkbox" id="mfUp" ${BR.up?'checked':''}> 과도한 상향(우주상향) 자동 제외</label>
@@ -1739,6 +1733,12 @@ function rFilters(){
     <div class="hint" style="margin-left:22px">정량·정성으로 학생부를 반영하는 모집단위를 결과에서 뺍니다.</div>
     <label class="chk"><input type="checkbox" id="mfNoHbU" ${MF.noHbU?'checked':''}> 학생부 '미확인' 모집단위도 제외</label>
     <div class="hint" style="margin-left:22px">체크하면 학생부 '미반영'으로 확인된 모집단위만 남아요.</div></div>
+  ${sec('judge','판정',pills('judge',['4','3','2','1'],v=>JL[v]),MF.judge.size)}
+  ${sec('gun','모집군',pills('gun',['가','나','다','이월','군외','전문'],gunLabel),MF.gun.size)}
+  ${sec('region','지역 <span style="font-weight:400;font-size:11px;color:var(--muted);margin-left:6px">미선택 시 전체</span>',pills('region',SIDO),MF.region.size)}
+  ${sec('cat','구분',pills('cat',CATS),MF.cat.size)}
+  ${sec('trait','계열',pills('trait',['자연','인문','공통']),MF.trait.size)}
+  ${sec('hb','학생부 반영 <span style="font-weight:400;font-size:11px;color:var(--muted);margin-left:6px">미선택 시 전체</span>',pills('hb',HB_CLS,v=>v==='미확인'?'미확인·미조사':v),MF.hb.size)}
   <div class="ftg"><label class="chk"><input type="checkbox" id="mfNoPro" ${MF.noPro?'checked':''}> 전문대 제외</label>
     <label class="chk"><input type="checkbox" id="mfEx0" ${MF.excl0?'checked':''}> 수학·탐구 결격 모집단위 제외</label></div>
   <div class="fpre"><div class="t"><span>내 필터 프리셋</span><span>학생별 저장</span></div><div class="chips">
