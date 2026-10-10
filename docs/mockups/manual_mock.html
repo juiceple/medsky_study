@@ -1,0 +1,198 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MEDSKY 정시 분석 도구 사용 설명서 (시안)</title>
+<style>
+:root{--navy:#132a4c;--navy2:#1f3f6e;--ink:#1b2230;--ink2:#4d5868;--muted:#6b7480;--paper:#f6f7f9;--panel:#fff;--line:#dde2ea;--line2:#eef1f5;--accent:#c0562f;--accent-s:#fbeee8;--j4:#2f7a46;--j4s:#d3e6d0;--j3:#2a5a9c;--j3s:#d9e6f6;--j2:#8a6510;--j2s:#fbe9b8;--j1:#a8432a;--j1s:#f6d8cc}
+@media (prefers-color-scheme:dark){:root{--ink:#e6eaf1;--ink2:#b3bccb;--muted:#8d97a8;--paper:#11151c;--panel:#1a1f28;--line:#2d3542;--line2:#232a35;--accent:#e07a52;--accent-s:#3a2419;--j4:#7fcf95;--j4s:#1f3a29;--j3:#8db5ee;--j3s:#1c2d47;--j2:#e8c26a;--j2s:#3d3218;--j1:#f09a80;--j1s:#432519}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.7 system-ui,"Noto Sans KR",sans-serif}
+.note{background:var(--accent-s);color:var(--accent);padding:8px 16px;font-size:12.5px;text-align:center}
+.lay{display:grid;grid-template-columns:270px minmax(0,1fr);max-width:1180px;margin:0 auto}
+nav{position:sticky;top:0;height:100vh;overflow:auto;padding:22px 14px 30px 18px;border-right:1px solid var(--line)}
+nav .logo{font-weight:800;font-size:15px;line-height:1.35;margin-bottom:2px}nav .sub{font-size:12px;color:var(--muted);margin-bottom:16px}
+nav a{display:block;color:var(--ink2);text-decoration:none;font-size:13.5px;padding:5px 10px;border-radius:7px;line-height:1.4}
+nav a:hover{background:var(--line2)}nav a.on{background:var(--navy);color:#fff}
+nav .g{font-size:11px;font-weight:700;color:var(--muted);margin:14px 10px 4px;letter-spacing:.04em}
+nav a.sub2{padding-left:24px;font-size:13px}nav a .soon{font-size:10.5px;color:var(--muted);border:1px solid var(--line);border-radius:8px;padding:0 6px;margin-left:4px}
+nav a.star{color:var(--accent);font-weight:700}nav a.star.on{color:#fff}
+main{padding:34px 40px 80px}
+h1{font-size:28px;margin:0 0 6px;letter-spacing:-.5px}.lead{color:var(--ink2);margin:0 0 26px}
+section{margin-bottom:64px;scroll-margin-top:16px}
+h2{font-size:23px;margin:0 0 6px;padding-left:12px;border-left:5px solid var(--accent);letter-spacing:-.3px}
+h2 .no{color:var(--accent);margin-right:6px}
+h3{font-size:17px;margin:26px 0 8px}
+p{margin:8px 0}.muted{color:var(--muted)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin:12px 0}
+.flow{display:flex;flex-wrap:wrap;gap:0;margin:16px 0;align-items:stretch}
+.fs{flex:1 1 130px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:0 8px 8px 0;position:relative;min-width:128px}
+.fs b{display:block;font-size:13px;color:var(--accent)}.fs span{font-weight:700}.fs small{display:block;color:var(--muted);font-size:12px;line-height:1.4;margin-top:2px}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:12px 0}
+.three>div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.three h4{margin:0 0 6px;font-size:13px;color:var(--muted)}.three ul{margin:0;padding-left:18px}.three li{margin:3px 0;font-size:14px}
+.warn{background:var(--j2s);color:var(--ink);border-left:4px solid var(--j2);border-radius:8px;padding:10px 14px;margin:12px 0;font-size:14px}.warn b{color:var(--j2)}
+.tip{background:var(--j3s);border-left:4px solid var(--j3);border-radius:8px;padding:10px 14px;margin:12px 0;font-size:14px}.tip b{color:var(--j3)}
+code,kbd{background:var(--line2);border-radius:5px;padding:1px 6px;font-size:13px}
+/* checklist */
+.prog{display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:14px 0;position:sticky;top:8px;z-index:5}
+.prog .bar{flex:1;height:8px;background:var(--line2);border-radius:4px;overflow:hidden}.prog .bar i{display:block;height:100%;background:var(--j4);width:0;transition:width .2s}
+.ph{margin:30px 0 10px}.ph .t{display:flex;align-items:baseline;gap:10px}.ph h3{margin:0;font-size:19px}.ph .when{font-size:12.5px;color:var(--muted)}
+.ph .badge{font-size:12px;font-weight:800;color:#fff;background:var(--navy);border-radius:50%;width:26px;height:26px;display:grid;place-items:center;flex:none}
+.ck{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:8px 0;overflow:hidden}
+.ck summary{list-style:none;display:flex;gap:12px;align-items:flex-start;padding:12px 16px;cursor:pointer}.ck summary::-webkit-details-marker{display:none}
+.ck input[type=checkbox]{margin-top:5px;width:18px;height:18px;accent-color:var(--j4);flex:none}
+.ck .tt{flex:1;font-weight:700;line-height:1.45}.ck .tt small{display:block;font-weight:400;color:var(--muted);font-size:12.5px}
+.tag{font-size:11px;font-weight:700;border-radius:9px;padding:1px 8px;white-space:nowrap}.t-must{background:var(--j1s);color:var(--j1)}.t-rec{background:var(--j3s);color:var(--j3)}.t-who{background:var(--line2);color:var(--ink2);font-weight:600}
+.ck .arr:after{content:"▸";color:var(--muted);margin-left:4px}.ck[open] .arr:after{content:"▾"}
+.ck .bd{border-top:1px solid var(--line2);padding:6px 18px 14px 46px;font-size:14px}
+.ck .bd dl{margin:8px 0 0;display:grid;grid-template-columns:92px 1fr;gap:6px 12px}.ck .bd dt{color:var(--muted);font-size:12.5px;font-weight:700;padding-top:2px}.ck .bd dd{margin:0}
+.ck.done summary .tt{color:var(--muted);text-decoration:line-through}
+.ck .bd ul{margin:4px 0;padding-left:18px}
+.toc-soon{opacity:.75}
+.sample{display:inline-block;font-size:11px;font-weight:700;color:var(--accent);border:1px solid var(--accent);border-radius:8px;padding:0 8px;margin-left:8px;vertical-align:3px}
+table{width:100%;border-collapse:collapse;font-size:14px;margin:10px 0}th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line2);vertical-align:top}th{font-size:12.5px;color:var(--muted);background:var(--paper)}
+@media(max-width:900px){.lay{grid-template-columns:1fr}nav{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line)}main{padding:22px 16px 60px}.three{grid-template-columns:1fr}}
+@media print{nav,.note,.prog{display:none}.lay{display:block}.ck .bd{display:block}.ck{break-inside:avoid}}
+</style></head><body>
+<div class="note">시안 — 목차 전체 구성과 3개 대표 장(시작하기·학생 정보 탭·수능 이후 체크리스트)만 작성했습니다. 나머지 장은 이 형식으로 채웁니다.</div>
+<div class="lay">
+<nav id="nav">
+ <div class="logo">MEDSKY<br>정시 합격 분석 도구</div><div class="sub">사용 설명서 · 컨설턴트 교육 + 관리자용</div>
+ <a href="#s0">시작하기</a>
+ <a href="#s1">상담 한 건 권장 순서</a>
+ <div class="g">탭별 사용법</div>
+ <a class="sub2" href="#s2-1">학생 정보 <span class="soon" style="display:none"></span></a>
+ <a class="sub2 toc-soon" href="#s2-x">대학 둘러보기 <span class="soon">예정</span></a>
+ <a class="sub2 toc-soon" href="#s2-x">성적대 위치 <span class="soon">예정</span></a>
+ <a class="sub2 toc-soon" href="#s2-x">정밀 매칭 도구 <span class="soon">예정</span></a>
+ <a class="sub2 toc-soon" href="#s2-x">지원희망 모집단위 <span class="soon">예정</span></a>
+ <a class="sub2 toc-soon" href="#s2-x">보고서 <span class="soon">예정</span></a>
+ <a class="sub2 toc-soon" href="#s2-x">데이터 관리 <span class="soon">예정</span></a>
+ <div class="g">참고</div>
+ <a class="toc-soon" href="#s2-x">용어와 판정 읽는 법 <span class="soon">예정</span></a>
+ <a class="star" href="#s4">수능 이후 반영 체크리스트</a>
+ <a class="toc-soon" href="#s2-x">자주 묻는 질문 <span class="soon">예정</span></a>
+ <a class="toc-soon" href="#s2-x">부록: 버전·백업·테스트 <span class="soon">예정</span></a>
+</nav>
+<main>
+<h1>정시 합격 분석 도구 사용 설명서<span class="sample">시안</span></h1>
+<p class="lead">이 도구는 수능 성적을 넣으면 전국 모집단위별로 합격 가능성(판정)을 계산하고, 상담용 보고서(PDF)까지 만들어 주는 MEDSKY 내부 프로그램입니다.</p>
+
+<section id="s0">
+<h2><span class="no">0</span>시작하기</h2>
+<div class="three">
+ <div><h4>이 도구로 하는 일</h4><ul><li>학생 성적으로 대학·학과별 판정 확인</li><li>지원 후보를 담고 군별 조합 정리</li><li>학생·학부모용 보고서 PDF 출력</li></ul></div>
+ <div><h4>처음 쓰기 전에</h4><ul><li>학생 이름·성적을 입력하면 즉시 재계산됩니다</li><li>저장은 <b>저장</b> 버튼(또는 내보내기)으로 직접 합니다</li><li>화면 위 탭 7개가 작업 단계입니다</li></ul></div>
+ <div><h4>꼭 알아둘 것</h4><ul><li>판정은 <b>참고 지표</b>이며 합격 보장이 아닙니다</li><li>펑크 근거는 <b>내부용</b>이라 보고서에 안 들어갑니다</li><li>수능 이후 <a href="#s4" style="color:var(--accent)">체크리스트</a> 필수</li></ul></div>
+</div>
+</section>
+
+<section id="s1">
+<h2><span class="no">1</span>상담 한 건 권장 순서</h2>
+<p>탭 순서대로 따라가면 한 학생의 상담 자료가 완성됩니다.</p>
+<div class="flow">
+ <div class="fs"><b>STEP 1</b><span>학생 정보</span><small>성적·내신 입력, 저장</small></div>
+ <div class="fs"><b>STEP 2</b><span>성적대 위치</span><small>학생 수준과 추천 대학 파악</small></div>
+ <div class="fs"><b>STEP 3</b><span>대학 둘러보기</span><small>관심 대학 상세·입결 확인</small></div>
+ <div class="fs"><b>STEP 4</b><span>정밀 매칭 도구</span><small>조건 걸어 후보 추리고 담기</small></div>
+ <div class="fs"><b>STEP 5</b><span>지원희망 모집단위</span><small>군별 정리, 최종 지원 지정</small></div>
+ <div class="fs"><b>STEP 6</b><span>보고서</span><small>소견 작성 후 PDF 저장</small></div>
+</div>
+<div class="tip"><b>팁</b> 데이터 관리 탭은 상담할 때마다 쓰지 않습니다. 수능 직후나 분석기 파일이 바뀔 때만 사용합니다.</div>
+</section>
+
+<section id="s2-1">
+<h2><span class="no">2-1</span>학생 정보 탭<span class="sample">작성 예시</span></h2>
+<div class="three">
+ <div><h4>무엇을 하는 곳</h4><ul><li>수능 성적, 내신, 상담 메모 입력</li><li>학생 요약(등수·대표 누백·판정 분포) 확인</li><li>학생 저장·불러오기·내보내기</li></ul></div>
+ <div><h4>이렇게 쓰세요</h4><ol style="margin:0;padding-left:18px"><li>이름을 입력합니다</li><li>① 수능 성적에 점수를 넣습니다 (영어·한국사는 등급)</li><li>② 상담 메모에 요청사항을 적습니다</li><li>필요하면 내신(정성 평가)·환산점수를 입력합니다</li><li><b>저장</b>을 누릅니다</li></ol></div>
+ <div><h4>주의할 점</h4><ul><li>영어·한국사 등급이 비면 판정이 전부 <b>오류</b>로 나옵니다</li><li>표준점수가 변환표에 없으면 '확인' 경고가 뜹니다</li><li>학생 요약의 등수·누백은 <b>추정값</b>입니다</li></ul></div>
+</div>
+<h3>화면 구성</h3>
+<table><thead><tr><th style="width:150px">영역</th><th>설명</th></tr></thead><tbody>
+<tr><td><b>프로필 바</b></td><td>학생 선택·이름·저장 상태. 저장됨/수정됨/이름 필요 중 하나가 표시됩니다</td></tr>
+<tr><td><b>① 수능 성적</b></td><td>국어·수학·탐구는 표준점수, 영어·한국사·제2외국어는 등급 입력. 백분위·등급·상위 누적이 자동 계산됩니다</td></tr>
+<tr><td><b>정성 평가 정보</b></td><td>접혀 있음(선택). 펼치면 최종 평균 내신이 크게 나오고, 학기별 내신·출결을 입력합니다</td></tr>
+<tr><td><b>대학별 내신 환산점수</b></td><td>접혀 있음(선택). 비워 두면 기본값(비교내신)이 적용됩니다</td></tr>
+<tr><td><b>학생 요약(오른쪽)</b></td><td>전국 등수·대표 누백·판정 분포·추천 대학. 판정 숫자를 누르면 정밀 매칭으로 이동합니다</td></tr></tbody></table>
+<div class="warn"><b>주의</b> 판정 분포의 숫자(적정 653 등)는 <b>전문대와 과도한 하향을 제외</b>한 값입니다. 전문대를 포함하면 숫자가 훨씬 큽니다.</div>
+</section>
+
+<section id="s4">
+<h2><span class="no">4</span>수능 이후 반영 체크리스트</h2>
+<p>수능 성적 발표 이후에 <b>반드시 다시 해야 하는 작업</b>을 시간 순서로 정리했습니다. 위에서부터 순서대로 체크하세요(체크 상태는 이 브라우저에 저장됩니다). 항목을 눌러 펼치면 <b>왜 / 어디서 / 어떻게 확인하나</b>가 나옵니다.</p>
+<div class="prog"><b id="pc">0 / 0 완료</b><div class="bar"><i id="pb"></i></div></div>
+<div id="list"></div>
+<div class="warn"><b>담당 표기</b> <span class="tag t-who">관리자</span> 파일·설정을 다루는 사람 · <span class="tag t-who">컨설턴트</span> 상담 중 확인 · <span class="tag t-who">개발</span> 프로그램 코드·규칙 수정이 필요한 작업(수정 요청 시 <code>docs/RECHECK_LIST.md</code>의 해당 번호를 알려 주세요)</div>
+</section>
+</main></div>
+<script>
+const PH=[
+{n:1,t:'수능 성적 발표 직후',w:'분석기를 새 성적 기준으로 바꾸기',items:[
+ {id:'a1',must:1,who:'관리자',t:'실제 수능 성적이 반영된 새 고속성장분석기 파일 확보',s:'현재 데이터는 9월 모평 실채점판(date:20260928)입니다',
+  why:'판정·누백·합격권은 분석기 데이터로 계산합니다. 모평 기준 그대로 상담하면 실제 수능과 크게 어긋납니다.',
+  where:'분석기 제작처에서 받은 .xlsb 파일',
+  how:['파일명과 안의 날짜(date:…)가 수능 실채점판인지 확인합니다','파일은 약 30MB 이상이므로 전송이 끝났는지 용량을 확인합니다']},
+ {id:'a2',must:1,who:'관리자',t:'데이터 관리 탭에서 새 파일 업로드 → 검증 통과 → 적용',s:'파일 분석 30초~1분 소요',
+  why:'도구가 파일의 수식과 데이터를 통째로 읽어 다시 계산하고, 엑셀이 저장해 둔 결과와 같은지 자동 검증합니다.',
+  where:'데이터 관리 탭',
+  how:['파일을 끌어다 놓거나 <code>파일 선택</code> → <code>파일 분석</code>','검증 결과가 모두 일치하는지 확인한 뒤 <code>이 데이터로 적용</code>','불일치가 나오면 적용하지 말고 제작처에 파일 확인을 요청합니다']},
+ {id:'a3',must:1,who:'컨설턴트',t:'적용 후 전후 비교 점검 (예시 학생)',s:'모집단위 수, 판정, 누백이 어떻게 달라졌는지',
+  why:'새 데이터에서 대학·학과가 추가·삭제되거나 판정이 크게 움직이면 먼저 알아야 상담이 틀어지지 않습니다.',
+  where:'학생 정보 → 학생 요약, 대학 둘러보기, 정밀 매칭 도구',
+  how:['업로드 전과 후의 모집단위 수(데이터 관리 탭 상단)를 비교합니다','같은 예시 학생으로 학생 요약의 적정·예상·소신 숫자를 비교합니다','이전과 크게 다르면 원인을 분석기 제작처에 확인합니다']},
+ {id:'a4',must:1,who:'컨설턴트',t:'학생 성적을 실제 수능 점수로 교체',s:'영어·한국사 등급은 반드시 입력',
+  why:'영어·한국사 등급이 비어 있으면 판정이 전부 <b>오류</b>로 나옵니다.',
+  where:'학생 정보 → ① 수능 성적',
+  how:['국어·수학·탐구는 표준점수, 영어·한국사·제2외국어는 등급을 입력합니다','입력 후 "확인" 경고가 없는지 봅니다']},
+ {id:'a5',must:1,who:'개발',t:'분석기 데이터의 모집단위·정원·모집군이 요강과 다른 곳 다시 점검',s:'재확인 목록 4번',
+  why:'분석기 데이터가 요강과 다르면 판정 자체가 틀립니다. 새 파일에서도 같은 문제가 남아 있는지 봐야 합니다.',
+  where:'정밀 매칭 도구에서 해당 대학 검색 → 모집단위·정원·군 확인',
+  how:['요강에 없는 단위: 고려 학부대학[교과], 연세 첨단컴퓨팅학부(3개 학과로 분리), 단국대(천안)[지역] 3단위, 강원대 수의예과[지역]','정원 불일치: 한양(융합전자 64→80 등), 고려·서강·서울대 일부, 중앙·경희·외대·시립대·이화 다수, 메디컬 다수','모집군 불일치: 중앙대 8개 학과(국어국문·심리·정치국제 나→가 등), 충북·충남 지역인재 일부','이화 인공지능데이터사이언스학부의 인문/자연 인원이 요강과 반대']}
+]},
+{n:2,t:'12월 확정 요강 공개 후',w:'학생부 반영·이월 등 규칙 재검증',items:[
+ {id:'b1',must:1,who:'개발',t:'학생부 반영 방법을 12월 확정 정시모집요강으로 재검증',s:'현재 근거는 2026.8~9월 공개본',
+  why:'모든 요강에 "변경될 수 있음" 문구가 있습니다. 확정본과 다르면 미반영/정량/정성 배지와 판정이 틀립니다.',
+  where:'각 대학 입학처의 확정 정시모집요강 → 학생부 반영 항목',
+  how:['동국대(WISE)·강원대(강릉)는 요강 자체를 구하지 못해 시행계획(안) 기준입니다 → 확정본으로 대체','경북대는 요강(안) 기준입니다 → 확정본으로 대체','달라진 대학 목록을 만들어 개발 담당에게 전달 → 규칙 수정 후 배지 확인']},
+ {id:'b2',must:0,who:'컨설턴트',t:'근거가 약한 항목 입학처 확인',s:'재확인 목록 5~15번 중 정시에 직결되는 것',
+  why:'해석이 들어갔거나 출처가 입시기관 사본인 항목은 상담에 쓰기 전에 원문 대조가 필요합니다.',
+  where:'해당 대학 입학처 · 확정 요강',
+  how:['상지대 한의예과 출결 감점의 수능전형 적용 여부 → 미적용이면 "미반영"으로 변경','부산대 의·치의예 학업충실도평가 20%가 정량인지 정성인지','목포대 약학과: 수능 미응시자 학생부 교과 환산 규정의 적용 여부','학폭 감점 호수별 점수(경북·계명·동덕·우석 등): 표를 이미지로 읽은 값이므로 원문 이미지와 대조','출처가 입시기관 사본인 대학은 입학처 사이트 최종본과 대조']},
+ {id:'b3',must:1,who:'개발',t:'수시이월 인원 반영 (2026.12.31 이후 공지)',s:'이월 인원 확정 전에는 "이월" 단위 판정은 참고만',
+  why:'수시이월 단위는 정원이 확정되기 전입니다. 서울대·외대·시립대 등은 선발 방식이 명시돼 있으나 연세·중앙·고려·한양 등은 규정이 없어 "미확인"으로 둔 상태입니다.',
+  where:'각 대학 이월 인원 공지',
+  how:['확정된 이월 정원과 선발 방식을 반영합니다','반영 전까지 상담에서 이월 단위는 "인원 미확정"이라고 안내합니다']}
+]},
+{n:3,t:'원서 접수 전',w:'최종 점검과 보고서',items:[
+ {id:'c1',must:1,who:'컨설턴트',t:'지원희망 목록의 정원·군이 확정 요강과 같은지 점검',s:'최종 지원 상담 직전',
+  why:'정원·군이 바뀐 단위를 지원하면 판정이 의미가 없어집니다.',where:'지원희망 모집단위 탭',
+  how:['군별로 담은 모집단위를 확정 요강과 하나씩 대조합니다','정원이 크게 바뀐 단위는 메모에 적어 둡니다']},
+ {id:'c2',must:0,who:'컨설턴트',t:'학생부 반영 대학은 실제 내신 환산점수 입력',s:'정량·정성 대학이 후보에 있을 때',
+  why:'환산점수를 비워 두면 기본값(비교내신)으로 계산해 실제와 다를 수 있습니다.',where:'학생 정보 → 대학별 내신 환산점수',
+  how:['진학사 등에서 산출한 학생의 대학별 내신 환산점수를 입력합니다','입력 후 해당 대학 모집단위의 판정이 바뀌는지 확인합니다']},
+ {id:'c3',must:0,who:'컨설턴트',t:'보고서 소견 작성 후 PDF 저장',s:'펑크 근거는 내부용 — 보고서에는 자동 제외',
+  why:'최종 상담 자료를 학생·학부모에게 전달합니다.',where:'보고서 탭',
+  how:['섹션별 소견을 작성하고 필요한 섹션만 체크합니다','PDF로 저장해 쪽 번호·표 잘림을 확인합니다']}
+]},
+{n:4,t:'원서 접수 종료 후 · 다음 시즌 준비',w:'내년을 위한 업데이트',items:[
+ {id:'d1',must:0,who:'개발',t:'2028학년도 변경 예고 반영',s:'연세·경희·서강',
+  why:'2027과는 무관하지만 내년에 판정 규칙이 달라집니다.',where:'각 대학 2028 시행계획',
+  how:['연세: 학생부 정량 폐지·서류평가 신설','경희: 수능·학생부형 신설','서강: 정시 지역균형 신설']},
+ {id:'d2',must:0,who:'개발',t:'조사 범위 확장',s:'현재 약 3,900개 모집단위가 학생부 "미확인"',
+  why:'조사하지 않은 대학은 학생부 반영 여부를 모릅니다.',where:'과기원·인서울 기타·경기/인천·지방 사립·전문대',
+  how:['우선순위를 정해 대학별로 요강을 조사합니다','조사 방법은 docs/PROJECT_NOTES.md를 참고합니다']},
+ {id:'d3',must:0,who:'관리자',t:'분석기 제작처에 확인할 사항 전달',s:'재확인 목록 18번',
+  why:'엑셀 내신입력 시트가 한양·경희(태권도)·상지 등 학생부 반영 대학을 포함하지 않고, 정량 대학의 환산 방식이 2027 요강과 일치하는지 확인되지 않았습니다.',where:'분석기 제작처',
+  how:['서울대 교과평가 입력(-6~0)과 요강 점수 체계의 대응도 함께 문의합니다']},
+ {id:'d4',must:0,who:'관리자',t:'운영 방식 정리 (저장·배포)',s:'재확인 목록 20번',
+  why:'현재는 학생 정보가 각 브라우저에만 저장됩니다. 공유가 필요하면 저장소 연결이 필요하고, 외부 배포 시 접근 제한(로그인)이 필요합니다.',where:'관리자 결정',
+  how:['학생 정보는 내보내기(JSON)로 정기 백업합니다']}
+]}];
+let st={};try{st=JSON.parse(localStorage.getItem('manual_ck')||'{}')}catch(e){}
+const save=()=>{try{localStorage.setItem('manual_ck',JSON.stringify(st))}catch(e){}};
+const all=PH.flatMap(p=>p.items);
+document.getElementById('list').innerHTML=PH.map(p=>`<div class="ph"><div class="t"><span class="badge">${p.n}</span><h3>${p.t}</h3><span class="when">${p.w}</span></div></div>`+p.items.map(i=>`<details class="ck ${st[i.id]?'done':''}" id="k-${i.id}"><summary><input type="checkbox" data-id="${i.id}" ${st[i.id]?'checked':''} aria-label="완료"><span class="tt">${i.t}<small>${i.s}</small></span><span class="tag ${i.must?'t-must':'t-rec'}">${i.must?'필수':'권장'}</span><span class="tag t-who">${i.who}</span><span class="arr"></span></summary><div class="bd"><dl><dt>왜 하나</dt><dd>${i.why}</dd><dt>어디서</dt><dd>${i.where}</dd><dt>확인 방법</dt><dd><ul>${i.how.map(h=>`<li>${h}</li>`).join('')}</ul></dd></dl></div></details>`).join('')).join('');
+function prog(){const d=all.filter(i=>st[i.id]).length;document.getElementById('pc').textContent=d+' / '+all.length+' 완료';document.getElementById('pb').style.width=(d/all.length*100)+'%'}
+document.querySelectorAll('.ck input').forEach(c=>{c.onclick=e=>e.stopPropagation();c.onchange=()=>{st[c.dataset.id]=c.checked;document.getElementById('k-'+c.dataset.id).classList.toggle('done',c.checked);save();prog()}});
+prog();
+const secs=[...document.querySelectorAll('section')],links=[...document.querySelectorAll('nav a')];
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id))}})},{rootMargin:'-20% 0px -70% 0px'});secs.forEach(s=>io.observe(s));
+</script></body></html>
