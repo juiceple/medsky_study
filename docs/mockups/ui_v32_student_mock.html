@@ -1,0 +1,98 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MEDSKY 학생 정보 시안</title>
+<style>
+:root{--navy:#132a4c;--navy2:#1f3f6e;--ink:#1b2230;--ink2:#4d5868;--muted:#6b7480;--paper:#f6f7f9;--panel:#fff;--line:#dde2ea;--line2:#eef1f5;--accent:#c0562f;--accent-s:#fbeee8;--j4:#2f7a46;--j4s:#d3e6d0;--j3:#2a5a9c;--j3s:#d9e6f6;--j2:#8a6510;--j2s:#fbe9b8;--j1:#a8432a;--j1s:#f6d8cc;--ok:#2f7a46}
+@media (prefers-color-scheme:dark){:root{--ink:#e6eaf1;--ink2:#b3bccb;--muted:#8d97a8;--paper:#11151c;--panel:#1a1f28;--line:#2d3542;--line2:#232a35;--accent:#e07a52;--accent-s:#3a2419;--j4:#7fcf95;--j4s:#1f3a29;--j3:#8db5ee;--j3s:#1c2d47;--j2:#e8c26a;--j2s:#3d3218;--j1:#f09a80;--j1s:#432519;--ok:#7fcf95}}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.5 system-ui,"Noto Sans KR",sans-serif}
+.note{background:var(--accent-s);color:var(--accent);padding:8px 16px;font-size:12.5px;text-align:center}
+.pbar{position:sticky;top:0;z-index:5;background:var(--panel);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.pbar select,.pbar .nm{border:1px solid var(--line);border-radius:8px;padding:6px 10px;background:var(--panel);color:var(--ink);font:inherit}
+.pbar .nm{font-weight:700}.st{font-size:12.5px;color:var(--ok);font-weight:600;margin-left:4px}.st:before{content:"● ";font-size:10px}
+.sp{flex:1}.btn{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:8px;padding:6px 12px;font:inherit;font-weight:600;cursor:pointer}.btn.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+.wrap{max-width:1240px;margin:0 auto;padding:18px 16px 60px;display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:20px;align-items:start}
+.sec{background:var(--panel);border:1px solid var(--line);border-radius:14px;margin-bottom:16px;overflow:hidden}
+.sh{display:flex;align-items:center;gap:10px;padding:14px 18px}
+.num{width:24px;height:24px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:800;flex:none}
+.sh h2{font-size:18px;margin:0;font-weight:800}.tip{color:var(--muted);font-size:13px;cursor:help;border:1px solid var(--line);border-radius:50%;width:18px;height:18px;display:inline-grid;place-items:center;font-size:11px}
+.sh .sumline{margin-left:auto;font-size:12.5px;color:var(--muted)}
+.opt .sh{cursor:pointer}.opt .sh h2{font-size:16px;color:var(--ink2)}.opt .sh:after{content:"▸";color:var(--muted);margin-left:10px}.opt.open .sh:after{content:"▾"}
+.opt .body{display:none;border-top:1px solid var(--line2);padding:12px 18px 16px}.opt.open .body{display:block}
+.opt .tag{font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:10px;padding:0 8px}
+table{width:100%;border-collapse:collapse}th{font-size:12px;color:var(--muted);text-align:left;padding:6px 10px;background:var(--paper);font-weight:600}
+td{padding:7px 10px;border-top:1px solid var(--line2)}td b{font-weight:800}
+input,select{font:inherit;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:7px;padding:5px 8px}
+input.sc{width:76px;text-align:right}
+.gr{display:flex;gap:3px}.gr i{width:20px;height:20px;border-radius:50%;border:1px solid var(--accent);color:var(--accent);font-style:normal;font-size:11px;display:grid;place-items:center}.gr i.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.tot{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line)}.tot div{padding:10px 18px;font-size:12px;color:var(--muted)}.tot b{display:block;font-size:20px;color:var(--ink)}
+.memo{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 18px 16px}.memo label{font-size:12px;font-weight:700;color:var(--ink2)}.memo textarea{width:100%;height:78px;margin-top:4px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);font:inherit;padding:8px;resize:vertical}
+/* summary card */
+.side{position:sticky;top:64px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+.card h3{margin:0 0 12px;font-size:13px;color:var(--muted);font-weight:700;display:flex;justify-content:space-between}
+.big{display:flex;gap:18px}.big div{flex:1}.big small{font-size:11.5px;color:var(--muted)}.big b{display:block;font-size:26px;font-weight:800;line-height:1.15}
+.big .rk small:last-child{display:block}
+.mini2{display:flex;justify-content:space-between;padding:8px 0;border-top:1px solid var(--line2);margin-top:12px;font-size:12.5px;color:var(--ink2)}.mini2 b{color:var(--ink)}
+.seg{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-bottom:12px}.seg button{flex:1;border:0;background:var(--panel);color:var(--ink2);padding:6px;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer}.seg button[aria-pressed=true]{background:var(--navy);color:#fff}
+.dist{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.dist a{display:block;border-radius:10px;padding:8px 10px;text-decoration:none;cursor:pointer}
+.dist a b{display:block;font-size:22px;font-weight:800;line-height:1.1}.dist a small{font-size:11.5px}
+.d4{background:var(--j4s);color:var(--j4)}.d3{background:var(--j3s);color:var(--j3)}.d2{background:var(--j2s);color:var(--j2)}
+.dist a:hover{filter:brightness(.97);outline:2px solid currentColor}
+.sub{font-size:11.5px;color:var(--muted);margin-top:8px}
+.goto{display:flex;gap:8px;margin-top:12px}.goto .btn{flex:1;font-size:12.5px}
+.rec{display:flex;align-items:center;gap:10px;padding:7px 0;border-top:1px solid var(--line2);font-size:13px}.rec:first-of-type{border-top:0}
+.rec .rn{width:20px;height:20px;border-radius:50%;background:var(--line2);font-size:11px;font-weight:800;display:grid;place-items:center;color:var(--ink2)}
+.rec .t{flex:1;font-weight:700}.rec .t small{font-weight:400;color:var(--muted);margin-left:4px}
+.g{display:inline-grid;place-items:center;width:19px;height:19px;border:1.5px solid;border-radius:50%;font-size:10.5px;font-weight:800}.ga{color:#2a5bd7}.na{color:#1e8a4c}.da{color:#8b3fc4}
+@media(max-width:960px){.wrap{grid-template-columns:1fr}.side{position:static;order:-1}}
+</style></head><body>
+<div class="note">시안(정적 데모 · 샘플 값) — 접기/펼치기와 응시 기준 탭은 눌러볼 수 있습니다. 실제 프로그램과는 연결되지 않았습니다.</div>
+<div class="pbar"><select><option>예시 학생 (9월 모평)</option></select><span class="nm">예시 학생 (9월 모평)</span><span class="st">저장됨 · 방금</span>
+<span class="sp"></span><button class="btn">내보내기</button><button class="btn">가져오기</button><button class="btn">삭제</button><button class="btn pri">저장</button></div>
+<div class="wrap"><main>
+<div class="sec"><div class="sh"><span class="num">1</span><h2>수능 성적</h2><span class="tip" title="국어·수학·탐구는 표준점수, 영어·한국사·제2외국어는 등급을 입력하면 백분위·누적이 자동 계산됩니다">i</span></div>
+<table><thead><tr><th>영역</th><th>선택과목</th><th>점수</th><th>백분위</th><th>등급</th><th>상위 누적</th></tr></thead><tbody>
+<tr><td><b>국어</b></td><td><select><option>언매</option></select></td><td><input class="sc" value="134"> 점</td><td><b>98</b></td><td><div class="gr"><i class="on">1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i></div></td><td>1.91%</td></tr>
+<tr><td><b>수학</b></td><td><select><option>미적</option></select></td><td><input class="sc" value="127"> 점</td><td><b>94</b></td><td><div class="gr"><i>1</i><i class="on">2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i></div></td><td>5.75%</td></tr>
+<tr><td><b>영어</b></td><td style="color:var(--muted)">등급 입력</td><td><input class="sc" value="2"> 등급</td><td>–</td><td><div class="gr"><i>1</i><i class="on">2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i></div></td><td>38.12%</td></tr>
+<tr><td><b>한국사</b></td><td style="color:var(--muted)">등급 입력</td><td><input class="sc" value="2"> 등급</td><td>–</td><td><div class="gr"><i>1</i><i class="on">2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i></div></td><td>31.41%</td></tr>
+<tr><td><b>탐구 1</b></td><td><select><option>화학 I</option></select></td><td><input class="sc" value="63"> 점</td><td><b>87</b></td><td><div class="gr"><i>1</i><i>2</i><i class="on">3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i></div></td><td>13.65%</td></tr>
+<tr><td><b>탐구 2</b></td><td><select><option>생명과학 I</option></select></td><td><input class="sc" value="62"> 점</td><td><b>89</b></td><td><div class="gr"><i>1</i><i class="on">2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i></div></td><td>14.07%</td></tr>
+<tr><td><b>제2외국어</b></td><td><select><option>독일어 I</option></select></td><td><input class="sc" value="5"> 등급</td><td>–</td><td><div class="gr"><i>1</i><i>2</i><i>3</i><i>4</i><i class="on">5</i><i>6</i><i>7</i><i>8</i><i>9</i></div></td><td>69.9%</td></tr></tbody></table>
+<div class="tot"><div>국수탐 백분위 합<b>368</b></div><div>국수탐 표준점수 합<b>386</b></div><div>응시 유형<b>이과</b></div></div></div>
+
+<div class="sec"><div class="sh"><span class="num">2</span><h2>상담 메모</h2><span class="tip" title="상담 중 파악한 학생 요청사항과 컨설턴트 의견. 학생을 저장하면 함께 저장됩니다">i</span></div>
+<div class="memo"><div><label>학생 요청사항</label><textarea placeholder="예: 가군은 무조건 안정, 다군은 지방 의대 소신 지원 원함"></textarea></div><div><label>컨설턴트 코멘트</label><textarea placeholder="예: 탐구 변환표준점수 유리한 대학 위주로 검토"></textarea></div></div></div>
+
+<div class="sec opt" id="o1"><div class="sh"><h2>대학별 내신 환산점수</h2><span class="tag">선택 입력</span><span class="sumline">입력 0/7 · 미입력 시 비교내신(기본값) 적용</span></div>
+<div class="body"><table><thead><tr><th>대학</th><th>내신 환산점수</th><th>미입력 시 적용값</th><th>적용 모집단위</th></tr></thead><tbody>
+<tr><td><b>고려대 (교과우수전형)</b></td><td><input class="sc" placeholder="0~200"> / 200점</td><td>196점 (비교내신)</td><td>59개</td></tr>
+<tr><td><b>연세대</b></td><td><input class="sc" placeholder="0~50"> / 50점</td><td>48.5점 (비교내신)</td><td>64개</td></tr>
+<tr><td><b>중앙대 (비교과 출결)</b></td><td><input class="sc" placeholder="0~100"> / 100점</td><td>100점 (비교내신)</td><td>62개</td></tr></tbody></table><div class="sub">… 이하 4개 대학 (대구대, 덕성여대, 동남보건대, 서울대 교과평가)</div></div></div>
+
+<div class="sec opt" id="o2"><div class="sh"><h2>정성 평가 정보 (내신·출결)</h2><span class="tag">선택 입력</span><span class="sumline">평균 내신 미입력 · 무단결석 0일</span></div>
+<div class="body"><table><thead><tr><th>학기</th><th>산출 내신 (전 교과 평균 등급)</th></tr></thead><tbody>
+<tr><td><b>1학년 1학기</b></td><td><input class="sc" placeholder="예: 2.85"> 등급</td></tr><tr><td><b>1학년 2학기</b></td><td><input class="sc" placeholder="예: 2.85"> 등급</td></tr></tbody></table><div class="sub">… 2·3학년 학기, 출결 상황, 특이 사항</div></div></div>
+</main>
+
+<aside class="side">
+<div class="card"><h3><span>이 학생 한눈에</span><span style="font-weight:500">성적 수정 시 즉시 갱신</span></h3>
+<div class="big"><div class="rk"><small>전국 등수</small><b>1,248위</b><small>/ 42,310명</small></div><div><small>대표 누백</small><b>2.06%</b><small>상위</small></div></div>
+<div class="mini2"><span>국수탐 백분위 합</span><b>368</b></div><div class="mini2" style="margin-top:0"><span>응시 유형</span><b>이과 (미적·기하+과탐)</b></div></div>
+
+<div class="card"><h3><span>판정 분포</span><span style="font-weight:500">전문대 제외</span></h3>
+<div class="seg" id="seg"><button aria-pressed="true" data-v="236,12,40,5656">전체</button><button aria-pressed="false" data-v="214,10,31,0">이과</button><button aria-pressed="false" data-v="168,9,22,0">문과</button></div>
+<div class="dist"><a class="d4"><b id="n4">236</b><small>적정</small></a><a class="d3"><b id="n3">12</b><small>예상</small></a><a class="d2"><b id="n2">40</b><small>소신</small></a></div>
+<div class="sub">숫자를 누르면 해당 판정이 걸린 정밀 매칭으로 이동합니다 · 전문대 포함 시 적정 5,656</div>
+<div class="goto"><button class="btn">정밀 매칭 →</button><button class="btn">대학 둘러보기 →</button></div></div>
+
+<div class="card"><h3><span>추천 대학 TOP 5</span><span style="font-weight:500">대표 누백 기준</span></h3>
+<div class="rec"><span class="rn">1</span><span class="t">서울시립대<small>서울</small></span><span class="g ga">가</span></div>
+<div class="rec"><span class="rn">2</span><span class="t">중앙대<small>서울</small></span><span class="g na">나</span></div>
+<div class="rec"><span class="rn">3</span><span class="t">경희대<small>서울</small></span><span class="g ga">가</span></div>
+<div class="rec"><span class="rn">4</span><span class="t">아주대<small>경기</small></span><span class="g da">다</span></div>
+<div class="rec"><span class="rn">5</span><span class="t">세종대<small>서울</small></span><span class="g na">나</span></div></div>
+</aside></div>
+<script>
+document.querySelectorAll('.opt .sh').forEach(h=>h.onclick=()=>h.parentNode.classList.toggle('open'));
+document.querySelectorAll('#seg button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#seg button').forEach(x=>x.setAttribute('aria-pressed',x==b));const[a,e,s]=b.dataset.v.split(',');n4.textContent=a;n3.textContent=e;n2.textContent=s});
+</script></body></html>
