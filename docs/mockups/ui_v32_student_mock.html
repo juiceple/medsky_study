@@ -25,6 +25,8 @@ input.sc{width:76px;text-align:right}
 .gr{display:flex;gap:3px}.gr i{width:20px;height:20px;border-radius:50%;border:1px solid var(--accent);color:var(--accent);font-style:normal;font-size:11px;display:grid;place-items:center}.gr i.on{background:var(--navy);border-color:var(--navy);color:#fff}
 .tot{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line)}.tot div{padding:10px 18px;font-size:12px;color:var(--muted)}.tot b{display:block;font-size:20px;color:var(--ink)}
 .memo{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 18px 16px}.memo label{font-size:12px;font-weight:700;color:var(--ink2)}.memo textarea{width:100%;height:78px;margin-top:4px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);font:inherit;padding:8px;resize:vertical}
+.ng{display:flex;justify-content:space-between;align-items:baseline;padding:8px 12px;margin:6px 0 10px;background:var(--paper);border-radius:10px}.ng small{font-size:12px;color:var(--ink2);font-weight:600}.ng b{font-size:26px;font-weight:800;letter-spacing:-.5px}.ng b em{font-style:normal;font-size:13px;font-weight:600;color:var(--ink2);margin-left:2px}
+.final{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border-left:4px solid var(--navy2);background:var(--paper);border-radius:10px;padding:14px 18px;margin-bottom:14px}.final small{font-size:12px;color:var(--ink2);font-weight:600;display:block}.final small span{font-weight:400;color:var(--muted)}.final .fv{display:flex;align-items:baseline;gap:6px;margin:2px 0}.final .fv b{font-size:44px;font-weight:800;line-height:1;letter-spacing:-1px}.final .fv em{font-style:normal;font-size:16px;color:var(--ink2)}.final .fs{font-weight:400;color:var(--muted)}.final .fd{text-align:right}.final .fd>div{margin-top:6px}
 /* summary card */
 .side{position:sticky;top:64px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:14px}
@@ -67,9 +69,11 @@ dl{margin:0;display:grid;grid-template-columns:auto 1fr;row-gap:6px;column-gap:1
 <div class="sec"><div class="sh"><span class="num">2</span><h2>상담 메모</h2><span class="tip" title="상담 중 파악한 학생 요청사항과 컨설턴트 의견. 학생을 저장하면 함께 저장됩니다">i</span></div>
 <div class="memo"><div><label>학생 요청사항</label><textarea placeholder="예: 가군은 무조건 안정, 다군은 지방 의대 소신 지원 원함"></textarea></div><div><label>컨설턴트 코멘트</label><textarea placeholder="예: 탐구 변환표준점수 유리한 대학 위주로 검토"></textarea></div></div></div>
 
-<div class="sec opt" id="o2"><div class="sh"><h2>정성 평가 정보 (내신·출결)</h2><span class="tag">선택 입력</span><span class="sumline">평균 2.75등급 · 무단 결석 0일</span></div>
-<div class="body"><table><thead><tr><th>학기</th><th>산출 내신 (전 교과 평균 등급)</th></tr></thead><tbody>
-<tr><td><b>1학년 1학기</b></td><td><input class="sc" placeholder="예: 2.85"> 등급</td></tr><tr><td><b>1학년 2학기</b></td><td><input class="sc" placeholder="예: 2.85"> 등급</td></tr></tbody></table><div class="sub">… 2·3학년 학기, 출결 상황, 특이 사항</div></div></div>
+<div class="sec opt open" id="o2"><div class="sh"><h2>정성 평가 정보 (내신·출결)</h2><span class="tag">선택 입력</span><span class="sumline">평균 2.75등급 · 무단 결석 0일</span></div>
+<div class="body"><div class="final"><div><small>최종 평균 내신 <span>(전 교과 평균 등급)</span></small><div class="fv"><b>2.75</b><em>등급</em></div><small class="fs">학기별 점수를 입력하면 자동으로 계산됩니다</small></div>
+<div class="fd"><small>직접 수정 <span>(비우면 자동 계산값 사용)</span></small><div><input class="sc" placeholder="예: 2.75" style="width:110px"> <button class="btn">자동값으로</button></div></div></div>
+<table><thead><tr><th>학기</th><th>산출 내신 (전 교과 평균 등급)</th></tr></thead><tbody>
+<tr><td><b>1학년 1학기</b></td><td><input class="sc" value="2.80"> 등급</td></tr><tr><td><b>1학년 2학기</b></td><td><input class="sc" value="2.75"> 등급</td></tr><tr><td><b>2학년 1학기</b></td><td><input class="sc" value="2.70"> 등급</td></tr></tbody></table><div class="sub">… 이하 2학년 2학기, 3학년 학기, 출결 상황, 특이 사항</div></div></div>
 <div class="sec opt" id="o1"><div class="sh"><h2>대학별 내신 환산점수</h2><span class="tag">선택 입력</span><span class="sumline">입력 0/7 · 미입력 시 비교내신(기본값) 적용</span></div>
 <div class="body"><table><thead><tr><th>대학</th><th>내신 환산점수</th><th>미입력 시 적용값</th><th>적용 모집단위</th></tr></thead><tbody>
 <tr><td><b>고려대 (교과우수전형)</b></td><td><input class="sc" placeholder="0~200"> / 200점</td><td>196점 (비교내신)</td><td>59개</td></tr>
@@ -84,7 +88,7 @@ dl{margin:0;display:grid;grid-template-columns:auto 1fr;row-gap:6px;column-gap:1
 <div class="grp">수능</div>
 <dl><dt>국수탐 백분위 합</dt><dd>368</dd><dt>응시 유형</dt><dd>이과</dd></dl>
 <div class="grp">내신 <span class="grpnote">정성 평가용</span></div>
-<dl><dt>평균 내신</dt><dd>2.75등급</dd><dt>무단 결석</dt><dd>0일</dd><dt>최근 학기</dt><dd>2.70등급 <span class="trend">▲ 0.10 개선</span></dd></dl></div>
+<div class="ng"><small>평균 내신</small><b>2.75<em>등급</em></b></div><dl><dt>무단 결석</dt><dd>0일</dd><dt>최근 학기</dt><dd>2.70등급 <span class="trend">▲ 0.05 개선</span></dd></dl></div>
 
 <div class="card"><h3>판정 분포 <span class="h3n">전문대 제외</span></h3>
 <div class="seg" id="seg"><button aria-pressed="true" data-v="236,12,40,5656">전체</button><button aria-pressed="false" data-v="214,10,31,0">이과</button><button aria-pressed="false" data-v="168,9,22,0">문과</button></div>
