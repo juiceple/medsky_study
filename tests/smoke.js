@@ -73,7 +73,30 @@ const ok=(c,m)=>{console.log((c?'  ✓ ':'  ✗ ')+m);if(!c)fail++};
   const k0=await p.evaluate(()=>Object.keys(S.finals).length);await p.locator('[data-fin]').first().click();await p.waitForTimeout(300);
   ok(Math.abs((await p.evaluate(()=>Object.keys(S.finals).length))-k0)===1,'최종 지정 버튼이 최종 지원을 켜고 끔');
 
-  console.log('12. 데이터 관리');
+  console.log('12. v30 카드·필터 패널');
+  p.on('dialog',d=>d.accept(d.type()==='prompt'?'스모크프리셋':undefined));
+  await p.click('[data-tab=browse]');await p.waitForSelector('.ucard');
+  const av=await p.$$eval('.ucard .av',e=>e.map(x=>x.textContent));
+  ok(av.includes('서울과학기술')||av.some(x=>x.length>=4),'대학 이니셜은 \'OO대학교\'의 OO까지 표시');
+  await p.click('[data-tab=match]');await p.waitForSelector('#mt tbody tr');
+  const n0=+((await p.textContent('#mfCnt')).replace(/,/g,''));
+  await p.click('[data-mf=judge][data-v="4"]');await p.waitForTimeout(300);
+  const n1=+((await p.textContent('#mfCnt')).replace(/,/g,''));
+  ok(n1>0&&n1<n0&&(await p.$$('.fact .ac')).length===1,'판정 칩 → 결과 수 감소 + 적용 중 필터 칩');
+  await p.click('#mfPreSave');await p.waitForTimeout(200);
+  await p.click('#mfClear');await p.waitForTimeout(300);
+  ok(+((await p.textContent('#mfCnt')).replace(/,/g,''))===n0,'전체 초기화로 원래 결과 수 복귀');
+  await p.click('[data-pre=u0]');await p.waitForTimeout(300);
+  ok(+((await p.textContent('#mfCnt')).replace(/,/g,''))===n1,'저장한 프리셋 불러오기');
+  await p.click('#mfClear');await p.waitForTimeout(200);
+  const nb4=await p.evaluate(()=>Object.keys(S.picks).length);
+  await p.click('#mt tbody tr:nth-child(1) .sk');await p.click('#mt tbody tr:nth-child(2) .sk');
+  ok((await p.textContent('#selbar')).includes('선택 2개'),'체크하면 선택 바가 뜸');
+  await p.click('#selAdd');await p.waitForTimeout(200);
+  ok(await p.evaluate(b=>Object.keys(S.picks).length-b,nb4)>=1&&!(await p.$('#selbar')),'선택 항목이 지원희망에 담기고 바가 사라짐');
+  ok(errs.length===0,'v30 화면 오류 없음');
+
+  console.log('13. 데이터 관리');
   await p.click('[data-tab=data]');await p.waitForSelector('#xdz');
   ok(await p.locator('#xf').count()===1&&await p.locator('#xgo').isDisabled(),'파일 선택 영역과 분석 버튼(처음엔 비활성)');
 

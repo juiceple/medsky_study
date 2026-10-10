@@ -103,11 +103,11 @@ h2.sec{margin:22px 0 6px;font-size:16px;color:var(--navy2);display:flex;align-it
 .gcol{cursor:pointer;user-select:none}.gcol:hover .gl{text-decoration:underline}.gcol .car{width:14px;color:var(--muted);font-size:11px}
 .legend{display:flex;gap:12px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--muted);margin:0 0 4px}.legend i{font-style:normal;font-size:9px;margin-right:3px}
 .ucard .cdist{display:flex;gap:8px;flex-wrap:wrap}.ucard .cdist i{font-style:normal;font-size:9px;margin-right:2px}
-.ugrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
-.ucard{all:unset;box-sizing:border-box;cursor:pointer;background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--bc,var(--line));border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:0;transition:box-shadow .15s,transform .15s}
-.ucard:hover{box-shadow:0 4px 14px rgba(19,42,76,.16);transform:translateY(-2px)}.ucard:focus-visible{outline:2px solid var(--navy2);outline-offset:2px}
-.ucard b{font-size:17px;font-weight:800;line-height:1.25}
-.ucard .mini{display:flex;height:8px;border-radius:4px;overflow:hidden;background:var(--line2);margin:14px 0 10px}
+.ugrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:8px}
+.ucard{all:unset;box-sizing:border-box;cursor:pointer;background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:10px 12px;display:flex;flex-direction:column;gap:6px}
+.ucard:hover{border-color:var(--navy2);box-shadow:0 2px 8px rgba(19,42,76,.08)}
+.ucard b{font-size:13.5px}
+.ucard .mini{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line2)}
 .ucard small{font-size:11.5px;color:var(--muted)}
 .dhead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
 .dhead h2{margin:0;font-size:19px}
@@ -118,46 +118,6 @@ h2.sec{margin:22px 0 6px;font-size:16px;color:var(--navy2);display:flex;align-it
 .chk{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;color:var(--ink2)}
 .chk input[type=number]{width:54px;padding:3px 6px}
 /* match layout */
-/* v30 cards / filters */
-.ucard .utop{display:flex;gap:12px;align-items:center}
-.ucard .av{flex:none;min-width:50px;height:50px;padding:0 6px;border-radius:14px;display:grid;place-items:center;color:#fff;font-weight:800;text-align:center;line-height:1.1;background:var(--ac,#555)}
-.ucard .usub{font-size:12px;color:var(--muted);margin-top:3px;display:flex;gap:5px;align-items:center;flex-wrap:wrap}
-.ucard .usub .gunc{width:19px;height:19px;font-size:10.5px}
-.ucard .unums{display:flex;gap:16px}.ucard .unums div{font-size:11px;color:var(--muted);line-height:1.2}.ucard .unums b{display:block;font-size:20px;font-weight:800}
-.ucard .ufoot{margin-top:10px;padding-top:8px;border-top:1px solid var(--line2);font-size:12px;color:var(--ink2);display:flex;justify-content:space-between}
-#browseWrap .gtitle{font-size:21px;font-weight:800;margin:26px 0 12px;padding-left:12px;border-left:5px solid var(--accent);align-items:center}
-#browseWrap .gtitle small{font-size:13px}
-#browseWrap .gtitle .car{font-size:14px;color:var(--muted)}
-#browseWrap .gtitle .gsum{font-size:13px;font-weight:500;color:var(--muted)}
-.filters{padding:0;display:flex;flex-direction:column;overflow:hidden}
-.filters .fbody{flex:1;overflow-y:auto;min-height:0}
-.fp-h{display:flex;justify-content:space-between;align-items:center;padding:14px 16px 8px}.fp-h b{font-size:16px}
-.lnk{background:none;border:0;color:var(--accent);font:inherit;font-size:12.5px;font-weight:600;cursor:pointer}
-.fpb{padding:0 16px 10px}.fpb .seg{display:flex}
-.fact{padding:0 16px 10px;display:flex;flex-wrap:wrap;gap:6px}.fact .t{font-size:11px;color:var(--muted);width:100%}
-.fact .ac{background:var(--accent-s);color:var(--accent);border:0;border-radius:14px;padding:3px 10px;font-size:12px;font-weight:600;cursor:pointer}.fact .ac:after{content:" ×";opacity:.7}
-.fsec{border-top:1px solid var(--line2)}
-.fsec>button{width:100%;display:flex;align-items:center;padding:11px 16px;background:none;border:0;color:var(--ink);font:inherit;font-weight:700;cursor:pointer;text-align:left}
-.fsec>button .bd{background:var(--accent);color:#fff;border-radius:9px;font-size:11px;padding:0 7px;margin-left:8px;margin-right:auto}
-.fsec>button:after{content:"▾";color:var(--muted);margin-left:auto}.fsec>button .bd+*{}.fsec.c>button:after{content:"▸"}
-.fsec .fsb{padding:0 16px 12px}.fsec.c .fsb{display:none}
-.fsec .fsb .hint{margin-bottom:6px}
-.chip small{margin-left:4px;opacity:.65;font-size:11px;font-weight:500}.chip.z:not([aria-pressed="true"]){opacity:.45}
-.chip.jt[aria-pressed="true"]{color:#fff}.chip.jt.j4[aria-pressed="true"]{background:#2f7a46;border-color:#2f7a46}.chip.jt.j3[aria-pressed="true"]{background:#2a5a9c;border-color:#2a5a9c}.chip.jt.j2[aria-pressed="true"]{background:#8a6510;border-color:#8a6510}.chip.jt.j1[aria-pressed="true"]{background:#a8432a;border-color:#a8432a}
-.ftg{padding:8px 16px;border-top:1px solid var(--line2)}.ftg .chk{margin:4px 0}
-.fpre{padding:12px 16px;background:var(--paper);border-top:1px solid var(--line2)}
-.fpre .t{font-size:11px;color:var(--muted);margin-bottom:6px;display:flex;justify-content:space-between}
-.fpre .chips{gap:6px}.fpre .pre{display:inline-flex;align-items:center;border:1px solid var(--line);background:var(--panel);border-radius:16px;overflow:hidden}
-.fpre .pre button{background:none;border:0;padding:4px 10px;font:inherit;font-size:12.5px;font-weight:600;color:var(--ink2);cursor:pointer}.fpre .pre button.x{padding:4px 8px 4px 0;color:var(--muted)}
-.fpre .pre:hover{border-color:var(--navy2)}.fpre .pre.save{border-style:dashed;border-color:var(--accent)}.fpre .pre.save button{color:var(--accent)}
-.ffoot{padding:12px 16px;border-top:1px solid var(--line);background:var(--panel)}
-.ffoot .go{width:100%;padding:11px;background:var(--navy);color:#fff;border:0;border-radius:10px;font:inherit;font-weight:700;cursor:pointer}
-.ffoot .sub{display:flex;gap:8px;margin-top:8px}.ffoot .sub .btn{flex:1}
-td.addc{white-space:nowrap}.addc .sk{margin-right:6px;vertical-align:middle;accent-color:var(--accent);width:15px;height:15px}
-.selbar{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:60;background:var(--navy);color:#fff;border-radius:12px;padding:10px 14px;display:flex;gap:10px;align-items:center;box-shadow:0 8px 24px rgba(0,0,0,.3)}
-.selbar button{border:0;border-radius:8px;padding:7px 12px;font:inherit;font-weight:700;cursor:pointer;background:rgba(255,255,255,.15);color:#fff}.selbar button.go{background:var(--accent)}
-@media (max-width:900px){.filters{overflow:visible}.filters .fbody{overflow:visible}}
-
 .layout{display:flex;height:calc(100vh - var(--hh,112px));min-height:520px}
 .filters{width:300px;flex:none;background:var(--panel);border-right:1px solid var(--line);padding:14px 16px;overflow-y:auto}
 .rh{width:6px;flex:none;cursor:col-resize;background:var(--line)}
@@ -1185,7 +1145,7 @@ function funkOf(i){
 const funkHtml=f=>`<span class="fk ${f.badgeClass}">${f.category}</span>`;
 
 /* ===== student state ===== */
-const BLANK=()=>({id:null,name:'',kor:{sub:'화작',s:null},math:{sub:'확통',s:null},eng:null,hist:null,t1:{sub:SCI[0],s:null},t2:{sub:SCI[1],s:null},lang:{sub:'',g:null},memoReq:'',memoCon:'',naesin:{},qual:{},picks:{},finals:{},notes:{},report:{},mfPresets:[]});
+const BLANK=()=>({id:null,name:'',kor:{sub:'화작',s:null},math:{sub:'확통',s:null},eng:null,hist:null,t1:{sub:SCI[0],s:null},t2:{sub:SCI[1],s:null},lang:{sub:'',g:null},memoReq:'',memoCon:'',naesin:{},qual:{},picks:{},finals:{},notes:{},report:{}});
 let S=BLANK();
 let basis='all';
 function scoresFromFile(sc){
@@ -1277,7 +1237,7 @@ function sortList(T,list){
 function cellHtml(k,i){
   const u=U[i],b=B[basis][i];
   switch(k){
-    case 'add':{const on=S.picks[keyOf(i)]!=null;return `<td class="addc"><input type="checkbox" class="sk" data-sel="${i}" aria-label="선택" ${SEL.has(i)?'checked':''}><button class="wb ${on?'on':''}" data-add="${i}">${on?'담음':'+ 담기'}</button></td>`}
+    case 'add':{const on=S.picks[keyOf(i)]!=null;return `<td><button class="wb ${on?'on':''}" data-add="${i}">${on?'담음':'+ 담기'}</button></td>`}
     case 'univ':return `<td class="nm">${esc(u[0])}</td>`;
     case 'major':return `<td>${esc(u[1])}</td>`;
     case 'trk':return `<td>${trkTag(u)}</td>`;
@@ -1300,18 +1260,6 @@ function cellHtml(k,i){
     case 'funk':return `<td>${funkHtml(funkOf(i))}</td>`;
   }
 }
-const SEL=new Set();
-function updateSelBar(){
-  let b=document.getElementById('selbar');
-  const on=SEL.size&&(tab==='match'||tab==='browse');
-  if(!on){if(b)b.remove();return}
-  if(!b){b=document.createElement('div');b.id='selbar';b.className='selbar';document.body.appendChild(b)}
-  b.innerHTML=`<span>선택 ${SEL.size}개</span>${tab==='match'?'<button id="selAll">보이는 결과 모두 선택</button>':''}<button id="selClr">선택 해제</button><button class="go" id="selAdd">지원희망에 담기</button>`;
-  $('selClr').onclick=()=>{SEL.clear();refreshSel()};
-  if($('selAll'))$('selAll').onclick=()=>{(TM.last||[]).slice(0,TM.limit).forEach(i=>SEL.add(i));refreshSel()};
-  $('selAdd').onclick=()=>{let n=0,t=Date.now();[...SEL].forEach(i=>{const k=keyOf(i);if(S.picks[k]==null){S.picks[k]=t+n;n++}});SEL.clear();header();autosave();toast(n?`${n}개를 지원희망에 담았어요`:'이미 모두 담겨 있어요');refreshSel()};
-}
-function refreshSel(){if(tab==='match')rMatchMain();else if(tab==='browse')rBrowse();updateSelBar()}
 function renderTable(T,list,host){
   const cols=COLS.filter(c=>!T.hide.includes(c.k)&&!T.fixed.includes(c.k));
   const rows=sortList(T,applyColFilters(T,list));
@@ -1327,7 +1275,6 @@ function renderTable(T,list,host){
     <tbody>${rows.length?rows.slice(0,T.limit).map(i=>`<tr data-i="${i}">${cols.map(c=>cellHtml(c.k,i)).join('')}</tr>`).join(''):`<tr><td colspan="${cols.length+4}" class="empty">조건에 맞는 모집단위가 없어요. 필터를 하나씩 풀어보세요.</td></tr>`}</tbody></table></div>
     ${rows.length>T.limit?`<button class="btn more" data-more>${Math.min(200,rows.length-T.limit)}개 더 보기 · 남은 ${(rows.length-T.limit).toLocaleString()}개</button>`:''}`;
   host.onclick=e=>{
-    const sk=e.target.closest('[data-sel]'); if(sk){e.stopPropagation();const i=+sk.dataset.sel;sk.checked?SEL.add(i):SEL.delete(i);updateSelBar();return}
     const a=e.target.closest('[data-add]'); if(a){e.stopPropagation();togglePick(+a.dataset.add);const on=S.picks[keyOf(+a.dataset.add)]!=null;a.classList.toggle('on',on);a.textContent=on?'담음':'+ 담기';return}
     const fb=e.target.closest('[data-fcol]'); if(fb){e.stopPropagation();openColFilter(T,fb.dataset.fcol,fb,list,()=>renderTable(T,list,host));return}
     const s=e.target.closest('th[data-sort]'); if(s&&s.dataset.sort){if(T.sortKey===s.dataset.sort)T.dir*=-1;else{T.sortKey=s.dataset.sort;T.dir=['univ','major','region','gun'].includes(T.sortKey)?1:-1}renderTable(T,list,host);return}
@@ -1369,8 +1316,8 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeColFilter();cl
 /* ===== tabs ===== */
 let tab='browse';
 document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>go(b.dataset.tab));
-function go(t,keep){if(t!==tab)SEL.clear();tab=t;document.querySelectorAll('[data-tab]').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===t));document.querySelectorAll('.page').forEach(p=>p.classList.toggle('on',p.id==='p-'+t));
-  ({student:rStudent,browse:rBrowse,chart:rChart,match:rMatch,report:rReport,wish:rWish,data:rData})[t](); closeColFilter(); updateSelBar(); if(!keep) window.scrollTo(0,0)}
+function go(t,keep){tab=t;document.querySelectorAll('[data-tab]').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===t));document.querySelectorAll('.page').forEach(p=>p.classList.toggle('on',p.id==='p-'+t));
+  ({student:rStudent,browse:rBrowse,chart:rChart,match:rMatch,report:rReport,wish:rWish,data:rData})[t](); closeColFilter(); if(!keep) window.scrollTo(0,0)}
 function header(){
   $('curName').textContent=S.name||'새 학생';
   const n=Object.keys(S.picks).length; $('wishN').hidden=!n; $('wishN').textContent=n;
@@ -1521,20 +1468,8 @@ function rBrowse(){
   const byU=new Map(); U.forEach((u,i)=>{if(!byU.has(u[0]))byU.set(u[0],[]);byU.get(u[0]).push(i)});
   BR.col=BR.col||new Set();
   const cdist=list=>{const c=[0,0,0,0,0];list.forEach(i=>c[B[basis][i][0]]++);return [4,3,2,1].filter(j=>c[j]).map(j=>`<span><i style="color:var(--j${j})">●</i>${JL[j]} ${c[j]}</span>`).join('')};
-  const bestJ=list=>{const c=[0,0,0,0,0];list.forEach(i=>c[B[basis][i][0]]++);return [4,3,2,1].find(j=>c[j])};
-  const avTxt=(n,raw)=>{const t=raw?n:(n.replace(/\(.*\)$/,'').replace(/(대학교|대학|대)$/,'')||n);const ch=[...t];let h,fs;
-    if(ch.length<=2){h=t;fs=19}else if(ch.length===3){h=t;fs=15}else{const k=Math.ceil(ch.length/2);h=ch.slice(0,k).join('')+'<br>'+ch.slice(k).join('');fs=ch.length>=7?11:13}
-    return `<span style="font-size:${fs}px">${h}</span>`};
-  const regColor=r=>r==='서울'?'#2a5bd7':(r==='경기'||r==='인천')?'#1e8a4c':'#b07a1c';
-  const card=(name,list,label)=>{const c=[0,0,0,0,0];list.forEach(i=>c[B[basis][i][0]]++);
-    const bj=bestJ(list),reg=!label&&list.length?(()=>{const m=new Map();list.forEach(i=>m.set(U[i][5],(m.get(U[i][5])||0)+1));return [...m].sort((a,b)=>b[1]-a[1])[0][0]||''})():'',gs=[...new Set(list.map(i=>gunOf(U[i])))].filter(g=>GUNS.includes(g));
-    const num=(j,t)=>c[j]||j!==1?`<div style="color:var(--j${j})"><b>${c[j]}</b>${t}</div>`:'';
-    return `<button class="ucard" style="${bj?`--bc:var(--j${bj})`:''}" data-open-${label?'cat':'univ'}="${esc(label||name)}"><span class="utop"><span class="av" style="--ac:${label?'var(--navy2)':regColor(reg)}">${avTxt(label||name,!!label)}</span><span><b>${esc(name)}</b><span class="usub">${reg?esc(reg)+' ':''}${gs.map(g=>`<span class="${gunCls(g)}">${g}</span>`).join('')}</span></span></span>
-    <div class="mini">${miniDist(list)}</div>
-    <div class="unums">${num(4,'적정')}${num(3,'예상')}${num(2,'소신')}${num(1,'위험')}</div>
-    <span class="ufoot"><span>모집단위 ${list.length}개</span><span>${bj?'보기 ›':'판정 가능 단위 없음'}</span></span></button>`};
-  const gsum=idxs=>{const c=[0,0,0,0,0];idxs.forEach(i=>c[B[basis][i][0]]++);return `<span class="gsum">적정 ${c[4]} · 예상 ${c[3]} · 소신 ${c[2]}</span>`};
-  const grp=(label,sm,inner,idxs)=>{const open=!BR.col.has(label);return `<div class="gsec"><div class="gtitle gcol" data-gcol="${esc(label)}" role="button" tabindex="0" aria-expanded="${open}"><span class="car">${open?'▾':'▸'}</span><span class="gl">${label}</span>${sm}${idxs?gsum(idxs):''}</div>${open?`<div class="ugrid">${inner}</div>`:''}</div>`};
+  const card=(name,list,label)=>`<button class="ucard" data-open-${label?'cat':'univ'}="${esc(label||name)}"><b>${esc(name)}</b><div class="mini">${miniDist(list)}</div><small>모집단위 ${list.length}개</small><small class="cdist">${cdist(list)||'<span>판정 가능 단위 없음</span>'}</small></button>`;
+  const grp=(label,sm,inner)=>{const open=!BR.col.has(label);return `<div class="gsec"><div class="gtitle gcol" data-gcol="${esc(label)}" role="button" tabindex="0" aria-expanded="${open}"><span class="car">${open?'▾':'▸'}</span><span class="gl">${label}</span>${sm}</div>${open?`<div class="ugrid">${inner}</div>`:''}</div>`};
   const all=[...byU.keys()].sort((a,b)=>a.localeCompare(b,'ko'));
   const allRes=()=>BR.q?(()=>{const ws=BR.q.split(/[,\s]+/).filter(Boolean);const hit=all.filter(n=>ws.some(w=>n.includes(w)));return `<div class="status" style="margin-bottom:8px">'${esc(BR.q)}' 검색 결과 ${hit.length}개교</div><div class="ugrid">${hit.map(n=>card(n,byU.get(n))).join('')||'<div class="status">일치하는 대학이 없어요</div>'}</div>`})()
       :BR.all?`<div class="ugrid">${all.map(n=>card(n,byU.get(n))).join('')}</div>`
@@ -1542,12 +1477,12 @@ function rBrowse(){
   const bindCards=root=>{root.querySelectorAll('[data-open-univ]').forEach(b=>b.onclick=()=>openUniv({univ:b.dataset.openUniv}));root.querySelectorAll('[data-open-cat]').forEach(b=>b.onclick=()=>openUniv({cat:b.dataset.openCat}))};
   w.innerHTML=`<div class="bar"><span class="lbl">현재 학생</span><b>${esc(S.name||'새 학생')}</b><span class="sep"></span>${basisSeg()}<button class="btn sm ghost" id="gAll" style="margin-left:auto">${BR.col.size>=UNIV_GROUPS.length?'모두 펼치기':'모두 접기'}</button></div>
   <p class="intro" style="margin:12px 0 2px">그룹별 대학을 누르면 해당 대학의 군·학과·입결을 한 번에 볼 수 있어요.</p>
-  <div class="legend">카드의 왼쪽 띠는 이 학생에게 가장 유리한 판정 색, 가운데 막대는 모집단위의 판정 분포예요 <span><i style="color:var(--j4)">●</i>적정</span><span><i style="color:var(--j3)">●</i>예상</span><span><i style="color:var(--j2)">●</i>소신</span><span><i style="color:var(--j1)">●</i>위험</span></div>
+  <div class="legend">카드의 색 막대는 모집단위의 판정 분포예요 <span><i style="color:var(--j4)">●</i>적정</span><span><i style="color:var(--j3)">●</i>예상</span><span><i style="color:var(--j2)">●</i>소신</span><span><i style="color:var(--j1)">●</i>위험</span></div>
   ${UNIV_GROUPS.map(g=>{
     if(g.cats){ const avU=(g.unis||[]).filter(n=>byU.has(n));
-      return grp(g.label,`<small>${avU.length?'교대 전체(이화여대·제주대 초등교육과 포함)와 교육대학교별로 볼 수 있어요':'계열별로 전국 모집단위를 모아봐요'}</small>`,g.cats.map(c=>card(c+' 전체',unitsOf({cat:c}),c)).join('')+avU.map(n=>card(n,byU.get(n))).join(''),g.cats.flatMap(c=>unitsOf({cat:c}))) }
+      return grp(g.label,`<small>${avU.length?'교대 전체(이화여대·제주대 초등교육과 포함)와 교육대학교별로 볼 수 있어요':'계열별로 전국 모집단위를 모아봐요'}</small>`,g.cats.map(c=>card(c+' 전체',unitsOf({cat:c}),c)).join('')+avU.map(n=>card(n,byU.get(n))).join('')) }
     const av=g.unis.filter(n=>byU.has(n));
-    return grp(g.label,av.length<g.unis.length?`<small>(데이터 있는 ${av.length}/${g.unis.length}개교)</small>`:'',av.map(n=>card(n,byU.get(n))).join(''),av.flatMap(n=>byU.get(n)))}).join('')}
+    return grp(g.label,av.length<g.unis.length?`<small>(데이터 있는 ${av.length}/${g.unis.length}개교)</small>`:'',av.map(n=>card(n,byU.get(n))).join(''))}).join('')}
   <div class="gsec allsec"><div class="gtitle">전체 대학 <small>${all.length}개교</small>
     <input id="bq" type="search" placeholder="대학명 검색 (예: 인천, 한국외대는 '외국어')" value="${esc(BR.q)}" style="margin-left:auto;width:260px;font-weight:400" aria-label="전체 대학 검색">
     <button class="btn sm ghost" id="bAll">${BR.all?'접기':'전체 펼치기'}</button></div>
@@ -1608,83 +1543,57 @@ const MF={region:new Set(),trait:new Set(),gun:new Set(),cat:new Set(),judge:new
 const TM=makeTable('match',{sortKey:'judge',dir:1,hide:loadHide('match',COL_DEFAULT_HIDE)});
 let filtersBuilt=false;
 function chipRow(key,vals,lab){return `<div class="chips">${vals.map(v=>`<button class="chip ${key==='gun'&&GUNS.includes(v)?gunCls(v).replace('gunc ','gt '):''}" aria-pressed="${MF[key].has(v)}" data-mf="${key}" data-v="${esc(v)}">${esc(lab?lab(v):v)}</button>`).join('')}</div>`}
-const MFOPEN={judge:true,gun:true,region:true};
-const MFBUILTIN=[{name:'안정 위주',st:{judge:['4','3']}},{name:'소신 도전',st:{judge:['2']}}];
-const FV={gun:u=>gunOf(u),cat:u=>catOf(u),trait:u=>u[7],judge:(u,b)=>String(b[0]),hb:u=>haksaengOf(u).cls,region:u=>u[5]};
-function facetCounts(k){const c=new Map();matchList(k).forEach(i=>{const v=FV[k](U[i],B[basis][i]);c.set(v,(c.get(v)||0)+1)});return c}
-function mfSnap(){return{region:[...MF.region],trait:[...MF.trait],gun:[...MF.gun],cat:[...MF.cat],judge:[...MF.judge],hb:[...MF.hb],major:MF.major,univ:MF.univ,excl0:MF.excl0,noSaeng:MF.noSaeng,noHbU:MF.noHbU,noPro:MF.noPro,down:BR.down,downK:BR.downK,up:BR.up,upK:BR.upK}}
-function mfApply(st){['region','trait','gun','cat','judge','hb'].forEach(k=>MF[k]=new Set(st[k]||[]));MF.major=st.major||'';MF.univ=st.univ||'';MF.excl0=st.excl0!==false;MF.noSaeng=!!st.noSaeng;MF.noHbU=!!st.noHbU;MF.noPro=st.noPro!==false;if(st.down!=null){BR.down=st.down;BR.downK=st.downK||2.5;BR.up=!!st.up;BR.upK=st.upK||2}TM.limit=200;TM.cf={}}
-function mfClear(){['region','trait','gun','cat','judge','hb'].forEach(k=>MF[k].clear());MF.major=MF.univ='';MF.noPro=true;MF.noSaeng=MF.noHbU=false;TM.cf={};TM.limit=200}
 function rFilters(){
   const SIDO=[...new Set(U.map(u=>u[5]).filter(Boolean))];
-  const F=$('filters'),old=F.querySelector('.fbody'),top=old?old.scrollTop:0;
-  const pills=(key,vals,lab)=>{const cn=facetCounts(key);return `<div class="chips">${vals.map(v=>{const n=cn.get(v)||0,cls=key==='gun'&&GUNS.includes(v)?gunCls(v).replace('gunc ','gt '):key==='judge'?'jt j'+v:'';return `<button class="chip ${cls} ${n?'':'z'}" aria-pressed="${MF[key].has(v)}" data-mf="${key}" data-v="${esc(v)}">${esc(lab?lab(v):v)}<small>${n}</small></button>`}).join('')}</div>`};
-  const sec=(id,title,inner,n)=>`<div class="fsec ${MFOPEN[id]?'':'c'}"><button data-sec="${id}" aria-expanded="${!!MFOPEN[id]}">${title}${n?`<span class="bd">${n}</span>`:''}</button><div class="fsb">${inner}</div></div>`;
-  const act=[];
-  [['judge',v=>'판정 '+JL[v]],['gun',gunLabel],['cat',v=>v],['trait',v=>v],['hb',v=>'학생부 '+v],['region',v=>v]].forEach(([k,f])=>MF[k].forEach(v=>act.push([k+'|'+v,f(v)])));
-  if(MF.major)act.push(['major|','전공 '+MF.major]);if(MF.univ)act.push(['univ|','대학 '+MF.univ]);if(MF.noSaeng)act.push(['noSaeng|','학생부 반영 제외']);if(MF.noHbU)act.push(['noHbU|','학생부 미확인 제외']);
-  const pre=S.mfPresets||[];
-  F.innerHTML=`<div class="fbody">
-  <div class="fp-h"><b>필터</b><button class="lnk" id="mfClear">전체 초기화</button></div>
-  <div class="fpb">${basisSeg(true)}</div>
-  <div class="fpb"><input type="text" id="mfUniv" placeholder="🔍 대학명 (예: 경희,중앙,부산대)" value="${esc(MF.univ)}" style="margin-bottom:6px"><input type="text" id="mfMajor" placeholder="전공 키워드 (예: 의예,약학,컴퓨터)" value="${esc(MF.major)}"></div>
-  ${act.length?`<div class="fact"><div class="t">적용 중인 필터</div>${act.map(([k,t])=>`<button class="ac" data-ac="${esc(k)}">${esc(t)}</button>`).join('')}</div>`:''}
-  ${sec('judge','판정',pills('judge',['4','3','2','1'],v=>JL[v]),MF.judge.size)}
-  ${sec('gun','모집군',pills('gun',['가','나','다','이월','군외','전문'],gunLabel),MF.gun.size)}
-  ${sec('region','지역 <span style="font-weight:400;font-size:11px;color:var(--muted);margin-left:6px">미선택 시 전체</span>',pills('region',SIDO),MF.region.size)}
-  ${sec('cat','구분',pills('cat',CATS),MF.cat.size)}
-  ${sec('trait','계열',pills('trait',['자연','인문','공통']),MF.trait.size)}
-  ${sec('hb','학생부 반영 <span style="font-weight:400;font-size:11px;color:var(--muted);margin-left:6px">미선택 시 전체</span>',pills('hb',HB_CLS,v=>v==='미확인'?'미확인·미조사':v),MF.hb.size)}
-  <div class="ftg"><label class="chk"><input type="checkbox" id="mfNoPro" ${MF.noPro?'checked':''}> 전문대 제외</label>
-    <label class="chk"><input type="checkbox" id="mfEx0" ${MF.excl0?'checked':''}> 수학·탐구 결격 모집단위 제외</label></div>
-  ${sec('adv','고급 옵션',`<label class="chk"><input type="checkbox" id="mfDown" ${BR.down?'checked':''}> 과도한 하향 자동 제외</label>
+  $('filters').innerHTML=`
+  <h3>비교 기준 (응시자)</h3>${basisSeg(true)}
+  <h3>군</h3>${chipRow('gun',['가','나','다','이월','군외','전문'],gunLabel)}
+  <h3>구분</h3>${chipRow('cat',CATS)}
+  <h3>계열</h3>${chipRow('trait',['자연','인문','공통'])}
+  <h3>판정</h3>${chipRow('judge',['4','3','2','1'],v=>JL[v])}
+  <h3>학생부 반영 <span style="font-weight:400">(미선택 시 전체)</span></h3>${chipRow('hb',HB_CLS,v=>v==='미확인'?'미확인·미조사':v)}
+  <h3>희망 지역 <span style="font-weight:400">(미선택 시 전체)</span></h3>${chipRow('region',SIDO)}
+  <h3>전공 키워드</h3><input type="text" id="mfMajor" placeholder="예: 의예,약학,컴퓨터" value="${esc(MF.major)}"><div class="hint">쉼표로 여러 개 · 하나라도 포함되면 표시</div>
+  <h3>대학명 검색</h3><input type="text" id="mfUniv" placeholder="예: 경희,중앙,부산대" value="${esc(MF.univ)}"><div class="hint">비워두면 전체 대학</div>
+  <div class="adv"><h3 style="margin-top:0">고급 옵션</h3>
+    <label class="chk"><input type="checkbox" id="mfDown" ${BR.down?'checked':''}> 과도한 하향 자동 제외</label>
     <div class="hint" style="margin-left:22px">적정 판정이면서 적정 누백이 학생 누백의 <input type="number" id="mfDownK" value="${BR.downK}" step="0.5" min="1.5" style="width:52px;padding:2px 5px"> 배 이상이면 제외</div>
     <label class="chk"><input type="checkbox" id="mfUp" ${BR.up?'checked':''}> 과도한 상향(우주상향) 자동 제외</label>
     <div class="hint" style="margin-left:22px">학생 누백이 소신 누백의 <input type="number" id="mfUpK" value="${BR.upK}" step="0.5" min="1.2" style="width:52px;padding:2px 5px"> 배 이상이면 제외</div>
+    <label class="chk"><input type="checkbox" id="mfEx0" ${MF.excl0?'checked':''}> 수학·탐구 결격 모집단위 제외</label>
+    <label class="chk"><input type="checkbox" id="mfNoPro" ${MF.noPro?'checked':''}> 전문대 제외</label>
     <label class="chk"><input type="checkbox" id="mfNoSaeng" ${MF.noSaeng?'checked':''}> 학생부(생기부) 반영 모집단위 제외</label>
     <div class="hint" style="margin-left:22px">정량·정성으로 학생부를 반영하는 모집단위를 결과에서 뺍니다.</div>
     <label class="chk"><input type="checkbox" id="mfNoHbU" ${MF.noHbU?'checked':''}> 학생부 '미확인' 모집단위도 제외</label>
-    <div class="hint" style="margin-left:22px">체크하면 학생부 '미반영'으로 확인된 모집단위만 남아요.</div>`,0)}
-  <div class="fpre"><div class="t"><span>내 필터 프리셋</span><span>학생별 저장</span></div><div class="chips">
-    ${MFBUILTIN.map((p,i)=>`<span class="pre"><button data-pre="b${i}">${esc(p.name)}</button></span>`).join('')}
-    ${pre.map((p,i)=>`<span class="pre"><button data-pre="u${i}">${esc(p.name)}</button><button class="x" data-predel="${i}" aria-label="${esc(p.name)} 삭제">×</button></span>`).join('')}
-    <span class="pre save"><button id="mfPreSave">＋ 현재 필터 저장</button></span></div></div>
-  </div>
-  <div class="ffoot"><button class="go" id="mfRun">결과 <span id="mfCnt">-</span>개 보기</button><div class="sub"><button class="btn" id="mfCsv">CSV로 저장</button><button class="btn" id="mfReset">조건 초기화</button></div></div>`;
-  const nb=F.querySelector('.fbody'); nb.scrollTop=top;
-  const refresh=()=>{TM.limit=200;rFilters();rMatchMain()};
+    <div class="hint" style="margin-left:22px">체크하면 학생부 '미반영'으로 확인된 모집단위만 남아요.</div></div>
+  <div class="fbtns"><button class="btn pri" id="mfRun">매칭 실행</button><button class="btn ghost" id="mfCsv">결과 CSV로 저장</button><button class="btn" id="mfReset">조건 초기화</button></div>`;
+  const F=$('filters');
   bindBasis(F,()=>{rFilters();rMatchMain()});
-  F.querySelectorAll('[data-sec]').forEach(b=>b.onclick=()=>{MFOPEN[b.dataset.sec]=!MFOPEN[b.dataset.sec];rFilters()});
-  F.querySelectorAll('[data-mf]').forEach(b=>b.onclick=()=>{const k=b.dataset.mf,v=b.dataset.v;MF[k].has(v)?MF[k].delete(v):MF[k].add(v);refresh()});
-  F.querySelectorAll('[data-ac]').forEach(b=>b.onclick=()=>{const[k,v]=b.dataset.ac.split('|');if(MF[k] instanceof Set)MF[k].delete(v);else if(k==='major'||k==='univ')MF[k]='';else MF[k]=false;refresh()});
+  F.querySelectorAll('[data-mf]').forEach(b=>b.onclick=()=>{const k=b.dataset.mf,v=b.dataset.v;MF[k].has(v)?MF[k].delete(v):MF[k].add(v);b.setAttribute('aria-pressed',MF[k].has(v));TM.limit=200;rMatchMain()});
   let t;const deb=()=>{clearTimeout(t);t=setTimeout(()=>{TM.limit=200;rMatchMain()},250)};
   $('mfMajor').oninput=e=>{MF.major=e.target.value;deb()};$('mfUniv').oninput=e=>{MF.univ=e.target.value;deb()};
-  $('mfDown').onchange=e=>{BR.down=e.target.checked;refresh()};$('mfUp').onchange=e=>{BR.up=e.target.checked;refresh()};
-  $('mfDownK').onchange=e=>{BR.downK=+e.target.value||2.5;refresh()};$('mfUpK').onchange=e=>{BR.upK=+e.target.value||2;refresh()};
-  $('mfEx0').onchange=e=>{MF.excl0=e.target.checked;refresh()};
-  $('mfNoPro').onchange=e=>{MF.noPro=e.target.checked;refresh()};
-  $('mfNoSaeng').onchange=e=>{MF.noSaeng=e.target.checked;refresh()};
-  $('mfNoHbU').onchange=e=>{MF.noHbU=e.target.checked;refresh()};
+  $('mfDown').onchange=e=>{BR.down=e.target.checked;rMatchMain()};$('mfUp').onchange=e=>{BR.up=e.target.checked;rMatchMain()};
+  $('mfDownK').onchange=e=>{BR.downK=+e.target.value||2.5;rMatchMain()};$('mfUpK').onchange=e=>{BR.upK=+e.target.value||2;rMatchMain()};
+  $('mfEx0').onchange=e=>{MF.excl0=e.target.checked;rMatchMain()};
+  $('mfNoPro').onchange=e=>{MF.noPro=e.target.checked;TM.limit=200;rMatchMain()};
+  $('mfNoSaeng').onchange=e=>{MF.noSaeng=e.target.checked;TM.limit=200;rMatchMain()};
+  $('mfNoHbU').onchange=e=>{MF.noHbU=e.target.checked;TM.limit=200;rMatchMain()};
   $('mfRun').onclick=()=>{rMatchMain();$('mmain').scrollTo(0,0)};
   $('mfCsv').onclick=exportCsv;
-  const reset=()=>{mfClear();refresh()};
-  $('mfReset').onclick=reset;$('mfClear').onclick=reset;
-  F.querySelectorAll('[data-pre]').forEach(b=>b.onclick=()=>{const id=b.dataset.pre,st=id[0]==='b'?MFBUILTIN[+id.slice(1)].st:(S.mfPresets||[])[+id.slice(1)].st;mfApply(st);refresh()});
-  F.querySelectorAll('[data-predel]').forEach(b=>b.onclick=e=>{e.stopPropagation();const p=S.mfPresets[+b.dataset.predel];if(!confirm(`'${p.name}' 프리셋을 삭제할까요?`))return;S.mfPresets.splice(+b.dataset.predel,1);autosave();rFilters()});
-  $('mfPreSave').onclick=()=>{const n=(prompt('프리셋 이름을 입력하세요 (예: 안정 위주 · 경기권)')||'').trim();if(!n)return;S.mfPresets=S.mfPresets||[];const e=S.mfPresets.findIndex(p=>p.name===n);const it={name:n,st:mfSnap()};e>=0?S.mfPresets[e]=it:S.mfPresets.push(it);autosave();toast(S.id?`'${n}' 프리셋을 저장했어요`:`'${n}' 프리셋을 담았어요 (학생을 저장하면 함께 보관돼요)`);rFilters()};
+  $('mfReset').onclick=()=>{['region','trait','gun','cat','judge','hb'].forEach(k=>MF[k].clear());MF.major=MF.univ='';MF.noPro=true;TM.cf={};rFilters();rMatchMain()};
 }
-function matchList(skip){
+function matchList(){
   const kw=s=>s.split(/[,\s]+/).map(x=>x.trim()).filter(Boolean);
   const mj=kw(MF.major), un=kw(MF.univ); const out=[];
   for(let i=0;i<U.length;i++){const u=U[i],b=B[basis][i];
     if(MF.excl0&&b[0]===0)continue;
     if(MF.noPro&&isPro(u))continue;
-    {const hc=haksaengOf(u).cls; if(skip!=='hb'&&MF.hb.size&&!MF.hb.has(hc))continue; if(MF.noSaeng&&(hc==='정량'||hc==='정성'))continue; if(MF.noHbU&&hc==='미확인')continue}
-    if(skip!=='gun'&&MF.gun.size&&!MF.gun.has(gunOf(u)))continue;
-    if(skip!=='cat'&&MF.cat.size&&!MF.cat.has(catOf(u)))continue;
-    if(skip!=='trait'&&MF.trait.size&&!MF.trait.has(u[7]))continue;
-    if(skip!=='judge'&&MF.judge.size&&!MF.judge.has(String(b[0])))continue;
-    if(skip!=='region'&&MF.region.size&&!MF.region.has(u[5]))continue;
+    {const hc=haksaengOf(u).cls; if(MF.hb.size&&!MF.hb.has(hc))continue; if(MF.noSaeng&&(hc==='정량'||hc==='정성'))continue; if(MF.noHbU&&hc==='미확인')continue}
+    if(MF.gun.size&&!MF.gun.has(gunOf(u)))continue;
+    if(MF.cat.size&&!MF.cat.has(catOf(u)))continue;
+    if(MF.trait.size&&!MF.trait.has(u[7]))continue;
+    if(MF.judge.size&&!MF.judge.has(String(b[0])))continue;
+    if(MF.region.size&&!MF.region.has(u[5]))continue;
     if(mj.length&&!mj.some(w=>u[1].includes(w)))continue;
     if(un.length&&!un.some(w=>u[0].includes(w)))continue;
     out.push(i)}
@@ -1692,7 +1601,7 @@ function matchList(skip){
 }
 function rMatch(){ rFilters(); rMatchMain(); }
 function rMatchMain(){
-  const list=matchList(); const m=$('mmain'); const gc=$('mfCnt'); if(gc)gc.textContent=list.length.toLocaleString();
+  const list=matchList(); const m=$('mmain');
   m.innerHTML=`<div class="summary"><div><span class="count" id="mCount">-</span> <span class="status">건 매칭 · ${BASIS[basis]} 응시자 기준${MF.noPro?' · 전문대 제외':''}${BR.down?' · 과도한 하향 제외':''}</span></div><div class="dist" id="mDist"></div>
     <div class="sortc"><label for="mSort">정렬 기준</label><select id="mSort">${COLS.filter(c=>c.sort).map(c=>`<option value="${c.k}" ${TM.sortKey===c.k?'selected':''}>${c.t}</option>`).join('')}</select><button class="btn sm ghost" id="mDir">${TM.dir>0?'오름차순 ▲':'내림차순 ▼'}</button><button class="btn sm" id="mCols">열 설정</button></div></div>
     <div id="mt"></div>
