@@ -136,7 +136,7 @@ h2.sec{margin:22px 0 6px;font-size:16px;color:var(--navy2);display:flex;align-it
 .ssum{margin-left:auto;font-size:12.5px;color:var(--muted);text-align:right}
 .scar:after{content:"▸";color:var(--muted);margin-left:6px}.sopt.open .scar:after{content:"▾"}
 .sopt .sbody{display:none;border-top:1px solid var(--line2);padding:14px 18px 16px}.sopt.open .sbody{display:block}
-.sside{position:sticky;top:calc(var(--hh,112px) + 14px)}
+.sside{position:sticky;top:calc(var(--tbh,48px) + 14px)}
 .sside .sc{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:14px}
 .sside .sc h3{margin:0 0 14px;font-size:15px;font-weight:800;color:var(--ink);display:flex;justify-content:space-between;align-items:baseline}.sside .sc h3 small{font-size:11.5px;color:var(--muted);font-weight:500}
 .sside .kpi{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--line2)}.sside .kpi small{display:block;font-size:11.5px;color:var(--muted)}.sside .kpi b{display:block;font-size:28px;font-weight:800;line-height:1.15;letter-spacing:-.5px}.sside .kpi b em{font-style:normal;font-size:14px;font-weight:600;color:var(--ink2);margin-left:2px}
@@ -155,6 +155,7 @@ h2.sec{margin:22px 0 6px;font-size:16px;color:var(--navy2);display:flex;align-it
 .sside .rec .t{flex:1;font-weight:700}.sside .rec .t small{font-weight:400;color:var(--muted);margin-left:4px}
 @media(max-width:960px){.swrap{grid-template-columns:1fr}.sside{position:static;order:-1}}
 
+.chtool{position:sticky;top:var(--tbh,48px);z-index:25;background:var(--paper);padding:12px 0 6px;margin-top:0}
 /* v34 성적대 위치 */
 .chsc{width:100%;border-collapse:collapse;margin:2px 0 14px;font-size:13px}
 .chsc th,.chsc td{text-align:center;padding:7px 8px;border-bottom:1px solid var(--line2)}
@@ -1929,7 +1930,7 @@ function rChart(){
   const reg=sel.filter(i=>GUNS.includes(gunOf(U[i])));
   const tot={4:0,3:0,2:0,1:0},stv=[];reg.forEach(i=>{const b=B[basis][i];tot[b[0]]++;if(typeof b[1]==='number'&&b[1]>0&&b[3]!=null&&b[3]<=30)stv.push(b[1])});
   const chip=(k,v,cls)=>`<button class="chip ${cls||''}" aria-pressed="${v}" data-chk="${k}">`;
-  w.innerHTML=`${chSummary(P0)}<div class="bar" style="margin-top:12px"><span class="lbl">비교 기준</span>${basisSeg()}<span class="sep"></span>
+  w.innerHTML=`${chSummary(P0)}<div class="chtool"><div class="bar" style="margin-top:0"><span class="lbl">비교 기준</span>${basisSeg()}<span class="sep"></span>
     <span class="lbl">계열</span><span class="seg">${[['all','전체'],['자연','자연'],['인문','인문']].map(([k,v])=>`<button aria-pressed="${CH.trait===k}" data-ctrait="${k}">${v}</button>`).join('')}</span><span class="sep"></span>
     <span class="lbl">군</span><div class="chips" style="display:inline-flex">${GUNS.map(g=>`<button class="chip ${gunCls(g).replace('gunc ','gt ')}" aria-pressed="${CH.gun.has(g)}" data-cgun="${g}">${g}군</button>`).join('')}</div></div>
   <div class="bar" style="margin-top:8px"><label class="chk"><input type="checkbox" id="chMed" ${CH.incMed?'checked':''}> 의치한약수·교대 포함</label>
@@ -1938,6 +1939,7 @@ function rChart(){
     <label class="chk" title="대학 적정 누백의 중앙값이 학생 대표 누백의 0.35배 이상 1.6배 미만인 대학만 보여줘요 (상향 도전~적정 추천 구간)"><input type="checkbox" id="chNear" ${CH.near?'checked':''}> 학생 근처 대학만</label><span class="sep"></span>
     <input type="search" id="chQ" placeholder="대학 검색 (예: 인천, 외국어, 쉼표로 여러 개)" value="${esc(CH.q)}" style="width:260px" aria-label="대학 검색"><span class="sep"></span>
     <span class="lbl">정렬</span><span class="seg"><button aria-pressed="${CH.sort==='group'}" data-csort="group">대학 그룹 순</button><button aria-pressed="${CH.sort==='rate'}" data-csort="rate">합격 가능 비율 순</button></span></div>
+  </div>
   <div class="chs"><div><small>비교 기준 · 모집단위(가·나·다군)</small><b>${reg.length.toLocaleString()}개</b></div>
     <div><small>적정 / 예상</small><b style="color:var(--j4)">${tot[4].toLocaleString()}</b> / <b style="color:var(--j3)">${tot[3].toLocaleString()}</b></div>
     <div><small>소신 / 위험</small><b style="color:var(--j2)">${tot[2].toLocaleString()}</b> / <b style="color:var(--j1)">${tot[1].toLocaleString()}</b></div></div>
@@ -2429,7 +2431,7 @@ async function applyPending(){
   paint();
 })();
 /* ===== 상단 높이 측정 (표 높이 계산용) ===== */
-function setHH(){const h=document.querySelector('header'),t=document.querySelector('.tabbar');document.documentElement.style.setProperty('--hh',(h.offsetHeight+t.offsetHeight)+'px')}
+function setHH(){const h=document.querySelector('header'),t=document.querySelector('.tabbar');document.documentElement.style.setProperty('--hh',(h.offsetHeight+t.offsetHeight)+'px');document.documentElement.style.setProperty('--tbh',t.offsetHeight+'px')}
 addEventListener('resize',setHH);setHH();
 /* ===== 로컬(브라우저 단독) 저장 계층: 채팅 런타임이 없을 때 사용 ===== */
 let LOCAL=false;
