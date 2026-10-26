@@ -108,3 +108,7 @@
 - 새 규칙 생성기 `tools/hb_final_spec.py`(검증 JSON `docs/research/verify_2027final/final_*.json` → HB_DATA, `tools/hb_spec.py`가 호출). 해당 대학의 기존 규칙은 전부 새 규칙으로 대체
 - 변경: 동국대(WISE) 33·공주대 86·계명대 68·경북대(상주) 20개 단위 미확인→미반영 (총 207)
 - 변경 비교 도구 `tools/hb_diff.py`(앱 스냅샷 두 개를 비교)
+
+## v39 학생부 반영 재조사 2차 묶음 — 19개 대학 (2026-10-26)
+- 대상: 연세·연세(미래)·고려·성균관·한양·경희·아주·인하·서울대·중앙(+다빈치)·서울시립·경상국립·영남·대구가톨릭·강원대(강릉)·상지·부산·목포 (조사원 + 독립 검증 2단계, 검증 지적은 상지·영남·강원 3곳 수정 반영)
+- 조사 도구: `docs/research/verify_2027final/AGENT_SPEC.md`·`VERIFY_SPEC.md`, `tools/final_check.py`, 결과 `final_*.json`
