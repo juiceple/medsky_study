@@ -1,521 +1,1040 @@
 {
-"가천대학교": [
-"가천대학교"
-],
-"가톨릭관동대학교": [
-"가톨릭관동대학교"
-],
-"가톨릭대학교": [
-"가톨릭대학교"
-],
-"강원대학교": [
-"강원대학교"
-],
-"건국대학교(글로컬)": [
-"건국대학교"
-],
-"건양대학교": [
-"건양대학교"
-],
-"경북대학교": [
-"경북대학교"
-],
-"경상국립대학교": [
-"경상국립대학교"
-],
-"경희대학교": [
-"경희대학교"
-],
-"계명대학교": [
-"계명대학교"
-],
-"고려대학교": [
-"고려대학교"
-],
-"고신대학교": [
-"고신대학교"
-],
-"단국대학교(천안)": [
-"단국대학교"
-],
-"대구가톨릭대학교": [
-"대구가톨릭대학교"
-],
-"동국대학교(WISE)": [
-"동국대학교"
-],
-"동아대학교": [
-"동아대학교"
-],
-"부산대학교": [
-"부산대학교"
-],
-"서울대학교": [
-"서울대학교"
-],
-"성균관대학교": [
-"성균관대학교"
-],
-"순천향대학교": [
-"순천향대학교"
-],
-"아주대학교": [
-"아주대학교"
-],
-"연세대학교": [
-"연세대학교"
-],
-"연세대학교(미래)": [
-"연세대학교"
-],
-"영남대학교": [
-"영남대학교"
-],
-"울산대학교": [
-"울산대학교"
-],
-"원광대학교": [
-"원광대학교"
-],
-"을지대학교": [
-"을지대학교"
-],
-"이화여자대학교": [
-"이화여자대학교"
-],
-"인제대학교": [
-"인제대학교"
-],
-"인하대학교": [
-"인하대학교"
-],
-"전남대학교": [
-"전남대학교"
-],
-"전북대학교": [
-"전북대학교"
-],
-"제주대학교": [
-"제주대학교"
-],
-"조선대학교": [
-"조선대학교"
-],
-"중앙대학교": [
-"중앙대학교"
-],
-"충남대학교": [
-"충남대학교"
-],
-"충북대학교": [
-"충북대학교"
-],
-"한림대학교": [
-"한림대학교"
-],
-"한양대학교": [
-"한양대학교"
-],
-"강원대학교(강릉)": [
-"강원대학교"
-],
-"대구한의대학교": [
-"대구한의대학교"
-],
-"대전대학교": [
-"대전대학교"
-],
-"동신대학교": [
-"동신대학교"
-],
-"동의대학교": [
-"동의대학교"
-],
-"상지대학교": [
-"상지대학교"
-],
-"세명대학교": [
-"세명대학교"
-],
-"우석대학교": [
-"우석대학교"
-],
-"경성대학교": [
-"경성대학교"
-],
-"고려대학교(세종)": [
-"고려대학교"
-],
-"덕성여자대학교": [
-"덕성여자대학교"
-],
-"동국대학교": [
-"동국대학교"
-],
-"동덕여자대학교": [
-"동덕여자대학교"
-],
-"목포대학교": [
-"국립목포대학교"
-],
-"삼육대학교": [
-"삼육대학교"
-],
-"숙명여자대학교": [
-"숙명여자대학교"
-],
-"순천대학교": [
-"국립순천대학교"
-],
-"차의과학대학교": [
-"차의과학대학교"
-],
-"한양대학교(ERICA)": [
-"한양대학교"
-],
-"건국대학교": [
-"건국대학교"
-],
-"경인교육대학교": [
-"경인교육대학교"
-],
-"공주교육대학교": [
-"공주교육대학교"
-],
-"광주교육대학교": [
-"광주교육대학교"
-],
-"대구교육대학교": [
-"대구교육대학교"
-],
-"부산교육대학교": [
-"부산교육대학교"
-],
-"서울교육대학교": [
-"서울교육대학교"
-],
-"전주교육대학교": [
-"전주교육대학교"
-],
-"진주교육대학교": [
-"진주교육대학교"
-],
-"청주교육대학교": [
-"청주교육대학교"
-],
-"춘천교육대학교": [
-"춘천교육대학교"
-],
-"한국교원대학교": [
-"한국교원대학교"
-],
-"가톨릭꽃동네대학교": [
-"가톨릭꽃동네대학교"
-],
-"감리교신학대학교": [
-"감리교신학대학교"
-],
-"강남대학교": [
-"강남대학교"
-],
-"강서대학교": [
-"강서대학교"
-],
-"강원대학교(삼척)": [
-"강원대학교"
-],
-"강원대학교(원주)": [
-"강원대학교"
-],
-"경국대학교": [
-"국립경국대학교"
-],
-"경기대학교": [
-"경기대학교"
-],
-"경남대학교": [
-"경남대학교"
-],
-"경북대학교(상주)": [
-"경북대학교"
-],
-"경운대학교": [
-"경운대학교"
-],
-"경일대학교": [
-"경일대학교"
-],
-"공주대학교": [
-"국립공주대학교"
-],
-"광운대학교": [
-"광운대학교"
-],
-"국민대학교": [
-"국민대학교"
-],
-"군산대학교": [
-"국립군산대학교"
-],
-"극동대학교": [
-"극동대학교"
-],
-"금강대학교": [
-"금강대학교"
-],
-"금오공과대학교": [
-"국립금오공과대학교"
-],
-"김천대학교": [
-"김천대학교"
-],
-"나사렛대학교": [
-"나사렛대학교"
-],
-"남부대학교": [
-"남부대학교"
-],
-"남서울대학교": [
-"남서울대학교"
-],
-"단국대학교": [
-"단국대학교"
-],
-"대구대학교": [
-"대구대학교"
-],
-"대진대학교": [
-"대진대학교"
-],
-"동명대학교": [
-"동명대학교"
-],
-"동서대학교": [
-"동서대학교"
-],
-"동양대학교": [
-"동양대학교"
-],
-"명지대학교": [
-"명지대학교"
-],
-"명지대학교(자연)": [
-"명지대학교"
-],
-"목원대학교": [
-"목원대학교"
-],
-"목포가톨릭대학교": [
-"목포가톨릭대학교"
-],
-"목포해양대학교": [
-"국립목포해양대학교"
-],
-"배재대학교": [
-"배재대학교"
-],
-"백석대학교": [
-"백석대학교"
-],
-"부경대학교": [
-"국립부경대학교"
-],
-"부산가톨릭대학교": [
-"부산가톨릭대학교"
-],
-"부산대학교(밀양)": [
-"부산대학교"
-],
-"부산외국어대학교": [
-"부산외국어대학교"
-],
-"상명대학교": [
-"상명대학교"
-],
-"상명대학교(천안)": [
-"상명대학교"
-],
-"서강대학교": [
-"서강대학교"
-],
-"서경대학교": [
-"서경대학교"
-],
-"서울과학기술대학교": [
-"서울과학기술대학교"
-],
-"서울시립대학교": [
-"서울시립대학교"
-],
-"서울신학대학교": [
-"서울신학대학교"
-],
-"서울여자대학교": [
-"서울여자대학교"
-],
-"서원대학교": [
-"서원대학교"
-],
-"선문대학교": [
-"선문대학교"
-],
-"성결대학교": [
-"성결대학교"
-],
-"성공회대학교": [
-"성공회대학교"
-],
-"성신여자대학교": [
-"성신여자대학교"
-],
-"세종대학교": [
-"세종대학교"
-],
-"수원대학교": [
-"수원대학교"
-],
-"숭실대학교": [
-"숭실대학교"
-],
-"신경주대학교": [
-"신경주대학교"
-],
-"신라대학교": [
-"신라대학교"
-],
-"신한대학교": [
-"신한대학교"
-],
-"안양대학교": [
-"안양대학교"
-],
-"예수대학교": [
-"예수대학교"
-],
-"용인대학교": [
-"용인대학교"
-],
-"우송대학교": [
-"우송대학교"
-],
-"유원대학교": [
-"유원대학교"
-],
-"인천가톨릭대학교": [
-"인천가톨릭대학교"
-],
-"인천대학교": [
-"인천대학교"
-],
-"장로회신학대학교": [
-"장로회신학대학교"
-],
-"전남대학교(여수)": [
-"전남대학교"
-],
-"전주대학교": [
-"전주대학교"
-],
-"중부대학교": [
-"중부대학교"
-],
-"중앙대학교(다빈치)": [
-"중앙대학교"
-],
-"중원대학교": [
-"중원대학교"
-],
-"창원대학교": [
-"국립창원대학교"
-],
-"청주대학교": [
-"청주대학교"
-],
-"총신대학교": [
-"총신대학교"
-],
-"추계예술대학교": [
-"추계예술대학교"
-],
-"한경국립대학교": [
-"한경국립대학교"
-],
-"한국공학대학교": [
-"한국공학대학교"
-],
-"한국교통대학교": [
-"국립한국교통대학교"
-],
-"한국기술교육대학교": [
-"한국기술교육대학교"
-],
-"한국성서대학교": [
-"한국성서대학교"
-],
-"한국외국어대학교": [
-"한국외국어대학교"
-],
-"한국외국어대학교(글로벌)": [
-"한국외국어대학교"
-],
-"한국체육대학교": [
-"한국체육대학교"
-],
-"한국항공대학교": [
-"한국항공대학교"
-],
-"한국해양대학교": [
-"국립한국해양대학교"
-],
-"한남대학교": [
-"한남대학교"
-],
-"한동대학교": [
-"한동대학교"
-],
-"한라대학교": [
-"한라대학교"
-],
-"한밭대학교": [
-"국립한밭대학교"
-],
-"한서대학교": [
-"한서대학교"
-],
-"한성대학교": [
-"한성대학교"
-],
-"한세대학교": [
-"한세대학교"
-],
-"한신대학교": [
-"한신대학교"
-],
-"협성대학교": [
-"협성대학교"
-],
-"호서대학교": [
-"호서대학교"
-],
-"홍익대학교": [
-"홍익대학교"
-],
-"홍익대학교(세종)": [
-"홍익대학교"
-],
-"광주과학기술원": [
-"광주과학기술원"
-],
-"대구경북과학기술원": [
-"대구경북과학기술원"
-],
-"울산과학기술원": [
-"울산과학기술원"
-],
-"한국과학기술원": [
-"한국과학기술원"
-],
-"한국에너지공과대학교": [
-"한국에너지공과대학교"
-]
+"가천대학교": {
+"name": "가천대학교",
+"campus": "본교",
+"location": "성남",
+"fileId": "1UiZbRQQmq8t40zz2YGNyQoJTNzHeBuk_"
+},
+"가톨릭관동대학교": {
+"name": "가톨릭관동대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1cl8Ax6BwRBLbcYOQN5x9c30Iwelvpod3"
+},
+"가톨릭대학교": {
+"name": "가톨릭대학교",
+"campus": "본교",
+"location": "부천",
+"fileId": "1ndcaKU-SwwB4OvxSGUkGeqQvIDuFuXlw"
+},
+"강원대학교": {
+"name": "강원대학교",
+"campus": "본교",
+"location": "춘천삼척",
+"fileId": "1kl40fCI5u8Nroq72UYGcwl8RyecyxX7T"
+},
+"건국대학교(글로컬)": {
+"name": "건국대학교",
+"campus": "분교",
+"location": "글로컬",
+"fileId": "1Oy90J4-868H5BzaMLYmC1ETKMS4Y-z18"
+},
+"건양대학교": {
+"name": "건양대학교",
+"campus": "본교",
+"location": "논산",
+"fileId": "1HrpLwHLCfnMf85cGaGaXprcEIjZ8uvs4"
+},
+"경북대학교": {
+"name": "경북대학교",
+"campus": "본교",
+"location": "대구",
+"fileId": "1AlpuyUS4po3Gs-FEOlpNAThxlqJAs-_n"
+},
+"경상국립대학교": {
+"name": "경상국립대학교",
+"campus": "본교",
+"location": "진주",
+"fileId": "1dRFurHrSKBZSTvFYljyhQiJIPj6UZcKh"
+},
+"경희대학교": {
+"name": "경희대학교",
+"campus": "본교",
+"location": "서울",
+"fileId": "1RYxrVJwkzuLDgGix9vV13Bck2Wr9zN_W"
+},
+"계명대학교": {
+"name": "계명대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1ZRlEhyKzji88tjNtXq_H1bUCTHN3LlHv"
+},
+"고려대학교": {
+"name": "고려대학교",
+"campus": "본교",
+"location": "서울",
+"fileId": "1bsRU2rC5s8yqZqLYcOPEtMIx0xLO06Qn"
+},
+"고신대학교": {
+"name": "고신대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1302sXOTVlb-U4dO_ufY0mOSsKTdBlKUO"
+},
+"단국대학교(천안)": {
+"name": "단국대학교",
+"campus": "이원화캠퍼스",
+"location": "천안",
+"fileId": "16KRBxZsWQpGYKxtoSKrgQKIQQMbs07il"
+},
+"대구가톨릭대학교": {
+"name": "대구가톨릭대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1VPl3NWf5opVF8_s8BRqD2aEJ-zxI9CZE"
+},
+"동국대학교(WISE)": {
+"name": "동국대학교",
+"campus": "분교",
+"location": "WISE",
+"fileId": "17CZP7iX_W6puMBhRgoi9JNV3oQpd3uVh"
+},
+"동아대학교": {
+"name": "동아대학교",
+"campus": "본교",
+"location": "",
+"fileId": "10ZiNaroGA8OspxZmCkuAVpNR6GkVIbZy"
+},
+"부산대학교": {
+"name": "부산대학교",
+"campus": "본교",
+"location": "부산",
+"fileId": "1Ho20NMwp029qCGPi_6rlXZoPbqXhL59a"
+},
+"서울대학교": {
+"name": "서울대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1sE7W_44ldrI-vxz9a_FiaO7NneXUSMw3"
+},
+"성균관대학교": {
+"name": "성균관대학교",
+"campus": "본교",
+"location": "서울",
+"fileId": "1Y47wT2nKYX0cVqFRg3Yf1lxxZepzk1Qh"
+},
+"순천향대학교": {
+"name": "순천향대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1S6xTD1AtD50KOn3qNgl2YpCYNeI1ffDN"
+},
+"아주대학교": {
+"name": "아주대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1YwWz3-Q689TcwnSlGbHDq36ob7j-R4ku"
+},
+"연세대학교": {
+"name": "연세대학교",
+"campus": "본교",
+"location": "서울",
+"fileId": "1mDVM6bogKf66uhoJ3FaN9ca9PH_byMmh"
+},
+"연세대학교(미래)": {
+"name": "연세대학교",
+"campus": "분교",
+"location": "미래",
+"fileId": "190yZ4Jrk6XsUOk79W6AD4oh0-HpD1hAE"
+},
+"영남대학교": {
+"name": "영남대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1E-8bjkSJuFE7ODWLFDFzWgPiaodAjRy2"
+},
+"울산대학교": {
+"name": "울산대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1JTQOEwdyxehsxnxUdJAKAF36CGE-95lM"
+},
+"원광대학교": {
+"name": "원광대학교",
+"campus": "본교",
+"location": "",
+"fileId": "16kVVbNeAcwlxKyXtJeu_VUcNGyLo2gwo"
+},
+"을지대학교": {
+"name": "을지대학교",
+"campus": "본교",
+"location": "대전",
+"fileId": "1BVKbEYEuCe4Uv8HF_VdTnIzCjf9U7T49"
+},
+"이화여자대학교": {
+"name": "이화여자대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1wDzcnqKpzpLH7bQ11IEafrQZsDFDTzyP"
+},
+"인제대학교": {
+"name": "인제대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1amfbhghvNQiDEAIVxbZSUOvXZ4lYhGcU"
+},
+"인하대학교": {
+"name": "인하대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1OZbdWyE2WUJOP0JKXte3Of0H2fjObkws"
+},
+"전남대학교": {
+"name": "전남대학교",
+"campus": "본교",
+"location": "광주",
+"fileId": "1xR_ZkcqE4WhaS4_pWITWlFLuYBIxB8qp"
+},
+"전북대학교": {
+"name": "전북대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1u71Tka4Hk1okWiPfsHlUYYAh68aYUIeH"
+},
+"제주대학교": {
+"name": "제주대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1ysbkAC_LsDhVN_o3-Yv8uMXTAZS-chij"
+},
+"조선대학교": {
+"name": "조선대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1zVHthb2X_8Q8y54NN70uENu0ytnD1hQe"
+},
+"중앙대학교": {
+"name": "중앙대학교",
+"campus": "본교",
+"location": "서울",
+"fileId": "1kiBvsGjTjuzsFOIuUBwsgqqzC-UsvvlJ"
+},
+"충남대학교": {
+"name": "충남대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1MVpCFcardUNxBe4T8pmdRp7heNhNiHGT"
+},
+"충북대학교": {
+"name": "충북대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1W06BFlUY_l3vfxUsWTdoe26crjOzUzOp"
+},
+"한림대학교": {
+"name": "한림대학교",
+"campus": "본교",
+"location": "",
+"fileId": "12B87opv2eZOGhseH2mF8TF11ExpbOKZq"
+},
+"한양대학교": {
+"name": "한양대학교",
+"campus": "본교",
+"location": "서울",
+"fileId": "1nYCX-xp7kXC6iyjjGJ2pOhhftiTlqTUO"
+},
+"강원대학교(강릉)": {
+"name": "강원대학교",
+"campus": "이원화캠퍼스",
+"location": "강릉원주",
+"fileId": "1MyI4DqrMZLhzBUb13m-jWJzqr-F3fE3V"
+},
+"대구한의대학교": {
+"name": "대구한의대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1_iICa7FiVVcJDlwf9RrKfefop0WFMMei"
+},
+"대전대학교": {
+"name": "대전대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1Kj-2Gztz7ixjX--TBNGySqx08hhk69wL"
+},
+"동신대학교": {
+"name": "동신대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1s0_QAh1fzZzlw9RHRzY2zWpmEtPivJPR"
+},
+"동의대학교": {
+"name": "동의대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1Esi5xgkj-89rHvGx8xv5Rd4A-o9hme6J"
+},
+"상지대학교": {
+"name": "상지대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1ife-d8Xzmbj8MKm_nFALQ4Q3wUlE6Uf7"
+},
+"세명대학교": {
+"name": "세명대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1xlSnBqhXDRW6YkHfRiTduw3Y8We6hKsF"
+},
+"우석대학교": {
+"name": "우석대학교",
+"campus": "본교",
+"location": "완주",
+"fileId": "1c3F-dgSCNvKD0FOKLnt1CenBCpc-6_iI"
+},
+"경성대학교": {
+"name": "경성대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1GiNxBt6CyjBEgH-2PdYycZw78IbdCZio"
+},
+"고려대학교(세종)": {
+"name": "고려대학교",
+"campus": "분교",
+"location": "세종",
+"fileId": "11CFfwJoB3sFkaxmyzpZUW6Lrsk0DDySv"
+},
+"덕성여자대학교": {
+"name": "덕성여자대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1Dc1dDxNNWAkd1XEqLHBn-INNfuPD9I-Q"
+},
+"동국대학교": {
+"name": "동국대학교",
+"campus": "본교",
+"location": "서울",
+"fileId": "1SqvZ4a3EGPo4jMIWff7Hj3ocBxGKt02P"
+},
+"동덕여자대학교": {
+"name": "동덕여자대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1sMvfHmqcWY7p000gKgK7HtaSvSsVx6M8"
+},
+"목포대학교": {
+"name": "국립목포대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1cTqY7g0Vm7kUoPmHBEOa2gWw6Xt6u2Wn"
+},
+"삼육대학교": {
+"name": "삼육대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1EdxT3Yi3Y5YHzGF6qDq60RGdFjRJbS1T"
+},
+"숙명여자대학교": {
+"name": "숙명여자대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1DLnc3yjPMZZuj-liWP-pteNjwTesdqXN"
+},
+"순천대학교": {
+"name": "국립순천대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1FVgWtHZUW5jlhF9NhJe6kAquBQ827dWJ"
+},
+"차의과학대학교": {
+"name": "차의과학대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1P-AhtHD2SBe1nH48hmCfySBdC18lDhAg"
+},
+"한양대학교(ERICA)": {
+"name": "한양대학교",
+"campus": "분교",
+"location": "ERICA",
+"fileId": "1mV1DSagDvj0qpLMbTpBO5iHVTMAcDNTT"
+},
+"건국대학교": {
+"name": "건국대학교",
+"campus": "본교",
+"location": "서울",
+"fileId": "18-WrjcOa6bpQS1Iwl1Wq2axwphMq6spF"
+},
+"경인교육대학교": {
+"name": "경인교육대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1EDimDqswQYyC2Vls0g9INsU4NpJ0cMW0"
+},
+"공주교육대학교": {
+"name": "공주교육대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1on7UMkNMPWu0LMR0cZ3goNRR5uUM58vq"
+},
+"광주교육대학교": {
+"name": "광주교육대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1dfULXnN0YOk74HPZ5ZAJd5IhjIqbmQ_3"
+},
+"대구교육대학교": {
+"name": "대구교육대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1oD-OmS2wUtMhZYGpE7I4NNgpPv8OVxxf"
+},
+"부산교육대학교": {
+"name": "부산교육대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1rqqmIqjqDbd3JrtsJi2jhfjbWSm6AUbz"
+},
+"서울교육대학교": {
+"name": "서울교육대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1smWAw7gAzOa1fsDj1xgMSGqQPL_UlX4x"
+},
+"전주교육대학교": {
+"name": "전주교육대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1I43ohm1meQacX9aoGbLWlwf7QhwQxGDU"
+},
+"진주교육대학교": {
+"name": "진주교육대학교",
+"campus": "본교",
+"location": "",
+"fileId": "10lrDpF8JHKLqWAUx0Tkv5tSH4VgciVyw"
+},
+"청주교육대학교": {
+"name": "청주교육대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1wJxcJkGVRXrG0APkDqhHe9u4DsAL2zi8"
+},
+"춘천교육대학교": {
+"name": "춘천교육대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1lFCRQb0HeRo4MAkpYNG33yzX4ucWnlPn"
+},
+"한국교원대학교": {
+"name": "한국교원대학교",
+"campus": "본교",
+"location": "",
+"fileId": "19-FSI_9Xro5x5o9Ni1iH_a45j6piHyj6"
+},
+"가톨릭꽃동네대학교": {
+"name": "가톨릭꽃동네대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1iR1hH5i1mLKXvR3xPaAih8udQt-cHriL"
+},
+"감리교신학대학교": {
+"name": "감리교신학대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1ivtwIcFo1zpewUdjykooFPpl00AEh9lV"
+},
+"강남대학교": {
+"name": "강남대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1s2cKJi4e-bKVy_oWmTHcDKTAdBMx7V4p"
+},
+"강서대학교": {
+"name": "강서대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1ibgdF2wCfv_lVPYk0AVLP_gYD68jGA8f"
+},
+"강원대학교(삼척)": {
+"name": "강원대학교",
+"campus": "본교",
+"location": "춘천삼척",
+"fileId": "1kl40fCI5u8Nroq72UYGcwl8RyecyxX7T"
+},
+"강원대학교(원주)": {
+"name": "강원대학교",
+"campus": "이원화캠퍼스",
+"location": "강릉원주",
+"fileId": "1MyI4DqrMZLhzBUb13m-jWJzqr-F3fE3V"
+},
+"경국대학교": {
+"name": "국립경국대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1XpZPiB2dwjP8K-q7kM936fyUkQarugDQ"
+},
+"경기대학교": {
+"name": "경기대학교",
+"campus": "본교",
+"location": "수원",
+"fileId": "15mFnvzWc11r16JXpEqIOe8CfcYnkgrA3"
+},
+"경남대학교": {
+"name": "경남대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1Nagh5bI5zmXp1-VLu4NxWBBjS1omZWwZ"
+},
+"경북대학교(상주)": {
+"name": "경북대학교",
+"campus": "이원화캠퍼스",
+"location": "상주",
+"fileId": "1QnEveHa0D5cAWTqNTHS9bdq0OllPGK5g"
+},
+"경운대학교": {
+"name": "경운대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1VUK54I-o9NOWT5MKfMhB7AT0zXIkTTPY"
+},
+"경일대학교": {
+"name": "경일대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1b9CRoBceeellDqRKwQEUMfVZ3xVVq3eq"
+},
+"공주대학교": {
+"name": "국립공주대학교",
+"campus": "본교",
+"location": "",
+"fileId": "12VjJxUdh7TZS9YPTRIAF8exzVWUZ6d_P"
+},
+"광운대학교": {
+"name": "광운대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1j0JGTOE60ec68Xo9zGoxN8zjvauwvIP5"
+},
+"국민대학교": {
+"name": "국민대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1ILNcz8hed87Mbx5vXebcVSP756IZn3Rs"
+},
+"군산대학교": {
+"name": "국립군산대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1avwaQpoSQUtOCNuVw92SZ1Exz4TG2hkn"
+},
+"극동대학교": {
+"name": "극동대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1h8yqIDYcatZ5hTwh85Cxm5IPQYlBF3tB"
+},
+"금강대학교": {
+"name": "금강대학교",
+"campus": "본교",
+"location": "",
+"fileId": "10BEgKhi5lQazHQp_XnOV2VpyGOv5cvwd"
+},
+"금오공과대학교": {
+"name": "국립금오공과대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1OGExGxwqPlueItXOw93NsbO-zuUw4tEU"
+},
+"김천대학교": {
+"name": "김천대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1xXZIrn9rpuUnjM7aHG9J_e4mNbGLp4lC"
+},
+"나사렛대학교": {
+"name": "나사렛대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1jX4KN0SuuetWNOmklVFailZV9jNia5Xy"
+},
+"남부대학교": {
+"name": "남부대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1gyzZjrskAELEEZlX0fS1cRR7FCm1wMrW"
+},
+"남서울대학교": {
+"name": "남서울대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1JJaD836hd-ZyXM8Q4pMbJFWwYP50WylZ"
+},
+"단국대학교": {
+"name": "단국대학교",
+"campus": "본교",
+"location": "죽전",
+"fileId": "17xcWdKJy9CulZiKcNPgvZJz9do0LMG9Z"
+},
+"대구대학교": {
+"name": "대구대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1GpK8EyKFc-8Y0oQDVTc0pC-cokUZ78cF"
+},
+"대진대학교": {
+"name": "대진대학교",
+"campus": "본교",
+"location": "",
+"fileId": "19BF7iYe8RoP8CkComBlfAiijBphLwcnu"
+},
+"동명대학교": {
+"name": "동명대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1exJ_qKRLo6UGWdZMvrvnTzoazM_FnCsB"
+},
+"동서대학교": {
+"name": "동서대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1pkhQUGwu5iYT4V8MrYPyV6LW8kqd0_kv"
+},
+"동양대학교": {
+"name": "동양대학교",
+"campus": "본교",
+"location": "영주",
+"fileId": "19oTg7h_C3ZEXLACsGMGfs8E8edDjGpzb"
+},
+"명지대학교": {
+"name": "명지대학교",
+"campus": "이원화캠퍼스",
+"location": "서울",
+"fileId": "10m3YCzou-uO9uaeO35zoc4A6WRmeXQD5"
+},
+"목원대학교": {
+"name": "목원대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1DydgkOZV8SWd3C_89OvPvE6MdQsl5QNb"
+},
+"목포가톨릭대학교": {
+"name": "목포가톨릭대학교",
+"campus": "0",
+"location": "",
+"fileId": "1791ycUnxd7gjbghFQy-7LxbitJUoOLq4"
+},
+"목포해양대학교": {
+"name": "국립목포해양대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1QORpNquiGl-fXFILYH7b-SFoM05tHPVw"
+},
+"배재대학교": {
+"name": "배재대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1jFZOdUyzhW0H551MtrZyTWB0mTl0ORiO"
+},
+"백석대학교": {
+"name": "백석대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1MOuPsoq7bIQLMx8VkH8cgBhR-miJC5d1"
+},
+"부경대학교": {
+"name": "국립부경대학교",
+"campus": "본교",
+"location": "",
+"fileId": "14yellcOQ8LUkG0twP4eSM-Qmq1CnYeMQ"
+},
+"부산가톨릭대학교": {
+"name": "부산가톨릭대학교",
+"campus": "본교",
+"location": "",
+"fileId": "16BCer_0D03I2094DsxHSpgfwr5Q_TqCW"
+},
+"부산대학교(밀양)": {
+"name": "부산대학교",
+"campus": "이원화캠퍼스",
+"location": "양산밀양",
+"fileId": "1cJMUyQQt9Ff7zO1TM_IRT46xBeHb7l1I"
+},
+"부산외국어대학교": {
+"name": "부산외국어대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1LGb_kXY47Kpj7455t0T78xFgImnE2Kp4"
+},
+"상명대학교": {
+"name": "상명대학교",
+"campus": "본교",
+"location": "서울",
+"fileId": "1Zv5yjCBdY4mIe9pr1pq4sNuupiTxRZlq"
+},
+"상명대학교(천안)": {
+"name": "상명대학교",
+"campus": "이원화캠퍼스",
+"location": "천안",
+"fileId": "1DdqMJ8qf3bFCo1WJKmKtZXC0sPNC13Fd"
+},
+"서강대학교": {
+"name": "서강대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1dx9qIZK8G0VxnFRxKElW55YnBwkNUCt4"
+},
+"서경대학교": {
+"name": "서경대학교",
+"campus": "본교",
+"location": "",
+"fileId": "12SjnGaBDUuipuI-HThCWvvxUyHZ3JUw-"
+},
+"서울과학기술대학교": {
+"name": "서울과학기술대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1TVYFuUjBbBgkuTuyjA2r__amsHBPeydg"
+},
+"서울시립대학교": {
+"name": "서울시립대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1alnEIvB8RZiPFnHxWpOTp1DZZHK0JoS8"
+},
+"서울신학대학교": {
+"name": "서울신학대학교",
+"campus": "본교",
+"location": "",
+"fileId": "12dwYo3wEKaMq5XzlcCsET6weT5tNXQDb"
+},
+"서울여자대학교": {
+"name": "서울여자대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1uWxtINqDskELWjR6ONIhy-ZnO7EWhNZf"
+},
+"서원대학교": {
+"name": "서원대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1Qbb3b41bZHLg56pTROKYantV738P6cMI"
+},
+"선문대학교": {
+"name": "선문대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1zMoqToPNttSHLlCJyTAyLhYiBVZElUbQ"
+},
+"성결대학교": {
+"name": "성결대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1HQxgWScrsBk-uRNKWYOCfadeAl_QiLsz"
+},
+"성공회대학교": {
+"name": "성공회대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1E16CZOrO2IdAnq-zoOfK3Bp9pPH51Fjs"
+},
+"성신여자대학교": {
+"name": "성신여자대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1TLpGoZKh2D25lfj7M8M90PWQqJ3RXIgf"
+},
+"세종대학교": {
+"name": "세종대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1WrJ3_g95Efmpxy1wWAl7v0v046LqAs_w"
+},
+"수원대학교": {
+"name": "수원대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1z13jUb_QmCvMsyhCCh1F3_XdxJSknlgx"
+},
+"숭실대학교": {
+"name": "숭실대학교",
+"campus": "본교",
+"location": "",
+"fileId": "11V78FijSGy-tLGyYuXcNoivUzHbENzw4"
+},
+"신경주대학교": {
+"name": "신경주대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1CWHeIKIAtHyIrIzCtw2jflXEi4D1mT13"
+},
+"신라대학교": {
+"name": "신라대학교",
+"campus": "본교",
+"location": "",
+"fileId": "10EO1EhUq4_BZZ4Y-J7YibpvG95h34KPf"
+},
+"신한대학교": {
+"name": "신한대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1EtOZYstUPHxg5ok0n2Wty39WHK3oYrki"
+},
+"안양대학교": {
+"name": "안양대학교",
+"campus": "본교",
+"location": "안양",
+"fileId": "1C-AqwfemfERZI_wmwuabbXYW5l-kWs16"
+},
+"예수대학교": {
+"name": "예수대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1Cy7E517R024eYZ5CJT-C0kH97c84JohS"
+},
+"용인대학교": {
+"name": "용인대학교",
+"campus": "본교",
+"location": "",
+"fileId": "16o91uYWNhmrdxvRvGUIO30pmfh8ALdKL"
+},
+"우송대학교": {
+"name": "우송대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1uklBLsBDqUw2Sgy3OvBIhgQli064DdaQ"
+},
+"유원대학교": {
+"name": "유원대학교",
+"campus": "본교",
+"location": "영동",
+"fileId": "1uUGFK9tl1EU_wvWSNB9q-7Mnhit4Oh_s"
+},
+"인천가톨릭대학교": {
+"name": "인천가톨릭대학교",
+"campus": "본교",
+"location": "",
+"fileId": null
+},
+"인천대학교": {
+"name": "인천대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1biRGa0JvsLgINwZqfzp6TD_RnP7ebA4s"
+},
+"장로회신학대학교": {
+"name": "장로회신학대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1WRLmQzC1VOIU2jJPJxT3-at12BpnaNNc"
+},
+"전남대학교(여수)": {
+"name": "전남대학교",
+"campus": "이원화캠퍼스",
+"location": "여수",
+"fileId": "1yv8SWvh4d_a1wg1vX66DwvtLjPkVsSJE"
+},
+"전주대학교": {
+"name": "전주대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1RhH_ujl8c5qSFXIulKoZJUDRUvJ4-QKl"
+},
+"중부대학교": {
+"name": "중부대학교",
+"campus": "본교",
+"location": "금산",
+"fileId": "1aI92TBF4C7_j57fmDE0S9ZnS-ESycTWi"
+},
+"중원대학교": {
+"name": "중원대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1kXUmTYXOou3fXSv_i6M4j6jLmRy1AyBR"
+},
+"창원대학교": {
+"name": "국립창원대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1F9rTv1ajyGWex4ocmzKqgkidyEWyAjmO"
+},
+"청주대학교": {
+"name": "청주대학교",
+"campus": "본교",
+"location": "",
+"fileId": "12YdIWWicG5XlaQx1XethbXyBlBZ7oXdh"
+},
+"총신대학교": {
+"name": "총신대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1A9pUDlIFVOdyIuTGvSzrScrr-UErJtHQ"
+},
+"추계예술대학교": {
+"name": "추계예술대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1K1REIm1Z3twNvgJ2SBItGR4RH7KinMey"
+},
+"한경국립대학교": {
+"name": "한경국립대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1IOvxhOtSRmYr011KlTiI33Yen_OwMwXw"
+},
+"한국공학대학교": {
+"name": "한국공학대학교",
+"campus": "본교",
+"location": "",
+"fileId": "19NDYHS9NJl1L1rNNnbPjDWRwbx1kHjdM"
+},
+"한국교통대학교": {
+"name": "국립한국교통대학교",
+"campus": "본교",
+"location": "충주증평",
+"fileId": "1kEjdKP6UyoKSC9AOxRmel6kP8rJhFmo-"
+},
+"한국기술교육대학교": {
+"name": "한국기술교육대학교",
+"campus": "본교",
+"location": "",
+"fileId": "112xk17WlugB8cmw7dnmLzZffSlvLJ1NK"
+},
+"한국성서대학교": {
+"name": "한국성서대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1ucuVCelB7CPzYJ8JolV2MBQcTWQW8tA5"
+},
+"한국외국어대학교": {
+"name": "한국외국어대학교",
+"campus": "본교",
+"location": "서울",
+"fileId": "1dyQapp-V6CHrQ6KPXt1A3hjBNbc3pJmG"
+},
+"한국체육대학교": {
+"name": "한국체육대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1Zfj771Y_qfwBodrOYFvflvIF0eDktSlP"
+},
+"한국항공대학교": {
+"name": "한국항공대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1l58cy9s6gcwMhVKPhkQYlZQDhYod83_r"
+},
+"한국해양대학교": {
+"name": "국립한국해양대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1xUrzI44Rhmh1z2cEPj27YoWkRk2J_DE5"
+},
+"한남대학교": {
+"name": "한남대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1RAeXM0cnulw4HkaryNLVaN9VdX87vw1n"
+},
+"한동대학교": {
+"name": "한동대학교",
+"campus": "본교",
+"location": "",
+"fileId": "16x7xanxVmd04g8DRZ_gxrcr04GW3ZRsZ"
+},
+"한라대학교": {
+"name": "한라대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1D66ke6iCpFm79vGCZxNK0ekYsFdsGfTn"
+},
+"한밭대학교": {
+"name": "국립한밭대학교",
+"campus": "본교",
+"location": "",
+"fileId": null
+},
+"한서대학교": {
+"name": "한서대학교",
+"campus": "본교",
+"location": "",
+"fileId": "12MLkGA-_8-i0eN1RK2n568ad73ik8yE0"
+},
+"한성대학교": {
+"name": "한성대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1pIiWVX4XpYFLGYbOn4ebW2R0AxKopS5C"
+},
+"한세대학교": {
+"name": "한세대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1c2Xf9-0rbho4xiKSq-V9NDv9NAAfaPmn"
+},
+"한신대학교": {
+"name": "한신대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1NMpsPXVw9UM5yJTUYcKvKE3ev6UbnQxC"
+},
+"협성대학교": {
+"name": "협성대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1OXKmjUe6-hKXtcKQYxQNiO9JfncCnTwC"
+},
+"호서대학교": {
+"name": "호서대학교",
+"campus": "본교",
+"location": "",
+"fileId": "17GzB0WLMkl6xWx6lYBzBushwldSFrID8"
+},
+"홍익대학교": {
+"name": "홍익대학교",
+"campus": "본교",
+"location": "서울",
+"fileId": "198jvRMzP2IS7Z-HksxbrnPIqc2RDUV6E"
+},
+"홍익대학교(세종)": {
+"name": "홍익대학교",
+"campus": "이원화캠퍼스",
+"location": "세종",
+"fileId": "1Hh60Oruydd4Q9uhrJ-BWZ15LrnMT0mX2"
+},
+"광주과학기술원": {
+"name": "광주과학기술원",
+"campus": "본교",
+"location": "",
+"fileId": "12qEQN6IbWETz661hYQHdwuFgmHmSUtXX"
+},
+"대구경북과학기술원": {
+"name": "대구경북과학기술원",
+"campus": "본교",
+"location": "",
+"fileId": "1AHRsc0ze8K0h_S_Cz6kSR5UF3v-Forc9"
+},
+"울산과학기술원": {
+"name": "울산과학기술원",
+"campus": "본교",
+"location": "",
+"fileId": "1Gwu9b4uLhnm6_sfkPkqKWARiOT5wvFXD"
+},
+"한국과학기술원": {
+"name": "한국과학기술원",
+"campus": "본교",
+"location": "",
+"fileId": "1ZCguz3th9qdvODzYW5OjQB2ZEKkniNxu"
+},
+"한국에너지공과대학교": {
+"name": "한국에너지공과대학교",
+"campus": "본교",
+"location": "",
+"fileId": "1Phht73tlTedSDlBNm9HHr55tY-YbC9vI"
+},
+"명지대학교(자연)": {
+"name": "명지대학교",
+"campus": "본교",
+"location": "용인",
+"fileId": "1OljNf4I-SzmIVJoUqoPBNQLhTutl66hh"
+},
+"중앙대학교(다빈치)": {
+"name": "중앙대학교",
+"campus": "이원화캠퍼스",
+"location": "안성",
+"fileId": "1K-Tv6YIBql4eVD9yqfgAjdyP877liX6Y"
+},
+"한국외국어대학교(글로벌)": {
+"name": "한국외국어대학교",
+"campus": "이원화캠퍼스",
+"location": "용인",
+"fileId": "1gdQd1eV6TWYRht2sMpqdW16Hn6P6aPLy"
+}
 }
