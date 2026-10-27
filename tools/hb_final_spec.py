@@ -31,7 +31,7 @@ def build_final(UNIV, SRC, R):
                 keys.append(k)
             bucket = {}
             for e in j["unit_map"]:
-                med = str(e.get("구분", "")).startswith("★")
+                med = str(e.get("구분", "")) in ("★의대", "★치대", "★한의대", "★약대", "★수의대")
                 bucket.setdefault((med, e["group_idx"], e["군"], e.get("구분") if med else None), []).append((e["학과"], e.get("reason", "")))
             rules, med_rules = [], []
             for (med, gi, gun, zone), items in sorted(bucket.items(), key=lambda x: (x[0][0], str(x[0][1]), x[0][2], str(x[0][3]))):
