@@ -258,6 +258,10 @@ table.dt{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
 .dt tbody tr:hover td{background:var(--line2)}
 .dt td.nm{font-weight:600}
 .dt td.num{text-align:right}
+.dt td.my{background:var(--accent-s);border-left:2px solid var(--accent);border-right:2px solid var(--accent);font-size:15px}
+.dt td.my b{font-weight:800;color:var(--ink)}
+.dt tbody tr:hover td.my{background:var(--accent-s)}
+.dt th.mycol{background:var(--accent);color:#fff}
 .dt td.h{text-align:right;font-size:12px}
 .dt td.h.hit{background:var(--hit)}
 .dt td.h.miss{background:var(--miss)}
@@ -1339,7 +1343,7 @@ function cellHtml(k,i){
     case 'cat':return `<td class="dim">${esc(catOf(u))}</td>`;
     case 'hb':return `<td>${hbBadge(i)}</td>`;
     case 'judge':return `<td><span class="jb j${b[0]}" title="${JD[b[0]]}">${JL[b[0]]}</span></td>`;
-    case 'my':return `<td class="num"><b>${pct(b[1])}</b>${posBadge(i)}</td>`;
+    case 'my':return `<td class="num my"><b>${pct(b[1])}</b>${posBadge(i)}</td>`;
     case 'margin':{const m=marginOf(i);return `<td class="num" style="color:${m>=0?'var(--j4)':'var(--j1)'}">${m===-999?'–':(m>=0?'+':'')+fmt(m,2)}</td>`}
     case 'jn':return `<td class="num">${pct(b[3])}</td>`;
     case 'yn':return `<td class="num">${pct(b[4])}</td>`;
@@ -1371,7 +1375,7 @@ function renderTable(T,list,host){
     const sorted=T.sortKey===c.k, arr=sorted?(T.dir>0?'▲':'▼'):'';
     const fb=c.filter?`<button class="fb ${T.cf[c.k]?.size?'on':''}" data-fcol="${c.k}" aria-label="${c.t} 필터">▾</button>`:'';
     if(c.k==='h') return `<th colspan="5" style="text-align:center">${c.t}</th>`;
-    return `<th rowspan="2" class="${c.sort?'sortable':''}" data-sort="${c.sort?c.k:''}">${c.t}${arr?`<span class="arr">${arr}</span>`:''}${fb}</th>`;
+    return `<th rowspan="2" class="${c.sort?'sortable':''}${c.k==='my'?' mycol':''}" data-sort="${c.sort?c.k:''}">${c.t}${arr?`<span class="arr">${arr}</span>`:''}${fb}</th>`;
   };
   host.innerHTML=`<div class="twrap"><table class="dt"><thead><tr>${cols.map(th).join('')}</tr>
     <tr class="sub">${cols.some(c=>c.k==='h')?['25','24','23','22','21'].map(y=>`<th>${y}</th>`).join(''):''}</tr></thead>
