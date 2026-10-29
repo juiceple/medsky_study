@@ -2071,10 +2071,10 @@ function rpS1(){
    ${rpCm('s1','성적 총평','학생 성적의 강점·약점, 영역별 특징, 올해 입시에서의 유불리 등을 적어주세요',5)}`;
 }
 function rpS2(P){
-  const tiers=P.tiers.map(([lab,list,cls])=>`<div class="rp-tier"><div><span class="jb ${cls}">${lab}</span> <small>${list.length}개교</small></div><div class="rp-chips">${list.slice(0,12).map(x=>`<span class="rp-chip">${esc(x.n.replace(/대학교$/,'대'))}<small>${x.s.c[4]+x.s.c[3]}/${x.s.n}</small></span>`).join('')||'<small>해당 없음</small>'}</div></div>`).join('');
+  const tiers=P.tiers.map(([lab,list,cls])=>`<div class="rp-tier"><div><span class="jb ${cls}">${lab}</span> <small>${list.length}개교</small></div><div class="rp-chips">${list.slice(0,12).map(x=>`<span class="rp-chip">${esc(x.n.replace(/대학교$/,'대'))}</span>`).join('')||'<small>해당 없음</small>'}</div></div>`).join('');
   const pick=[...P.tiers[0][1].slice(0,8).map(x=>[x,'상향 도전']),...P.tiers[1][1].slice(0,8).map(x=>[x,'소신']),...P.tiers[2][1].slice(0,10).map(x=>[x,'적정']),...P.tiers[3][1].slice(0,5).map(x=>[x,'안정'])];
   const rows=pick.map(([x,l])=>chRow(x.n,x.ids,'r:'+x.n,l)).join('').replace(/▸ /g,'');
-  return rpSub('추천 구간')+`<div class="rp-tiers">${tiers}</div><p class="rp-hint">칩의 숫자는 적정+예상 판정 모집단위 수 / 전체 모집단위 수예요. 구간은 대학 모집단위 적정 누백의 중앙값 ÷ 학생 대표 누백으로 나눴어요.</p>
+  return rpSub('추천 구간')+`<div class="rp-tiers">${tiers}</div><p class="rp-hint">구간은 대학 모집단위 적정 누백의 중앙값 ÷ 학생 대표 누백으로 나눴어요.</p>
    ${rpSub('대학별 성적대 위치')}<div class="rp-chart">${chBlock('추천 대학 (누백 축)',rows,pick.length)}</div>
    <p class="rp-hint">가로축은 누백(상위 몇 %)이고 왼쪽일수록 상위권이에요. 초록 막대는 대학 모집단위의 적정 누백 25~75% 구간, ◆는 학생 누백이에요. ◆가 막대보다 왼쪽이면 적정선 위, 오른쪽이면 상향이에요.</p>
    ${rpCm('s2','추천 대학 소견','추천 구간에 대한 해석, 학생 요청사항과의 연결, 지역·계열 조건 등을 적어주세요',5)}`;
@@ -2146,7 +2146,7 @@ function rpPageStyle(name){
 }
 function rReport(){
   const w=$('reportWrap'),R=rpR();
-  const name=S.name||'(학생 이름 미입력)',date=new Date().toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'});
+  const name=(S.name||'').replace(/\s*학생$/,'')||'(학생 이름 미입력)',date=new Date().toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'});
   const P=chProfile();
   const secs=RP_SECS.filter(s=>!R.off[s.id]);
   const body={s0:()=>rpS0(P),s1:()=>rpS1(),s2:()=>rpS2(P),s3:rpS3,s4:rpS4,s5:rpS5};
