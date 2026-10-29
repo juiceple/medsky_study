@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """학생부 반영 구분(미반영/정량/정성/미확인) 규칙 원본.
 
-- 2027학년도 정시 기준, 2026-10-07 조사 → 4팀 독립 교차검증 반영 (docs/research 참고)
+- 2027학년도 정시 기준 요강(8~9월 공개본) 재조사, 2026-10-28 마무리 → 독립 검증 반영 (docs/research/verify_2027final 참고)
 - 실행: python3 tools/hb_spec.py  → jeongsi_tool.html 의 HB_DATA 블록을 갱신
 - UNIV[대학]["rules"]=비메디컬 규칙, UNIV[대학]["med"]=메디컬(의·치·한·약·수) 규칙 (앱 구분 ★의대 등은 m.zone 으로 구분 가능)
 - 메디컬/다른 대학을 추가할 때는 UNIV 에 대학명(앱의 모집단위 대학명 그대로)을 키로 규칙을 추가한다.
@@ -9,7 +9,7 @@
 """
 import json, re, sys, pathlib
 
-ASOF = "2026-10-07"
+ASOF = "2026-10-28"
 
 CDN = "https://cdn013.negagea.net/dgsmidc/omr/seoul/web/univ_info2026/%s/%s_2027학년도_정시모집요강.pdf"
 def jy(univ):
