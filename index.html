@@ -45,7 +45,8 @@ p strong{color:var(--ink)}
 .ph{position:relative;width:100%;border-radius:var(--radius);overflow:hidden;background:repeating-linear-gradient(45deg,var(--brand-l),var(--brand-l) 12px,transparent 12px,transparent 24px),var(--card);border:2px dashed var(--brand);display:flex;align-items:center;justify-content:center;text-align:center;color:var(--brand);font-weight:700;font-size:14px;padding:16px;margin:24px 0}
 .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .ph.cover{aspect-ratio:1414/2000;max-width:340px;margin:28px auto 0;box-shadow:0 18px 40px rgba(111,95,196,.28)}
-.ph.portrait{aspect-ratio:732/927;max-width:300px;margin:24px auto 8px}
+.photos{display:grid;grid-template-columns:1fr 1.7fr;gap:10px;margin:24px 0 8px}
+.photos .ph{margin:0;min-height:140px;border-radius:16px}
 .ph.r169{aspect-ratio:16/9}.ph.r43{aspect-ratio:4/3}.ph.r11{aspect-ratio:1/1}
 
 /* storyline cards */
@@ -146,8 +147,11 @@ footer{padding:32px 0 40px;text-align:center;font-size:13px;color:var(--sub)}
       </div>
     </div>
 
-    <div class="ph portrait rv" data-ph="school"><span>📷 고등학생 시절 사진</span></div>
-    <p class="cap rv">고등학생 시절의 저, 이성국</p>
+    <div class="photos rv">
+      <div class="ph" data-ph="school"><span>📷 증명사진</span></div>
+      <div class="ph" data-ph="school-friends" style="aspect-ratio:4/3"><span>📷 친구들과</span></div>
+    </div>
+    <p class="cap rv">고등학생 시절의 저, 이성국 (왼쪽 위)</p>
   </div>
 </section>
 
@@ -286,7 +290,8 @@ document.querySelectorAll("[data-link]").forEach(function(a){a.href = HOME_URL;}
 // 이미지 교체: IMAGES 에 경로를 넣으면 해당 자리표시자가 사진으로 바뀝니다.
 var IMAGES = {
   "hero":"img/book-cover.jpg",
-  "school":"img/author-highschool.jpg"
+  "school":"img/author-highschool.jpg",
+  "school-friends":"img/author-friends.jpg"
   // "book-main":"img/book.jpg", "review-1":"img/review1.jpg"
 };
 document.querySelectorAll("[data-ph]").forEach(function(el){
