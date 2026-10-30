@@ -133,9 +133,9 @@ p strong{color:var(--ink)}
 .pt-head{font-size:clamp(34px,9vw,52px);font-weight:800;line-height:1.2;letter-spacing:-.02em;color:var(--ink);margin:6px 0 4px}
 
 /* reviews */
-.reviews{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.reviews .ph{margin:0;aspect-ratio:3/4}
-@media(min-width:620px){.reviews{grid-template-columns:repeat(3,1fr)}}
+.reviews{display:grid;gap:14px;max-width:480px;margin:0 auto}
+.reviews .ph{margin:0;padding:0;border-radius:16px;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow);cursor:zoom-in}
+.reviews .ph img{object-fit:contain;background:#fff}
 
 /* final CTA */
 .final{background:linear-gradient(180deg,var(--bg),var(--brand-l));text-align:center}
@@ -349,12 +349,9 @@ h1 em,h2 em{background:linear-gradient(transparent 62%,var(--brand-l) 62%) no-re
       <h2>읽어본 분들의 후기</h2>
     </div>
     <div class="reviews rv stagger">
-      <div class="ph" data-ph="review-1"><span>📷 후기 1</span></div>
-      <div class="ph" data-ph="review-2"><span>📷 후기 2</span></div>
-      <div class="ph" data-ph="review-3"><span>📷 후기 3</span></div>
-      <div class="ph" data-ph="review-4"><span>📷 후기 4</span></div>
-      <div class="ph" data-ph="review-5"><span>📷 후기 5</span></div>
-      <div class="ph" data-ph="review-6"><span>📷 후기 6</span></div>
+      <div class="ph" data-ph="review-1" style="aspect-ratio:362/311"><span>📷 후기 1</span></div>
+      <div class="ph" data-ph="review-2" style="aspect-ratio:360/310"><span>📷 후기 2</span></div>
+      <div class="ph" data-ph="review-3" style="aspect-ratio:361/192"><span>📷 후기 3</span></div>
     </div>
   </div>
 </section>
@@ -428,8 +425,10 @@ var IMAGES = {
   "interview":"img/interview.jpg",
   "proof-ku":"img/proof-ku.jpg",
   "proof-cha":"img/proof-cha.jpg",
-  "proof-record":"img/proof-record.jpg"
-  // "review-1":"img/review1.jpg"
+  "proof-record":"img/proof-record.jpg",
+  "review-1":"img/review-1.jpg",
+  "review-2":"img/review-2.jpg",
+  "review-3":"img/review-3.jpg"
 };
 // 사진은 화면 근처에 왔을 때 불러옵니다(모바일 데이터 절약). 첫 화면 사진은 바로 불러옵니다.
 function loadPh(el){
@@ -521,22 +520,22 @@ window.addEventListener("scroll", toggle, {passive:true}); toggle();
     .then(function(){ clearTimeout(timer); });
 })();
 
-// 합격증·생활기록부 사진을 누르면 크게 보여줍니다.
+// 합격증·생활기록부·후기 사진을 누르면 크게 보여줍니다.
 (function(){
-  var box = document.querySelector(".proofs");
-  if(!box) return;
+  var boxes = document.querySelectorAll(".proofs, .reviews");
+  if(!boxes.length) return;
   var lb = document.createElement("div");
   lb.className = "lb"; lb.setAttribute("role","dialog"); lb.setAttribute("aria-label","사진 크게 보기");
   lb.innerHTML = "<img alt=''>";
   document.body.appendChild(lb);
   var big = lb.firstChild;
   function close(){ lb.classList.remove("show"); document.body.style.overflow = ""; }
-  box.addEventListener("click", function(e){
+  boxes.forEach(function(box){ box.addEventListener("click", function(e){
     var im = e.target.closest("img");
     if(!im) return;
     big.src = im.currentSrc || im.src; big.alt = im.alt;
     lb.classList.add("show"); document.body.style.overflow = "hidden";
-  });
+  }); });
   lb.addEventListener("click", close);
   document.addEventListener("keydown", function(e){ if(e.key === "Escape") close(); });
 })();
