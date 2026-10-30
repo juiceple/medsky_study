@@ -2,7 +2,11 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f8f8f6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15131f" media="(prefers-color-scheme: dark)">
+<link rel="preload" as="image" href="img/book-mockup.jpg">
+<link rel="preconnect" href="https://www.medsky.co.kr">
 <title>메드스카이 | 전공별 생기부 비법자료</title>
 <meta name="description" content="지방 일반고 출신, 학종으로 SKY 대학 합격. 같은 길을 걸은 선배들의 인터뷰를 학과별로 정리한 전공별 생기부 비법자료.">
 <meta property="og:title" content="메드스카이 | 전공별 생기부 비법자료">
@@ -17,7 +21,9 @@
   :root{--bg:#15131f; --card:#1e1b2e; --tint:#2a2447; --ink:#f1effa; --sub:#aaa6c0; --line:#2e2a45;
         --brand:#7b6bd8; --brand-d:#9183e6; --brand-l:#2a2548; --accent:#b0a4e3; --shadow:0 10px 30px rgba(0,0,0,.35);}
 }
-*{box-sizing:border-box;margin:0;padding:0}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+a,button{touch-action:manipulation}
 html{scroll-behavior:smooth}
 html,body{overflow-x:clip}
 .s-white{background:var(--card)}
@@ -39,9 +45,11 @@ p strong{color:var(--ink)}
 .hero .brand{font-weight:800;color:var(--brand);margin-bottom:20px;font-size:15px}
 .hero p{font-size:18px;margin-top:16px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--brand);color:#fff;text-decoration:none;font-weight:800;font-size:17px;padding:16px 28px;border-radius:14px;box-shadow:0 8px 20px rgba(111,95,196,.28);transition:.15s;border:0;cursor:pointer}
-.btn:hover{background:var(--brand-d);transform:translateY(-2px)}
+.btn{min-height:52px}
+@media(hover:hover){.btn:hover{background:var(--brand-d);transform:translateY(-2px)}}
 .btn.ghost{background:transparent;color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand)}
-.btn.ghost:hover{background:var(--brand-l)}
+@media(hover:hover){.btn.ghost:hover{background:var(--brand-l)}}
+.btn:active{transform:scale(.98)}
 .hero .btn{margin-top:26px}
 
 /* image placeholders: swap by setting <img src> */
@@ -56,13 +64,14 @@ p strong{color:var(--ink)}
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow);margin:22px 0}
 .story p{font-size:18px;color:var(--ink);line-height:1.85;margin-bottom:18px}
 .peek{display:flex;align-items:center;gap:16px;padding:14px 18px 14px 14px;background:var(--card);border:1px solid var(--line);border-radius:20px;text-decoration:none;color:var(--ink);transition:transform .25s,box-shadow .25s,border-color .25s}
-.peek:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--brand)}
+@media(hover:hover){.peek:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--brand)}}
+.peek:active{transform:scale(.985)}
 .peek img{flex:none;width:76px;height:76px;border-radius:14px;object-fit:cover;background:var(--tint)}
 .peek .t{flex:1;min-width:0;line-height:1.45}
 .peek small{display:block;font-size:13px;color:var(--sub);font-weight:600}
 .peek b{display:block;font-size:18px;font-weight:800;letter-spacing:-.01em;margin-top:2px}
 .peek .go{flex:none;width:38px;height:38px;border-radius:50%;background:var(--brand-l);color:var(--brand);display:grid;place-items:center;font-size:18px;font-weight:800;transition:transform .25s,background .25s,color .25s}
-.peek:hover .go{transform:translateX(3px);background:var(--brand);color:#fff}
+@media(hover:hover){.peek:hover .go{transform:translateX(3px);background:var(--brand);color:#fff}}
 .quote{border-left:5px solid var(--brand);padding:6px 0 6px 18px;margin:24px 0;font-size:20px;font-weight:700;color:var(--ink);line-height:1.6}
 
 /* diagram: ① 환경 → ② 전략 → ③ 결과 */
@@ -122,6 +131,7 @@ footer{padding:32px 0 40px;text-align:center;font-size:13px;color:var(--sub)}
 section[id]{scroll-margin-top:52px}
 .toc{position:fixed;top:0;left:0;right:0;z-index:20;background:color-mix(in srgb,var(--card) 90%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);transform:translateY(-110%);transition:transform .35s cubic-bezier(.22,1,.36,1)}
 .toc.show{transform:none}
+.toc{padding-top:env(safe-area-inset-top)}
 .toc-in{max-width:720px;margin:0 auto;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;padding:0 8px}
 .toc-in::-webkit-scrollbar{display:none}
 .toc a{position:relative;flex:none;padding:14px 9px;font-size:14px;font-weight:700;color:var(--sub);text-decoration:none;white-space:nowrap;transition:color .2s}
@@ -130,6 +140,33 @@ section[id]{scroll-margin-top:52px}
 .toc a.on{color:var(--brand)}
 .toc a.on:after{transform:none}
 @media(min-width:720px){.toc-in{justify-content:center}}
+
+
+/* 상단 안내 바 */
+.topbar{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--ink);color:var(--bg);font-size:14px;font-weight:600;padding:10px 16px;padding-top:calc(10px + env(safe-area-inset-top));text-align:center;max-height:0;overflow:hidden;padding-block:0;opacity:0;transition:max-height .5s cubic-bezier(.22,1,.36,1),padding .5s,opacity .5s}
+.topbar.show{max-height:80px;padding-top:calc(10px + env(safe-area-inset-top));padding-bottom:10px;opacity:1}
+.topbar b{color:var(--accent);font-size:16px}
+.topbar .dot,.pop .dot{width:8px;height:8px;border-radius:50%;background:#ff6b6b;flex:none;animation:pulse 1.6s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,107,107,.6)}70%,100%{box-shadow:0 0 0 8px rgba(255,107,107,0)}}
+
+/* 수량 팝업: 모바일은 아래에서 올라오는 시트, 넓은 화면은 가운데 카드 */
+.pop{position:fixed;inset:0;z-index:50;display:flex;align-items:flex-end;justify-content:center;visibility:hidden;pointer-events:none}
+.pop.show{visibility:visible;pointer-events:auto}
+.pop-bg{position:absolute;inset:0;background:rgba(15,12,30,.55);opacity:0;transition:opacity .3s}
+.pop.show .pop-bg{opacity:1}
+.pop-card{position:relative;width:100%;max-width:440px;background:var(--card);border-radius:24px 24px 0 0;padding:30px 22px calc(22px + env(safe-area-inset-bottom));text-align:center;transform:translateY(100%);transition:transform .45s cubic-bezier(.22,1,.36,1);box-shadow:0 -12px 40px rgba(0,0,0,.18)}
+.pop.show .pop-card{transform:none}
+.pop-card{outline:none}
+.pop-x:focus-visible{outline:2px solid var(--brand)}
+.pop-x{position:absolute;top:6px;right:6px;width:44px;height:44px;border:0;background:transparent;color:var(--sub);font-size:26px;line-height:1;cursor:pointer;border-radius:50%}
+.pop small{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--brand);background:var(--brand-l);padding:5px 12px;border-radius:99px}
+.pop h3{font-size:clamp(24px,6.4vw,30px);line-height:1.4;font-weight:800;letter-spacing:-.02em;margin:16px 0 20px;color:var(--ink)}
+.pop h3 em{font-style:normal;color:var(--brand)}
+.pop-btns,.cta-pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pop-btns .btn,.cta-pair .btn{padding:14px 10px;font-size:16px;width:100%}
+.final .cta-pair{max-width:420px;margin:26px auto 0}
+.final .cta-pair .btn{font-size:16px;padding:16px 10px}
+@media(min-width:560px){.pop{align-items:center}.pop-card{border-radius:24px;padding-bottom:26px;transform:translateY(24px) scale(.96);opacity:0;transition:transform .4s cubic-bezier(.22,1,.36,1),opacity .3s}.pop.show .pop-card{transform:none;opacity:1}}
 
 /* reveal */
 .rv{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
@@ -176,6 +213,7 @@ h1 em,h2 em{background:linear-gradient(transparent 62%,var(--brand-l) 62%) no-re
 </style>
 </head>
 <body>
+<div class="topbar" id="topbar" aria-live="polite"><span class="dot"></span><span>이번 달 한정 수량 <b data-left>0</b>개 남았습니다</span></div>
 
 <nav class="toc" id="toc" aria-label="목차">
   <div class="toc-in">
@@ -300,9 +338,25 @@ h1 em,h2 em{background:linear-gradient(transparent 62%,var(--brand-l) 62%) no-re
   <div class="wrap rv">
     <h2>이 자료가 궁금하시다면,<br><em>구매해주세요!</em></h2>
     <!-- TODO: 판매 문구(가격/혜택/구성) 교체 -->
-    <a class="btn" data-link="buy" href="#" target="_blank" rel="noopener">전공별 생기부 비법자료 결제하기</a>
+    <div class="cta-pair">
+      <a class="btn ghost" data-link="final-detail" href="#" target="_blank" rel="noopener">상품 자세히 보기</a>
+      <a class="btn" data-link="buy" href="#" target="_blank" rel="noopener">결제하기</a>
+    </div>
   </div>
 </section>
+
+<div class="pop" id="pop" role="dialog" aria-modal="true" aria-labelledby="pop-title">
+  <div class="pop-bg" data-close></div>
+  <div class="pop-card" tabindex="-1">
+    <button class="pop-x" type="button" data-close aria-label="닫기">×</button>
+    <small><span class="dot"></span>전공별 생기부 비법자료</small>
+    <h3 id="pop-title">이번 달 한정 수량<br><em><span data-left>0</span>개</em> 남았습니다</h3>
+    <div class="pop-btns">
+      <a class="btn ghost" data-link="popup-detail" href="#" target="_blank" rel="noopener">상품 자세히 보기</a>
+      <a class="btn" data-link="popup-buy" href="#" target="_blank" rel="noopener">결제하기</a>
+    </div>
+  </div>
+</div>
 
 <footer>© MEDSKY 메드스카이. All rights reserved.</footer>
 
@@ -316,7 +370,7 @@ var HOME_URL = "https://www.medsky.co.kr/product/major-record-guide";
 document.querySelectorAll("[data-link]").forEach(function(a){
   var k = a.dataset.link;
   a.href = HOME_URL + "?utm_source=guide&utm_medium=landing&utm_campaign=major-record-guide&utm_content=" + k +
-    (k === "buy" || k === "sticky" ? "&checkout=open" : "");
+    (/(^|-)buy$|^sticky$/.test(k) ? "&checkout=open" : "");
 });
 
 // 이미지 교체: IMAGES 에 경로를 넣으면 해당 자리표시자가 사진으로 바뀝니다.
@@ -331,13 +385,18 @@ var IMAGES = {
   "interview":"img/interview.jpg"
   // "review-1":"img/review1.jpg"
 };
-document.querySelectorAll("[data-ph]").forEach(function(el){
+// 사진은 화면 근처에 왔을 때 불러옵니다(모바일 데이터 절약). 첫 화면 사진은 바로 불러옵니다.
+function loadPh(el){
   var src = IMAGES[el.dataset.ph];
   if(!src) return;
-  var img = new Image(); img.alt = el.textContent.replace("📷","").trim();
+  var img = new Image(); img.alt = el.textContent.replace("📷","").trim(); img.decoding = "async";
   img.onload = function(){ el.style.border = "0"; el.innerHTML = ""; el.appendChild(img); };
   img.src = src;
-});
+}
+var phIo = new IntersectionObserver(function(es){
+  es.forEach(function(e){ if(e.isIntersecting){ phIo.unobserve(e.target); loadPh(e.target); } });
+},{rootMargin:"600px 0px"});
+document.querySelectorAll("[data-ph]").forEach(function(el){ phIo.observe(el); });
 
 // 스크롤 등장 효과 + 하단 고정 버튼
 document.querySelectorAll(".stagger").forEach(function(g){
@@ -378,6 +437,42 @@ window.addEventListener("scroll", toggle, {passive:true}); toggle();
   window.addEventListener("scroll", update, {passive:true});
   window.addEventListener("resize", update);
   update();
+})();
+
+// 남은 수량: 본 홈페이지와 같은 값을 불러옵니다. 불러오지 못하면 안내 바와 팝업은 띄우지 않습니다.
+(function(){
+  var LEFT_URL = "https://www.medsky.co.kr/api/major-record-guide/remaining";
+  var pop = document.getElementById("pop"), bar = document.getElementById("topbar"), opener = null;
+  function openPop(){
+    try{ if(sessionStorage.getItem("medsky_pop_seen")) return; }catch(e){}
+    opener = document.activeElement;
+    pop.classList.add("show"); document.body.style.overflow = "hidden";
+    pop.querySelector(".pop-card").focus({preventScroll:true});
+  }
+  function closePop(){
+    if(!pop.classList.contains("show")) return;
+    pop.classList.remove("show"); document.body.style.overflow = "";
+    try{ sessionStorage.setItem("medsky_pop_seen","1"); }catch(e){}
+    if(opener && opener.focus) opener.focus({preventScroll:true});
+  }
+  pop.addEventListener("click", function(e){ if(e.target.closest("[data-close]")) closePop(); });
+  document.addEventListener("keydown", function(e){ if(e.key === "Escape") closePop(); });
+  // 팝업 안 링크를 누르면 닫고 넘어갑니다.
+  pop.querySelectorAll("a").forEach(function(a){ a.addEventListener("click", function(){ setTimeout(closePop, 0); }); });
+
+  var ctl = window.AbortController ? new AbortController() : null;
+  var timer = setTimeout(function(){ if(ctl) ctl.abort(); }, 4000);
+  fetch(LEFT_URL, ctl ? {signal:ctl.signal} : {})
+    .then(function(r){ return r.ok ? r.json() : Promise.reject(); })
+    .then(function(d){
+      var n = Number(d && d.remaining);
+      if(!isFinite(n) || n < 1) return;
+      document.querySelectorAll("[data-left]").forEach(function(el){ el.textContent = Math.floor(n); });
+      bar.classList.add("show");
+      setTimeout(openPop, 5000);
+    })
+    .catch(function(){})
+    .then(function(){ clearTimeout(timer); });
 })();
 </script>
 </body>
