@@ -51,6 +51,7 @@ p strong{color:var(--ink)}
 
 /* storyline cards */
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow);margin:22px 0}
+.story p{font-size:18px;color:var(--ink);line-height:1.85;margin-bottom:18px}
 .quote{border-left:5px solid var(--brand);padding:6px 0 6px 18px;margin:24px 0;font-size:20px;font-weight:700;color:var(--ink);line-height:1.6}
 
 /* diagram: ① 환경 → ② 전략 → ③ 결과 */
@@ -130,71 +131,39 @@ footer{padding:32px 0 40px;text-align:center;font-size:13px;color:var(--sub)}
   </div>
 </header>
 
-<!-- 2. 저자 소개 -->
+<!-- 2. 이야기 -->
 <section id="story">
-  <div class="wrap">
+  <div class="wrap story">
     <div class="rv">
-      <span class="eyebrow">STORY 01</span>
       <h2>안녕하세요,<br><em>메드스카이 이성국</em>입니다</h2>
-      <p>저는 경상북도 대구 출신, 흔히 말하는 <strong>지방 일반고 출신</strong>입니다.</p>
+      <p>저는 경상북도 대구 출신이고, 흔히 말하는 <strong>지방 일반고</strong> 나왔습니다.</p>
+      <p>저희 학교에서는 학종으로 대학에 간 사례가 전혀 없었어요. 선생님들도 생활기록부를 잘 모르셨거나, 바쁘셔서 생기부까지는 챙겨주지 못하셨고요.</p>
     </div>
-
-    <div class="rv card">
-      <h2 style="font-size:20px;margin-bottom:12px">우리 학교는 이랬습니다</h2>
-      <div class="flow" style="margin:0">
-        <div class="step"><div class="num">✕</div><div><b>학종 합격 사례 0건</b><span>학종으로 대학에 간 선배가 전혀 없었습니다</span></div></div>
-        <div class="step"><div class="num">✕</div><div><b>생기부에 무지한 환경</b><span>선생님들도 생기부를 잘 모르셨거나, 너무 바쁘셨습니다</span></div></div>
-      </div>
-    </div>
-
     <div class="photos rv">
       <div class="ph" data-ph="school"><span>📷 증명사진</span></div>
       <div class="ph" data-ph="school-friends" style="aspect-ratio:4/3"><span>📷 친구들과</span></div>
     </div>
-    <p class="cap rv">고등학생 시절의 저, 이성국 (왼쪽 위)</p>
   </div>
 </section>
 
-<!-- 3. 전환 -->
 <section style="background:var(--card)">
-  <div class="wrap">
+  <div class="wrap story">
     <div class="rv">
-      <span class="eyebrow">STORY 02</span>
-      <h2>그래도, 저만의 방식으로<br><em>학종</em>을 챙겼습니다</h2>
-      <p>내신이 높지 않았지만 스스로 생기부를 설계했고, 그 결과 <strong>SKY 대학과 약학대학에 학종으로 합격</strong>했습니다.</p>
+      <h2>그래도 저는,<br>저대로 챙겼습니다</h2>
+      <p>내신은 낮았어요. 그래도 저 나름의 방식으로 학종을 준비했고, 결과적으로 <strong>SKY 대학과 약학대학에 학종으로 합격</strong>했습니다.</p>
     </div>
-
-    <div class="flow rv">
-      <div class="step"><div class="num">1</div><div><b>낮은 내신</b><span>교과만으로는 어려운 상황</span></div></div>
-      <div class="arrow">▼</div>
-      <div class="step"><div class="num">2</div><div><b>나만의 생기부 전략</b><span>누구도 알려주지 않아 직접 설계</span></div></div>
-      <div class="arrow">▼</div>
-      <div class="step win"><div class="num">3</div><div><b>SKY · 약대 학종 합격</b><span>환경이 아니라 방법의 차이였습니다</span></div></div>
-    </div>
-
     <div class="ph r169 rv" data-ph="result"><span>📷 합격 인증 / 생기부 일부 이미지</span></div>
   </div>
 </section>
 
-<!-- 4. 동료 인터뷰 -->
 <section>
-  <div class="wrap">
+  <div class="wrap story">
     <div class="rv">
-      <span class="eyebrow">STORY 03</span>
-      <h2>대학에 와보니,<br><em>같은 길을 걸은 친구들</em>이 많았습니다</h2>
-      <p>저처럼 지방 일반고 출신인데도 학종을 잘 활용해 합격한 친구들을 대학에서 많이 만났습니다.</p>
-      <p>그래서 그 친구들의 이야기를 <strong>하나하나 인터뷰</strong>했습니다.</p>
+      <h2>대학에 와서 알게 된 것</h2>
+      <p>대학에 와보니, 저처럼 지방 일반고 출신인데도 학종을 잘 활용해서 합격한 친구들이 정말 많았어요.</p>
+      <p>그래서 그 친구들 이야기를 하나하나 인터뷰했습니다. 거기서 나온 노하우를 학과별로 나눠 정리했고, 그렇게 만들어진 책이 <strong>전공별 생기부 비법자료</strong>입니다.</p>
     </div>
-
-    <div class="chips rv">
-      <span class="chip on">지방 일반고</span><span class="chip on">학종 합격</span>
-      <span class="chip">의대</span><span class="chip">약대</span><span class="chip">공대</span>
-      <span class="chip">인문·사회</span><span class="chip">…학과별</span>
-    </div>
-
     <div class="ph r43 rv" data-ph="interview"><span>📷 인터뷰 장면 / 자료 정리 사진</span></div>
-
-    <div class="quote rv">“노하우를 학과별로 나눠 정리하자,<br>그게 한 권의 책이 되었습니다.”</div>
   </div>
 </section>
 
@@ -202,8 +171,7 @@ footer{padding:32px 0 40px;text-align:center;font-size:13px;color:var(--sub)}
 <section style="padding:24px 0">
   <div class="wrap">
     <div class="mid rv">
-      <h2>더 자세히 궁금하신가요?</h2>
-      <p>목차, 샘플, 전공별 상세 소개는<br>공식 홈페이지에서 확인할 수 있습니다.</p>
+      <h2>책이 더 궁금하다면</h2>
       <a class="btn" data-link href="#" target="_blank" rel="noopener">자세히 보기 →</a>
     </div>
   </div>
@@ -213,9 +181,8 @@ footer{padding:32px 0 40px;text-align:center;font-size:13px;color:var(--sub)}
 <section id="book">
   <div class="wrap">
     <div class="rv">
-      <span class="eyebrow">BOOK</span>
-      <h2>전공별 생기부 비법자료,<br>이렇게 구성되어 있습니다</h2>
-      <p>인터뷰한 합격 선배들의 생기부를 <strong>따라 하기 쉽게</strong> 학과별로 정리했습니다.</p>
+      <h2>책은 이렇게<br>구성되어 있어요</h2>
+      <p>최대한 많은 지방 일반고 학생들이 그저 읽고 <strong>쉽게 따라 하면서</strong> 자기 생기부에 옮길 수 있도록 정리해뒀습니다.</p>
     </div>
 
     <div class="rv">
@@ -234,17 +201,11 @@ footer{padding:32px 0 40px;text-align:center;font-size:13px;color:var(--sub)}
     <div class="ph r43 rv" data-ph="book-main"><span>📷 구성품 전체 사진</span></div>
 
     <div class="grid rv">
-      <div><div class="ph r11" data-ph="book-1"><span>📷 구성품 ①</span></div><p class="cap">구성품 ① 이름</p></div>
-      <div><div class="ph r11" data-ph="book-2"><span>📷 구성품 ②</span></div><p class="cap">구성품 ② 이름</p></div>
-      <div><div class="ph r11" data-ph="book-3"><span>📷 구성품 ③</span></div><p class="cap">구성품 ③ 이름</p></div>
-      <div><div class="ph r11" data-ph="book-4"><span>📷 구성품 ④</span></div><p class="cap">구성품 ④ 이름</p></div>
+      <div><div class="ph r11" data-ph="book-1"><span>📷 구성품 ①</span></div></div>
+      <div><div class="ph r11" data-ph="book-2"><span>📷 구성품 ②</span></div></div>
+      <div><div class="ph r11" data-ph="book-3"><span>📷 구성품 ③</span></div></div>
+      <div><div class="ph r11" data-ph="book-4"><span>📷 구성품 ④</span></div></div>
     </div>
-
-    <ul class="list rv">
-      <li>지방 일반고 학생도 바로 따라 할 수 있는 구성</li>
-      <li>학과별로 나누어 정리한 합격 선배들의 노하우</li>
-      <li>읽고, 따라 하고, 내 생기부로 옮기기 쉬운 형태</li>
-    </ul>
   </div>
 </section>
 
@@ -252,8 +213,7 @@ footer{padding:32px 0 40px;text-align:center;font-size:13px;color:var(--sub)}
 <section style="background:var(--card)">
   <div class="wrap">
     <div class="rv center">
-      <span class="eyebrow">REVIEW</span>
-      <h2>먼저 읽어본 학생들의 후기</h2>
+      <h2>읽어본 분들의 후기</h2>
     </div>
     <div class="reviews rv">
       <div class="ph" data-ph="review-1"><span>📷 후기 1</span></div>
@@ -269,12 +229,9 @@ footer{padding:32px 0 40px;text-align:center;font-size:13px;color:var(--sub)}
 <!-- 8. 최종 CTA -->
 <section class="final" id="buy">
   <div class="wrap rv">
-    <span class="eyebrow">지금 시작하세요</span>
-    <h2>환경은 달라도,<br><em>방법</em>은 따라 할 수 있습니다</h2>
-    <p>지방 일반고에서도 학종 합격은 가능합니다.<br>이 책이 궁금하시다면 지금 확인해보세요!</p>
+    <h2>이 책이 궁금하시다면,<br><em>구매해주세요!</em></h2>
     <!-- TODO: 판매 문구(가격/혜택/구성) 교체 -->
     <a class="btn" data-link href="#" target="_blank" rel="noopener">전공별 생기부 비법자료 구매하기</a>
-    <p class="note">※ 판매 문구 / 가격 / 혜택 안내 영역</p>
   </div>
 </section>
 
