@@ -85,6 +85,15 @@ p strong{color:var(--ink)}
 .peek b{display:block;font-size:18px;font-weight:800;letter-spacing:-.01em;margin-top:2px}
 .peek .go{flex:none;width:38px;height:38px;border-radius:50%;background:var(--brand-l);color:var(--brand);display:grid;place-items:center;font-size:18px;font-weight:800;transition:transform .25s,background .25s,color .25s}
 @media(hover:hover){.peek:hover .go{transform:translateX(3px);background:var(--brand);color:#fff}}
+
+/* 합격증·생기부 증빙 사진 */
+.proofs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:26px}
+.proofs .ph{margin:0;padding:0;border-radius:14px;background:#fff;box-shadow:var(--shadow);cursor:zoom-in}
+.proofs .ph img{object-fit:contain;background:#fff}
+.proofs .rec{grid-column:1/-1;aspect-ratio:376/423}
+.lb{position:fixed;inset:0;z-index:60;background:rgba(10,8,20,.88);display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s;cursor:zoom-out}
+.lb.show{opacity:1;visibility:visible}
+.lb img{max-width:100%;max-height:100%;object-fit:contain;border-radius:8px;background:#fff;box-shadow:0 10px 40px rgba(0,0,0,.5)}
 .quote{border-left:5px solid var(--brand);padding:6px 0 6px 18px;margin:24px 0;font-size:20px;font-weight:700;color:var(--ink);line-height:1.6}
 
 /* diagram: ① 환경 → ② 전략 → ③ 결과 */
@@ -273,7 +282,11 @@ h1 em,h2 em{background:linear-gradient(transparent 62%,var(--brand-l) 62%) no-re
       <p>내신은 주변 친구들보다 조금 낮은 편이었습니다.</p>
       <p>대신 주요 대학 학생부종합전형 가이드북 20여 개를 전부 분석하면서 저만의 노하우를 얻을 수 있었고, 결과적으로 <strong>SKY 라인 대학에 합격</strong>했습니다.</p>
     </div>
-    <div class="ph r169 rv" data-ph="result"><span>📷 합격 인증 / 생기부 일부 이미지</span></div>
+    <div class="proofs rv stagger">
+      <div class="ph" data-ph="proof-ku" style="aspect-ratio:3/4"><span>📷 합격증</span></div>
+      <div class="ph" data-ph="proof-cha" style="aspect-ratio:3/4"><span>📷 합격증</span></div>
+      <div class="ph rec" data-ph="proof-record"><span>📷 생활기록부</span></div>
+    </div>
   </div>
 </section>
 
@@ -412,7 +425,10 @@ var IMAGES = {
   "book-2":"img/content-faq.jpg",
   "book-3":"img/content-roadmap.jpg",
   "book-4":"img/content-topics.jpg",
-  "interview":"img/interview.jpg"
+  "interview":"img/interview.jpg",
+  "proof-ku":"img/proof-ku.jpg",
+  "proof-cha":"img/proof-cha.jpg",
+  "proof-record":"img/proof-record.jpg"
   // "review-1":"img/review1.jpg"
 };
 // 사진은 화면 근처에 왔을 때 불러옵니다(모바일 데이터 절약). 첫 화면 사진은 바로 불러옵니다.
@@ -503,6 +519,26 @@ window.addEventListener("scroll", toggle, {passive:true}); toggle();
     })
     .catch(function(){})
     .then(function(){ clearTimeout(timer); });
+})();
+
+// 합격증·생활기록부 사진을 누르면 크게 보여줍니다.
+(function(){
+  var box = document.querySelector(".proofs");
+  if(!box) return;
+  var lb = document.createElement("div");
+  lb.className = "lb"; lb.setAttribute("role","dialog"); lb.setAttribute("aria-label","사진 크게 보기");
+  lb.innerHTML = "<img alt=''>";
+  document.body.appendChild(lb);
+  var big = lb.firstChild;
+  function close(){ lb.classList.remove("show"); document.body.style.overflow = ""; }
+  box.addEventListener("click", function(e){
+    var im = e.target.closest("img");
+    if(!im) return;
+    big.src = im.currentSrc || im.src; big.alt = im.alt;
+    lb.classList.add("show"); document.body.style.overflow = "hidden";
+  });
+  lb.addEventListener("click", close);
+  document.addEventListener("keydown", function(e){ if(e.key === "Escape") close(); });
 })();
 </script>
 </body>
