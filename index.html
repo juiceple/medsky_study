@@ -9,13 +9,13 @@
 <meta property="og:description" content="지방 일반고도 학종으로 합격할 수 있습니다. 선배들의 생기부 노하우를 학과별로 정리했습니다.">
 <style>
 :root{
-  --bg:#f6f8fc; --card:#ffffff; --ink:#0f1b33; --sub:#55627a; --line:#e3e9f4;
-  --brand:#1f5eff; --brand-d:#1647c9; --brand-l:#e8efff; --accent:#ffb020;
-  --radius:20px; --shadow:0 10px 30px rgba(31,94,255,.10);
+  --bg:#f8f8f6; --card:#ffffff; --ink:#333333; --sub:#62606e; --line:#e6e3f2;
+  --brand:#6f5fc4; --brand-d:#5a4aae; --brand-l:#ece8f9; --accent:#b0a4e3;
+  --radius:20px; --shadow:0 10px 30px rgba(111,95,196,.10);
 }
 @media (prefers-color-scheme:dark){
-  :root{--bg:#0b1220; --card:#121b2e; --ink:#eef2fb; --sub:#9aa8c2; --line:#22304a;
-        --brand:#5b8cff; --brand-d:#7ea2ff; --brand-l:#16264a; --shadow:0 10px 30px rgba(0,0,0,.35);}
+  :root{--bg:#15131f; --card:#1e1b2e; --ink:#f1effa; --sub:#aaa6c0; --line:#2e2a45;
+        --brand:#7b6bd8; --brand-d:#9183e6; --brand-l:#2a2548; --accent:#b0a4e3; --shadow:0 10px 30px rgba(0,0,0,.35);}
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -35,7 +35,7 @@ p strong{color:var(--ink)}
 .hero{padding:56px 0 48px;background:linear-gradient(180deg,var(--brand-l),var(--bg))}
 .hero .brand{font-weight:800;color:var(--brand);margin-bottom:20px;font-size:15px}
 .hero p{font-size:18px;margin-top:16px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--brand);color:#fff;text-decoration:none;font-weight:800;font-size:17px;padding:16px 28px;border-radius:14px;box-shadow:0 8px 20px rgba(31,94,255,.28);transition:.15s;border:0;cursor:pointer}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--brand);color:#fff;text-decoration:none;font-weight:800;font-size:17px;padding:16px 28px;border-radius:14px;box-shadow:0 8px 20px rgba(111,95,196,.28);transition:.15s;border:0;cursor:pointer}
 .btn:hover{background:var(--brand-d);transform:translateY(-2px)}
 .btn.ghost{background:transparent;color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand)}
 .btn.ghost:hover{background:var(--brand-l)}
@@ -67,7 +67,7 @@ p strong{color:var(--ink)}
 .chip.on{background:var(--brand);color:#fff;border-color:var(--brand)}
 
 /* mid CTA */
-.mid{background:var(--brand);color:#fff;border-radius:28px;padding:40px 26px;text-align:center;box-shadow:0 16px 40px rgba(31,94,255,.3)}
+.mid{background:var(--brand);color:#fff;border-radius:28px;padding:40px 26px;text-align:center;box-shadow:0 16px 40px rgba(111,95,196,.3)}
 .mid h2{color:#fff;margin-bottom:10px}
 .mid p{color:rgba(255,255,255,.85)}
 .mid .btn{background:#fff;color:var(--brand);margin-top:10px;box-shadow:none}
@@ -80,6 +80,16 @@ p strong{color:var(--ink)}
 .list{list-style:none;margin:20px 0}
 .list li{position:relative;padding:14px 16px 14px 48px;background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;font-size:16px;color:var(--ink);font-weight:600}
 .list li:before{content:"✓";position:absolute;left:14px;top:50%;transform:translateY(-50%);width:24px;height:24px;border-radius:50%;background:var(--brand);color:#fff;font-size:14px;display:grid;place-items:center}
+
+
+/* 3 points */
+.pts{display:grid;gap:14px;margin:26px 0}
+.pt{display:grid;grid-template-columns:1fr 96px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.pt .tx{padding:20px 22px;display:flex;flex-direction:column;justify-content:center;font-size:17px;font-weight:700;color:var(--ink);line-height:1.55}
+.pt .tx em{color:var(--brand);font-style:normal}
+.pt .ic{background:var(--accent);display:grid;place-items:center}
+.pt .ic svg{width:48px;height:48px;stroke:#111;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.pt-head{font-size:clamp(34px,9vw,52px);font-weight:800;line-height:1.2;letter-spacing:-.02em;color:var(--ink);margin:6px 0 4px}
 
 /* reviews */
 .reviews{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
@@ -199,6 +209,19 @@ footer{padding:32px 0 40px;text-align:center;font-size:13px;color:var(--sub)}
       <span class="eyebrow">BOOK</span>
       <h2>전공별 생기부 비법자료,<br>이렇게 구성되어 있습니다</h2>
       <p>인터뷰한 합격 선배들의 생기부를 <strong>따라 하기 쉽게</strong> 학과별로 정리했습니다.</p>
+    </div>
+
+    <div class="rv">
+      <div class="brand" style="font-weight:800;color:var(--ink);font-size:15px;margin-top:28px">MED SKY</div>
+      <div class="pt-head">3가지<br>포인트</div>
+    </div>
+    <div class="pts rv">
+      <div class="pt"><div class="tx"><span>학생들이 가장 궁금해 할<br><em>세특 작성법 &amp; 관리법</em></span></div>
+        <div class="ic"><svg viewBox="0 0 48 48"><path d="M24 12c-4-3-10-4-17-3v26c7-1 13 0 17 3 4-3 10-4 17-3V9c-7-1-13 0-17 3z"/><path d="M24 12v26"/></svg></div></div>
+      <div class="pt"><div class="tx"><span><em>합격생과 평가자</em>의<br>생생한 인터뷰</span></div>
+        <div class="ic"><svg viewBox="0 0 48 48"><rect x="17" y="5" width="14" height="24" rx="7"/><path d="M10 22a14 14 0 0 0 28 0M24 36v7M16 43h16"/></svg></div></div>
+      <div class="pt"><div class="tx"><span><em>내 상황에 바로 적용 가능한</em><br>실전 탐구 주제 수록</span></div>
+        <div class="ic"><svg viewBox="0 0 48 48"><path d="M17 33c-4-3-6-7-6-11a13 13 0 0 1 26 0c0 4-2 8-6 11v4H17z"/><path d="M18 42h12M24 2v4M7 8l3 3M41 8l-3 3M2 22h4M42 22h4"/></svg></div></div>
     </div>
 
     <div class="ph r43 rv" data-ph="book-main"><span>📷 구성품 전체 사진</span></div>
