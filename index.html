@@ -19,6 +19,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
+html,body{overflow-x:clip}
 body{font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;
   background:var(--bg);color:var(--ink);line-height:1.75;word-break:keep-all;-webkit-font-smoothing:antialiased;padding-bottom:84px}
 .wrap{max-width:720px;margin:0 auto;padding:0 20px}
@@ -44,10 +45,7 @@ p strong{color:var(--ink)}
 /* image placeholders: swap by setting <img src> */
 .ph{position:relative;width:100%;border-radius:var(--radius);overflow:hidden;background:repeating-linear-gradient(45deg,var(--brand-l),var(--brand-l) 12px,transparent 12px,transparent 24px),var(--card);border:2px dashed var(--brand);display:flex;align-items:center;justify-content:center;text-align:center;color:var(--brand);font-weight:700;font-size:14px;padding:16px;margin:24px 0}
 .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.hero-imgs{display:grid;grid-template-columns:1fr 1.2fr;gap:12px;align-items:center;margin-top:28px}
-.hero-imgs .ph{margin:0;border-radius:14px}
-.ph.cover{aspect-ratio:1414/2000;box-shadow:0 14px 30px rgba(111,95,196,.28)}
-.ph.mockup{aspect-ratio:1/1}
+.ph.mockup{aspect-ratio:1/1;max-width:440px;margin:28px auto 0;border-radius:24px;box-shadow:0 18px 40px rgba(111,95,196,.22)}
 .photos{display:grid;grid-template-columns:1fr 1.7fr;gap:10px;margin:24px 0 8px}
 .photos .ph{margin:0;min-height:140px;border-radius:16px}
 .ph.r169{aspect-ratio:16/9}.ph.r43{aspect-ratio:4/3}.ph.r11{aspect-ratio:1/1}
@@ -115,9 +113,48 @@ footer{padding:32px 0 40px;text-align:center;font-size:13px;color:var(--sub)}
 .sticky .btn{width:100%;max-width:720px;margin:0 auto;display:flex}
 
 /* reveal */
-.rv{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s}
+.rv{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
 .rv.in{opacity:1;transform:none}
-@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+
+/* 묶음 요소는 하나씩 차례로 등장 */
+.stagger.rv{opacity:1;transform:none}
+.stagger.rv>*{opacity:0;transform:translateY(28px) scale(.97);transition:opacity .6s cubic-bezier(.22,1,.36,1),transform .6s cubic-bezier(.22,1,.36,1);transition-delay:calc(var(--i,0)*110ms)}
+.stagger.rv.in>*{opacity:1;transform:none}
+.pts.rv:not(.in)>*{transform:translateX(-36px)}
+.photos.rv:not(.in)>:nth-child(1){transform:translateX(-36px)}
+.photos.rv:not(.in)>:nth-child(2){transform:translateX(36px)}
+
+/* 사진은 살짝 줌아웃되며 나타남 */
+.ph img{transform:scale(1.12);transition:transform 1.4s cubic-bezier(.22,1,.36,1)}
+.in .ph img,.ph.in img,.hero .ph img{transform:none}
+
+/* 강조 문구에 형광펜이 그어지는 효과 */
+h1 em,h2 em{background:linear-gradient(transparent 62%,var(--brand-l) 62%) no-repeat 0 0/0% 100%;transition:background-size .9s .35s cubic-bezier(.22,1,.36,1)}
+.rv.in em,.hero h1 em{background-size:100% 100%}
+.hero h1 em{animation:mark 1s .8s both}
+@keyframes mark{from{background-size:0% 100%}to{background-size:100% 100%}}
+
+/* 첫 화면 순차 등장 */
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.hero .wrap>*{animation:rise .8s cubic-bezier(.22,1,.36,1) both}
+.hero .wrap>:nth-child(2){animation-delay:.08s}.hero .wrap>:nth-child(3){animation-delay:.16s}
+.hero .wrap>:nth-child(4){animation-delay:.28s}.hero .wrap>:nth-child(5){animation-delay:.4s}.hero .wrap>:nth-child(6){animation-delay:.52s}
+.hero .ph.mockup{animation:rise .9s .52s cubic-bezier(.22,1,.36,1) both,float 6s 1.5s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+/* 버튼 반짝임 */
+.btn{position:relative;overflow:hidden}
+.btn:after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-20deg);animation:shine 3.2s 1.2s infinite}
+@keyframes shine{0%{left:-60%}35%,100%{left:130%}}
+.mid .btn:after{background:linear-gradient(100deg,transparent,rgba(111,95,196,.18),transparent)}
+
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{animation:none!important;transition:none!important}
+  .rv,.stagger.rv>*{opacity:1!important;transform:none!important}
+  .ph img{transform:none!important}
+  h1 em,h2 em{background-size:100% 100%!important}
+  html{scroll-behavior:auto}
+}
 </style>
 </head>
 <body>
@@ -130,10 +167,7 @@ footer{padding:32px 0 40px;text-align:center;font-size:13px;color:var(--sub)}
     <h1>학종 정보 하나 없던<br><em>지방 일반고</em>에서<br>SKY와 약대에 합격했습니다</h1>
     <p>저와 같은 길을 걸어 합격한 선배들의 생기부 노하우를, 학과별로 정리했습니다.</p>
     <a class="btn" href="#story">이야기 보기 ↓</a>
-    <div class="hero-imgs">
-      <div class="ph cover" data-ph="hero"><span>📷 책 표지</span></div>
-      <div class="ph mockup" data-ph="hero-mockup"><span>📷 책 사진</span></div>
-    </div>
+    <div class="ph mockup" data-ph="hero-mockup"><span>📷 책 사진</span></div>
   </div>
 </header>
 
@@ -145,7 +179,7 @@ footer{padding:32px 0 40px;text-align:center;font-size:13px;color:var(--sub)}
       <p>저는 경상북도 대구 출신이고, 흔히 말하는 <strong>지방 일반고</strong> 나왔습니다.</p>
       <p>저희 학교에서는 학종으로 대학에 간 사례가 전혀 없었어요. 선생님들도 생활기록부를 잘 모르셨거나, 바쁘셔서 생기부까지는 챙겨주지 못하셨고요.</p>
     </div>
-    <div class="photos rv">
+    <div class="photos rv stagger">
       <div class="ph" data-ph="school"><span>📷 증명사진</span></div>
       <div class="ph" data-ph="school-friends" style="aspect-ratio:4/3"><span>📷 친구들과</span></div>
     </div>
@@ -178,7 +212,7 @@ footer{padding:32px 0 40px;text-align:center;font-size:13px;color:var(--sub)}
   <div class="wrap">
     <div class="mid rv">
       <h2>책이 더 궁금하다면</h2>
-      <a class="btn" data-link href="#" target="_blank" rel="noopener">자세히 보기 →</a>
+      <a class="btn" data-link="detail" href="#" target="_blank" rel="noopener">자세히 보기 →</a>
     </div>
   </div>
 </section>
@@ -195,7 +229,7 @@ footer{padding:32px 0 40px;text-align:center;font-size:13px;color:var(--sub)}
       <div class="brand" style="font-weight:800;color:var(--ink);font-size:15px;margin-top:28px">MED SKY</div>
       <div class="pt-head">3가지<br>포인트</div>
     </div>
-    <div class="pts rv">
+    <div class="pts rv stagger">
       <div class="pt"><div class="tx"><span>학생들이 가장 궁금해 할<br><em>세특 작성법 &amp; 관리법</em></span></div>
         <div class="ic"><svg viewBox="0 0 48 48"><path d="M24 12c-4-3-10-4-17-3v26c7-1 13 0 17 3 4-3 10-4 17-3V9c-7-1-13 0-17 3z"/><path d="M24 12v26"/></svg></div></div>
       <div class="pt"><div class="tx"><span><em>합격생과 평가자</em>의<br>생생한 인터뷰</span></div>
@@ -204,7 +238,7 @@ footer{padding:32px 0 40px;text-align:center;font-size:13px;color:var(--sub)}
         <div class="ic"><svg viewBox="0 0 48 48"><path d="M17 33c-4-3-6-7-6-11a13 13 0 0 1 26 0c0 4-2 8-6 11v4H17z"/><path d="M18 42h12M24 2v4M7 8l3 3M41 8l-3 3M2 22h4M42 22h4"/></svg></div></div>
     </div>
 
-    <div class="grid rv">
+    <div class="grid rv stagger">
       <div class="ph" data-ph="book-1"><span>📷 구성품 ①</span></div>
       <div class="ph" data-ph="book-2"><span>📷 구성품 ②</span></div>
       <div class="ph" data-ph="book-3"><span>📷 구성품 ③</span></div>
@@ -219,7 +253,7 @@ footer{padding:32px 0 40px;text-align:center;font-size:13px;color:var(--sub)}
     <div class="rv center">
       <h2>읽어본 분들의 후기</h2>
     </div>
-    <div class="reviews rv">
+    <div class="reviews rv stagger">
       <div class="ph" data-ph="review-1"><span>📷 후기 1</span></div>
       <div class="ph" data-ph="review-2"><span>📷 후기 2</span></div>
       <div class="ph" data-ph="review-3"><span>📷 후기 3</span></div>
@@ -235,22 +269,24 @@ footer{padding:32px 0 40px;text-align:center;font-size:13px;color:var(--sub)}
   <div class="wrap rv">
     <h2>이 책이 궁금하시다면,<br><em>구매해주세요!</em></h2>
     <!-- TODO: 판매 문구(가격/혜택/구성) 교체 -->
-    <a class="btn" data-link href="#" target="_blank" rel="noopener">전공별 생기부 비법자료 구매하기</a>
+    <a class="btn" data-link="buy" href="#" target="_blank" rel="noopener">전공별 생기부 비법자료 결제하기</a>
   </div>
 </section>
 
 <footer>© MEDSKY 메드스카이. All rights reserved.</footer>
 
-<div class="sticky" id="sticky"><a class="btn" data-link href="#" target="_blank" rel="noopener">전공별 생기부 비법자료 보러가기</a></div>
+<div class="sticky" id="sticky"><a class="btn" data-link="sticky" href="#" target="_blank" rel="noopener">전공별 생기부 비법자료 결제하기</a></div>
 
 <script>
 // 전공별 생기부 비법자료 홈페이지 주소 — 여기 한 줄만 바꾸면 모든 버튼에 적용됩니다.
 var HOME_URL = "https://www.medsky.co.kr/product/major-record-guide";
-document.querySelectorAll("[data-link]").forEach(function(a){a.href = HOME_URL;});
+// 어느 버튼에서 넘어왔는지 상품 페이지에서 구분할 수 있게 UTM을 붙입니다.
+document.querySelectorAll("[data-link]").forEach(function(a){
+  a.href = HOME_URL + "?utm_source=guide&utm_medium=landing&utm_campaign=major-record-guide&utm_content=" + a.dataset.link;
+});
 
 // 이미지 교체: IMAGES 에 경로를 넣으면 해당 자리표시자가 사진으로 바뀝니다.
 var IMAGES = {
-  "hero":"img/book-cover.jpg",
   "school":"img/author-highschool.jpg",
   "school-friends":"img/author-friends.jpg",
   "hero-mockup":"img/book-mockup.jpg",
@@ -270,6 +306,9 @@ document.querySelectorAll("[data-ph]").forEach(function(el){
 });
 
 // 스크롤 등장 효과 + 하단 고정 버튼
+document.querySelectorAll(".stagger").forEach(function(g){
+  Array.prototype.forEach.call(g.children, function(c,i){ c.style.setProperty("--i", i); });
+});
 var io = new IntersectionObserver(function(es){
   es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } });
 },{threshold:.12});
