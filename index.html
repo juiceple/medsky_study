@@ -117,6 +117,20 @@ footer{padding:32px 0 40px;text-align:center;font-size:13px;color:var(--sub)}
 .sticky.show{transform:none}
 .sticky .btn{width:100%;max-width:720px;margin:0 auto;display:flex}
 
+
+/* 상단 목차 */
+section[id]{scroll-margin-top:52px}
+.toc{position:fixed;top:0;left:0;right:0;z-index:20;background:color-mix(in srgb,var(--card) 90%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);transform:translateY(-110%);transition:transform .35s cubic-bezier(.22,1,.36,1)}
+.toc.show{transform:none}
+.toc-in{max-width:720px;margin:0 auto;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;padding:0 8px}
+.toc-in::-webkit-scrollbar{display:none}
+.toc a{position:relative;flex:none;padding:14px 9px;font-size:14px;font-weight:700;color:var(--sub);text-decoration:none;white-space:nowrap;transition:color .2s}
+.toc a:after{content:"";position:absolute;left:9px;right:9px;bottom:0;height:3px;border-radius:3px 3px 0 0;background:var(--brand);transform:scaleX(0);transition:transform .25s}
+.toc a:hover{color:var(--ink)}
+.toc a.on{color:var(--brand)}
+.toc a.on:after{transform:none}
+@media(min-width:720px){.toc-in{justify-content:center}}
+
 /* reveal */
 .rv{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
 .rv.in{opacity:1;transform:none}
@@ -163,6 +177,17 @@ h1 em,h2 em{background:linear-gradient(transparent 62%,var(--brand-l) 62%) no-re
 </head>
 <body>
 
+<nav class="toc" id="toc" aria-label="목차">
+  <div class="toc-in">
+    <a href="#story">소개</a>
+    <a href="#path">합격 과정</a>
+    <a href="#interview">인터뷰</a>
+    <a href="#book">자료 구성</a>
+    <a href="#reviews">후기</a>
+    <a href="#buy">구매</a>
+  </div>
+</nav>
+
 <!-- 1. HERO -->
 <header class="hero">
   <div class="wrap">
@@ -190,7 +215,7 @@ h1 em,h2 em{background:linear-gradient(transparent 62%,var(--brand-l) 62%) no-re
   </div>
 </section>
 
-<section class="s-tint">
+<section id="path" class="s-tint">
   <div class="wrap story">
     <div class="rv">
       <h2>그래도 저는,<br>저대로 챙겼습니다</h2>
@@ -201,7 +226,7 @@ h1 em,h2 em{background:linear-gradient(transparent 62%,var(--brand-l) 62%) no-re
   </div>
 </section>
 
-<section class="s-white">
+<section id="interview" class="s-white">
   <div class="wrap story">
     <div class="rv">
       <h2>대학에 와서 알게 된 것</h2>
@@ -254,7 +279,7 @@ h1 em,h2 em{background:linear-gradient(transparent 62%,var(--brand-l) 62%) no-re
 </section>
 
 <!-- 7. 후기 -->
-<section class="s-white">
+<section id="reviews" class="s-white">
   <div class="wrap">
     <div class="rv center">
       <h2>읽어본 분들의 후기</h2>
@@ -330,6 +355,30 @@ function toggle(){
   sticky.classList.toggle("show", past && !atBuy);
 }
 window.addEventListener("scroll", toggle, {passive:true}); toggle();
+
+// 상단 목차: 첫 화면을 지나면 나타나고, 지금 보고 있는 섹션에 밑줄이 따라갑니다.
+(function(){
+  var toc = document.getElementById("toc");
+  var tabs = Array.prototype.slice.call(toc.querySelectorAll("a"));
+  var targets = tabs.map(function(a){ return document.querySelector(a.getAttribute("href")); });
+  var scroller = toc.querySelector(".toc-in");
+  var current = -1;
+  function update(){
+    toc.classList.toggle("show", window.scrollY > 420);
+    var idx = -1;
+    targets.forEach(function(t,i){ if(t && t.getBoundingClientRect().top <= window.innerHeight * .35) idx = i; });
+    if(idx === current) return;
+    current = idx;
+    tabs.forEach(function(a,i){ a.classList.toggle("on", i === idx); });
+    if(idx > -1){
+      var a = tabs[idx];
+      scroller.scrollTo({left: a.offsetLeft - (scroller.clientWidth - a.offsetWidth)/2, behavior:"smooth"});
+    }
+  }
+  window.addEventListener("scroll", update, {passive:true});
+  window.addEventListener("resize", update);
+  update();
+})();
 </script>
 </body>
 </html>
