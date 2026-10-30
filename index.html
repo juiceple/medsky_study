@@ -287,8 +287,11 @@ h1 em,h2 em{background:linear-gradient(transparent 62%,var(--brand-l) 62%) no-re
 // 전공별 생기부 비법자료 홈페이지 주소 — 여기 한 줄만 바꾸면 모든 버튼에 적용됩니다.
 var HOME_URL = "https://www.medsky.co.kr/product/major-record-guide";
 // 어느 버튼에서 넘어왔는지 상품 페이지에서 구분할 수 있게 UTM을 붙입니다.
+// "결제하기" 버튼(buy, sticky)은 checkout=open 을 붙여서, 상품 페이지가 열리자마자 결제창이 뜹니다.
 document.querySelectorAll("[data-link]").forEach(function(a){
-  a.href = HOME_URL + "?utm_source=guide&utm_medium=landing&utm_campaign=major-record-guide&utm_content=" + a.dataset.link;
+  var k = a.dataset.link;
+  a.href = HOME_URL + "?utm_source=guide&utm_medium=landing&utm_campaign=major-record-guide&utm_content=" + k +
+    (k === "buy" || k === "sticky" ? "&checkout=open" : "");
 });
 
 // 이미지 교체: IMAGES 에 경로를 넣으면 해당 자리표시자가 사진으로 바뀝니다.
