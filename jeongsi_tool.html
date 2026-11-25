@@ -73,6 +73,8 @@ h2.sec{margin:22px 0 6px;font-size:16px;color:var(--navy2);display:flex;align-it
 .btn.pri{background:var(--accent);border-color:var(--accent);color:#fff}
 .btn.navy{background:var(--navy2);border-color:var(--navy2);color:#fff}
 .btn.ghost{border-color:var(--navy2);color:var(--navy2);background:var(--panel)}
+:root[data-theme="dark"] .btn.ghost{border-color:var(--info);color:var(--info)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn.ghost{border-color:var(--info);color:var(--info)}}
 .btn.sm{padding:3px 8px;font-size:12px}
 .btn:disabled{opacity:.5;cursor:not-allowed}
 .status{font-size:12px;color:var(--muted)}
