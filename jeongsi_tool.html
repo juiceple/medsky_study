@@ -7,7 +7,7 @@
 <style>:root{
   --navy:#132a4c;--navy2:#1f3f6e;--ink:#1b2230;--ink2:#4d5868;--muted:#6b7480;--paper:#f6f7f9;--panel:#ffffff;--line:#dde2ea;--line2:#eef1f5;
   --accent:#c0562f;--accent-s:#fbeee8;--head:#ffffff;
-  --j4:#2f7a46;--j4s:#d3e6d0;--j3:#2a5a9c;--j3s:#d9e6f6;--j2:#8a6510;--j2s:#fbe9b8;--j1:#a8432a;--j1s:#f6d8cc;--j0:#6b7480;--j0s:#e7eaef;
+  --j4:#1f5fae;--j4s:#d9e6f6;--j3:#3f7d1c;--j3s:#e1f2cf;--j2:#8a6510;--j2s:#fbe9b8;--j1:#c0301f;--j1s:#fbdad5;--j0:#6b7480;--j0s:#e7eaef;--ok:#2f7a46;--oks:#d3e6d0;--info:#2a5a9c;--infos:#d9e6f6;--pS:#4d5b70;--pSs:#e3e8ef;--pA:#17727a;--pAs:#d4ecee;--pU:#7a3e9d;--pUs:#efe1f7;
   --hit:#e3f1e0;--miss:#fbe6df;
   --font:"Pretendard","IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
   box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
@@ -15,12 +15,12 @@
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --navy:#0f1d33;--navy2:#1a3156;--ink:#e6eaf1;--ink2:#b3bccb;--muted:#8d97a8;--paper:#11151c;--panel:#1a1f28;--line:#2d3542;--line2:#232a35;
   --accent:#e07a52;--accent-s:#3a2419;
-  --j4:#7fcf95;--j4s:#1f3a29;--j3:#8db5ee;--j3s:#1c2d47;--j2:#e8c26a;--j2s:#3d3218;--j1:#f09a80;--j1s:#432519;--j0:#9aa3b3;--j0s:#272d38;
+  --j4:#8db5ee;--j4s:#1c2d47;--j3:#a6d98a;--j3s:#26381c;--j2:#e8c26a;--j2s:#3d3218;--j1:#ff8f80;--j1s:#4a1f1b;--j0:#9aa3b3;--j0s:#272d38;--ok:#7fcf95;--oks:#1f3a29;--info:#8db5ee;--infos:#1c2d47;--pS:#aab6c8;--pSs:#2a313d;--pA:#6fcfd6;--pAs:#17353a;--pU:#c79be0;--pUs:#35223f;
   --hit:#1d3324;--miss:#3d241c;}}
 :root[data-theme="dark"]{
   --navy:#0f1d33;--navy2:#1a3156;--ink:#e6eaf1;--ink2:#b3bccb;--muted:#8d97a8;--paper:#11151c;--panel:#1a1f28;--line:#2d3542;--line2:#232a35;
   --accent:#e07a52;--accent-s:#3a2419;
-  --j4:#7fcf95;--j4s:#1f3a29;--j3:#8db5ee;--j3s:#1c2d47;--j2:#e8c26a;--j2s:#3d3218;--j1:#f09a80;--j1s:#432519;--j0:#9aa3b3;--j0s:#272d38;
+  --j4:#8db5ee;--j4s:#1c2d47;--j3:#a6d98a;--j3s:#26381c;--j2:#e8c26a;--j2s:#3d3218;--j1:#ff8f80;--j1s:#4a1f1b;--j0:#9aa3b3;--j0s:#272d38;--ok:#7fcf95;--oks:#1f3a29;--info:#8db5ee;--infos:#1c2d47;--pS:#aab6c8;--pSs:#2a313d;--pA:#6fcfd6;--pAs:#17353a;--pU:#c79be0;--pUs:#35223f;
   --hit:#1d3324;--miss:#3d241c;}
 *,*::before,*::after{box-sizing:inherit}
 html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
@@ -122,7 +122,7 @@ h2.sec{margin:22px 0 6px;font-size:16px;color:var(--navy2);display:flex;align-it
 /* v32 student page */
 .pbar{background:var(--panel);border-bottom:1px solid var(--line);padding:9px 20px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .pbar .sp{flex:1}.pbar select{max-width:220px}
-.sstat{font-size:12.5px;font-weight:600;color:var(--muted)}.sstat.ok{color:var(--j4)}.sstat.dirty{color:var(--j2)}.sstat.warn{color:var(--j1)}
+.sstat{font-size:12.5px;font-weight:600;color:var(--muted)}.sstat.ok{color:var(--ok)}.sstat.dirty{color:var(--j2)}.sstat.warn{color:var(--j1)}
 .sstat:before{content:"● ";font-size:10px}
 .swrap{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:20px;align-items:start;max-width:1240px}
 .ssh{display:flex;align-items:center;gap:10px;margin:22px 0 10px}.ssh:first-of-type{margin-top:6px}
@@ -142,7 +142,7 @@ h2.sec{margin:22px 0 6px;font-size:16px;color:var(--navy2);display:flex;align-it
 .sside .kpi{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--line2)}.sside .kpi small{display:block;font-size:11.5px;color:var(--muted)}.sside .kpi b{display:block;font-size:28px;font-weight:800;line-height:1.15;letter-spacing:-.5px}.sside .kpi b em{font-style:normal;font-size:14px;font-weight:600;color:var(--ink2);margin-left:2px}
 .sside .grp{font-size:11.5px;font-weight:700;color:var(--muted);margin:14px 0 4px;display:flex;gap:6px;align-items:center}.sside .grp .gn{font-weight:500;border:1px solid var(--line);border-radius:8px;padding:0 6px;font-size:10.5px}
 .sside dl{margin:0;display:grid;grid-template-columns:auto 1fr;row-gap:6px;column-gap:12px;font-size:13px}.sside dt{color:var(--ink2)}.sside dd{margin:0;text-align:right;font-weight:700}
-.sside .trend{font-weight:500;font-size:11.5px;color:var(--j4);margin-left:4px}.sside .trend.dn{color:var(--j1)}
+.sside .trend{font-weight:500;font-size:11.5px;color:var(--ok);margin-left:4px}.sside .trend.dn{color:var(--j1)}
 .sside .ng{display:flex;justify-content:space-between;align-items:baseline;padding:8px 12px;margin:6px 0 10px;background:var(--paper);border-radius:10px}.sside .ng small{font-size:12px;color:var(--ink2);font-weight:600}.sside .ng b{font-size:26px;font-weight:800;letter-spacing:-.5px}.sside .ng b em{font-style:normal;font-size:13px;font-weight:600;color:var(--ink2);margin-left:2px}
 .sside .dd3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.sside .dd3 button{all:unset;box-sizing:border-box;cursor:pointer;display:block;border-radius:10px;padding:8px 10px}.sside .dd3 button:hover{outline:2px solid currentColor}
 .sside .dd3 b{display:block;font-size:22px;font-weight:800;line-height:1.1}.sside .dd3 small{font-size:11.5px}
@@ -169,8 +169,8 @@ h2.sec{margin:22px 0 6px;font-size:16px;color:var(--navy2);display:flex;align-it
 .chgh{display:flex;align-items:baseline;gap:12px;padding-left:12px;border-left:5px solid var(--accent);margin-bottom:12px;cursor:pointer;user-select:none;flex-wrap:wrap}
 .chgh h2{margin:0;font-size:21px;font-weight:800;color:var(--ink)}.chgh .gs{font-size:13px;color:var(--muted)}.chgh .car{width:14px;color:var(--muted);font-size:14px}.chgh:hover h2{text-decoration:underline}
 .cht .rf{position:absolute;top:0;bottom:0;width:0;border-left:2px dashed var(--accent);opacity:.65;pointer-events:none}
-.cht .st.p-a{background:var(--j4)}.cht .st.p-s{background:var(--j3)}.cht .st.p-u{background:var(--j2)}
-.chd .pos.p-a{background:var(--j4s);color:var(--j4)}.chd .pos.p-s{background:var(--j3s);color:var(--j3)}.chd .pos.p-u{background:var(--j2s);color:var(--j2)}
+.cht .st.p-a{background:var(--pA)}.cht .st.p-s{background:var(--pS)}.cht .st.p-u{background:var(--pU)}
+.chd .pos.p-a{background:var(--pAs);color:var(--pA)}.chd .pos.p-s{background:var(--pSs);color:var(--pS)}.chd .pos.p-u{background:var(--pUs);color:var(--pU)}
 .chd .pos{font-weight:700}
 .chhow{margin:8px 2px 0}.chhow summary{cursor:pointer;color:var(--ink2);font-size:12.5px;font-weight:600;list-style:none}.chhow summary::-webkit-details-marker{display:none}.chhow .intro{margin:6px 0 0}
 /* v30 cards / filters */
@@ -198,7 +198,7 @@ h2.sec{margin:22px 0 6px;font-size:16px;color:var(--navy2);display:flex;align-it
 .fsec .fsb{padding:0 16px 12px}.fsec.c .fsb{display:none}
 .fsec .fsb .hint{margin-bottom:6px}
 .chip small{margin-left:4px;opacity:.65;font-size:11px;font-weight:500}.chip.z:not([aria-pressed="true"]){opacity:.45}
-.chip.jt[aria-pressed="true"]{color:#fff}.chip.jt.j4[aria-pressed="true"]{background:#2f7a46;border-color:#2f7a46}.chip.jt.j3[aria-pressed="true"]{background:#2a5a9c;border-color:#2a5a9c}.chip.jt.j2[aria-pressed="true"]{background:#8a6510;border-color:#8a6510}.chip.jt.j1[aria-pressed="true"]{background:#a8432a;border-color:#a8432a}
+.chip.jt[aria-pressed="true"]{color:#fff}.chip.jt.j4[aria-pressed="true"]{background:#1f5fae;border-color:#1f5fae}.chip.jt.j3[aria-pressed="true"]{background:#4f8f2a;border-color:#4f8f2a}.chip.jt.j2[aria-pressed="true"]{background:#8a6510;border-color:#8a6510}.chip.jt.j1[aria-pressed="true"]{background:#c0301f;border-color:#c0301f}
 .ftg{padding:8px 16px;border-top:1px solid var(--line2)}.ftg .chk{margin:4px 0}
 .fpre{padding:12px 16px;background:var(--paper);border-top:1px solid var(--line2)}
 .fpre .t{font-size:11px;color:var(--muted);margin-bottom:6px;display:flex;justify-content:space-between}
@@ -232,7 +232,7 @@ td.addc{white-space:nowrap}.addc .sk{margin-right:6px;vertical-align:middle;acce
 .dz{margin-top:14px;border:2px dashed var(--line);border-radius:12px;padding:22px 18px;text-align:center;cursor:pointer;background:var(--paper);transition:border-color .15s,background .15s}
 .dz:hover,.dz:focus-visible{border-color:var(--navy2);outline:none}.dz.over{border-color:var(--accent);background:var(--accent-s)}
 .dz .dzt{font-weight:700;font-size:14px;color:var(--ink)}.dz .dzs{margin-top:8px;display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap}
-.dz .dzf{margin-top:10px;font-size:12.5px;color:var(--muted)}.dz.has{border-style:solid;border-color:var(--j4);background:var(--j4s)}.dz.has .dzf{color:var(--ink);font-weight:600}
+.dz .dzf{margin-top:10px;font-size:12.5px;color:var(--muted)}.dz.has{border-style:solid;border-color:var(--ok);background:var(--oks)}.dz.has .dzf{color:var(--ink);font-weight:600}
 .fbtns{display:flex;flex-direction:column;gap:8px;margin-top:16px}
 .fbtns .btn{width:100%;padding:9px}
 .summary{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
@@ -267,9 +267,9 @@ table.dt{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
 .dt td.h.miss{background:var(--miss)}
 .dt td.dim{color:var(--muted)}
 .jb{display:inline-block;padding:2px 8px;border-radius:5px;font-size:12px;font-weight:700}
-.j4{background:var(--j4s);color:var(--j4)}.j3{background:var(--j3s);color:var(--j3)}.j2{background:var(--j2s);color:var(--j2)}.j1{background:var(--j1s);color:var(--j1)}.j0{background:var(--j0s);color:var(--j0)}
+.j4{background:var(--j4s);color:var(--j4)}.j3{background:var(--j3s);color:var(--j3)}.j2{background:var(--j2s);color:var(--j2)}.j1{background:var(--j1s);color:var(--j1)}.inf{background:var(--infos);color:var(--info)}.j0{background:var(--j0s);color:var(--j0)}
 .pf{display:inline-block;margin-left:5px;padding:0 6px;border-radius:9px;font-size:10.5px;font-weight:700;line-height:17px;border:1px solid;white-space:nowrap;cursor:help;vertical-align:1px}
-.pf.low{color:var(--j1);background:var(--j1s);border-color:var(--j1)}.pf.high{color:var(--j3);background:var(--j3s);border-color:var(--j3)}
+.pf.low{color:var(--j1);background:var(--j1s);border-color:var(--j1)}.pf.high{color:var(--info);background:var(--infos);border-color:var(--info)}
 .fk{display:inline-block;padding:2px 7px;border-radius:10px;font-size:11.5px;font-weight:700;border:1px solid}
 .fk.strong{color:#a4451f;border-color:#e8bfa0;background:#fbeee6}
 .fk.candidate{color:#b06a1a;border-color:#efd3a6;background:#fdf5e7}
@@ -381,7 +381,7 @@ table.dt{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
 :root[data-theme="dark"] .finalbox .fv{color:var(--ink)}:root[data-theme="dark"] .finalbox.man .fv{color:var(--accent)}
 .hb{display:inline-block;padding:2px 9px;border-radius:10px;font-size:11.5px;font-weight:700;border:1px solid;cursor:help;white-space:nowrap;line-height:1.5}
 .hb-n{color:var(--j0);background:var(--j0s);border-color:var(--line)}
-.hb-q{color:var(--j3);background:var(--j3s);border-color:color-mix(in srgb,var(--j3) 40%,transparent)}
+.hb-q{color:var(--info);background:var(--infos);border-color:color-mix(in srgb,var(--info) 40%,transparent)}
 .hb-s{color:#6a3fa0;background:#f3ecfb;border-color:#c9b2e6}
 .hb-x{color:var(--muted);background:transparent;border:1px dashed var(--line)}
 .hb-u{color:var(--j2);background:var(--j2s);border-color:color-mix(in srgb,var(--j2) 55%,transparent);border-style:dashed}
@@ -407,7 +407,7 @@ table.dt{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
 :root[data-theme="dark"] .gunc.g-ga,:root[data-theme="dark"] .gt.g-ga{color:#7fa6ff;border-color:#7fa6ff}:root[data-theme="dark"] .gunc.g-na,:root[data-theme="dark"] .gt.g-na{color:#62c98d;border-color:#62c98d}:root[data-theme="dark"] .gunc.g-da,:root[data-theme="dark"] .gt.g-da{color:#c08af0;border-color:#c08af0}
 .seg button.gt[aria-pressed="true"]{color:#fff}
 .seg button.gt.g-ga[aria-pressed="true"]{background:#2a5bd7}.seg button.gt.g-na[aria-pressed="true"]{background:#1e8a4c}.seg button.gt.g-da[aria-pressed="true"]{background:#8b3fc4}
-.calcstat{color:var(--j4);font-weight:600}
+.calcstat{color:var(--ok);font-weight:600}
 .calcstat.busy{color:var(--accent)}
 
 .chprof{padding:14px 16px;margin-top:4px}.chprof .phd{display:flex;gap:10px;align-items:baseline;margin-bottom:8px}.chprof .phd b{font-size:16px}
@@ -419,7 +419,7 @@ table.dt{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
 .trk{display:inline-block;font-size:10.5px;font-weight:700;border-radius:4px;padding:0 5px;margin-left:5px;vertical-align:1px;line-height:16px;white-space:nowrap}
 .twrap .trk,.dt .trk,td .trk{margin-left:0}
 .trk.gen{color:var(--muted);background:var(--line2);font-weight:600}
-.trk.reg{color:var(--j4);background:var(--j4s)}.trk.gyo{color:var(--j3);background:var(--j3s)}.trk.spc{color:#7a3e9d;background:#efe1f7}.trk.car{color:var(--j2);background:var(--j2s)}.trk.num{color:var(--ink2);background:var(--line)}
+.trk.reg{color:var(--ok);background:var(--oks)}.trk.gyo{color:var(--info);background:var(--infos)}.trk.spc{color:#7a3e9d;background:#efe1f7}.trk.car{color:var(--j2);background:var(--j2s)}.trk.num{color:var(--ink2);background:var(--line)}
 :root[data-theme="dark"] .trk.spc{color:#d3a8ec;background:#35214a}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .trk.spc{color:#d3a8ec;background:#35214a}}
 /* ===== 보고서 탭 (수시 보고서 틀) ===== */
 .rp-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin-bottom:12px}
@@ -431,7 +431,7 @@ table.dt{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
 .rp-scroll{flex:1;overflow-y:auto;padding:22px 26px}
 .rp-doc{--navy:#111;--navy2:#2a2a2a;--rp-seal:#a3312c;--serif:'Noto Serif KR','Nanum Myeongjo',serif;--mono:'IBM Plex Mono','Roboto Mono',monospace;
   --panel:#fff;--ink:#1b2230;--ink2:#4d5868;--muted:#6b7480;--line:#dde2ea;--line2:#eef1f5;--paper:#f6f7f9;
-  --j4:#2f7a46;--j4s:#d3e6d0;--j3:#2a5a9c;--j3s:#d9e6f6;--j2:#8a6510;--j2s:#fbe9b8;--j1:#a8432a;--j1s:#f6d8cc;--j0:#6b7480;--j0s:#e7eaef;--accent:#2a5a9c;
+  --j4:#1f5fae;--j4s:#d9e6f6;--j3:#3f7d1c;--j3s:#e1f2cf;--j2:#8a6510;--j2s:#fbe9b8;--j1:#c0301f;--j1s:#fbdad5;--j0:#6b7480;--j0s:#e7eaef;--ok:#2f7a46;--oks:#d3e6d0;--info:#2a5a9c;--infos:#d9e6f6;--pS:#4d5b70;--pSs:#e3e8ef;--pA:#17727a;--pAs:#d4ecee;--pU:#7a3e9d;--pUs:#efe1f7;--accent:#2a5a9c;
   color:#111;max-width:860px;margin:0 auto;font-size:13px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 /* 장(페이지): 화면에서는 종이 카드, 인쇄에서는 장마다 새 페이지 */
 .rp-page{background:#fff;border-radius:6px;box-shadow:0 1px 7px rgba(0,0,0,.14);padding:34px 42px 38px;margin-bottom:22px}
@@ -472,7 +472,7 @@ table.dt{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
 .rp-twin{display:none;line-height:1.85;color:#222}
 .rp-tiers{display:grid;grid-template-columns:1fr 1fr;gap:10px}.rp-tier{border:1px solid #e2e2e2;border-radius:6px;padding:10px 12px;break-inside:avoid}
 .rp-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}.rp-chip{border:1px solid #d5d5d5;border-radius:12px;padding:2px 9px;font-size:12px;font-weight:600}.rp-chip small{margin-left:5px;color:#888;font-weight:500}
-.rp-chart .chg{margin:6px 0 0;border:1px solid #e2e2e2;border-radius:6px;padding:8px 0 0;background:#fff}.rp-chart .chr{cursor:default;break-inside:avoid;grid-template-columns:150px minmax(260px,1fr) 150px}.rp-chart .chr:hover,.rp-chart .chr.hd:hover{background:transparent}.rp-chart .chg h3{display:none}
+.rp-chart .chg{margin:6px 0 0;border:1px solid #e2e2e2;border-radius:6px;padding:8px 0 0;background:#fff}.rp-chart .chr{cursor:default;break-inside:avoid;grid-template-columns:150px minmax(260px,1fr) 250px}.rp-chart .chr:hover,.rp-chart .chr.hd:hover{background:transparent}.rp-chart .chg h3{display:none}
 .rp-gun{break-inside:auto}.rp-mix{margin:-4px 0 8px}
 .rp-fins{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .rp-fin{border:1px solid #cfcfcf;border-radius:6px;padding:12px 14px;break-inside:avoid;background:#fafafa}.rp-fin.empty{border-style:dashed;color:#999;background:#fff}
@@ -518,7 +518,7 @@ table.dt{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
 .wgh b{font-size:15px}.wgh small{color:var(--muted);font-size:12px}.wgh .wmix{margin-left:auto;display:flex;gap:6px}
 .wgh .gunc{width:28px;height:28px;font-size:13px}
 .whint{padding:14px;color:var(--muted);font-size:13px;border:1px dashed var(--line);border-radius:8px}
-.wt tr.fin td{background:var(--j3s)}.wt tr.fin td:first-child{box-shadow:inset 4px 0 0 var(--navy2)}
+.wt tr.fin td{background:var(--infos)}.wt tr.fin td:first-child{box-shadow:inset 4px 0 0 var(--navy2)}
 #wishWrap.wrap{max-width:1560px}
 .wgun .twrap{min-height:0;height:auto;max-height:none!important}
 .wt .memo-in{min-width:130px}
@@ -531,7 +531,7 @@ table.dt{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
 .chg{margin:16px 0 0}.chg h3{margin:0 0 6px;font-size:14px;color:var(--navy2);display:flex;gap:8px;align-items:baseline}
 :root[data-theme="dark"] .chg h3{color:var(--ink)}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .chg h3{color:var(--ink)}}
 .chg h3 small{font-weight:500;color:var(--muted);font-size:12px}
-.chr{display:grid;grid-template-columns:150px minmax(260px,1fr) 190px;gap:10px;align-items:center;padding:4px 10px;border-bottom:1px solid var(--line2);cursor:pointer;min-height:34px}
+.chr{display:grid;grid-template-columns:150px minmax(260px,1fr) 250px;gap:10px;align-items:center;padding:4px 10px;border-bottom:1px solid var(--line2);cursor:pointer;min-height:34px}
 .chr:hover{background:var(--line2)}.chr.hd{cursor:default;font-size:11.5px;color:var(--muted);border-bottom:1px solid var(--line);background:transparent}
 .chr.hd:hover{background:transparent}
 .chn{font-weight:600;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.chn small{color:var(--muted);font-weight:400;margin-left:4px}
@@ -544,7 +544,7 @@ table.dt{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
 :root[data-theme="dark"] .cht .st{background:#f0c040;box-shadow:0 0 0 1px #f0c040}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .cht .st{background:#f0c040;box-shadow:0 0 0 1px #f0c040}}
 .cht .dt2{position:absolute;top:7px;width:8px;height:8px;margin-left:-4px;border-radius:50%;border:1px solid var(--panel);cursor:pointer}
 .cht .dt2.j4{background:var(--j4)}.cht .dt2.j3{background:var(--j3)}.cht .dt2.j2{background:var(--j2)}.cht .dt2.j1{background:var(--j1)}
-.chd{display:flex;gap:3px;font-size:11px;flex-wrap:wrap}.chd span{padding:1px 6px;border-radius:9px;font-weight:600}
+.chd{display:flex;flex-direction:column;gap:3px;font-size:11px}.chd .chl{display:flex;gap:3px;flex-wrap:wrap;align-items:center}.chd span{padding:1px 6px;border-radius:9px;font-weight:600}.chd .lb{padding:0 4px 0 0;font-weight:500;color:var(--muted);background:none;min-width:5.6em;font-size:10.5px}
 .chd .j4{background:var(--j4s);color:var(--j4)}.chd .j3{background:var(--j3s);color:var(--j3)}.chd .j2{background:var(--j2s);color:var(--j2)}.chd .j1{background:var(--j1s);color:var(--j1)}
 .chx{padding:6px 10px 10px;background:var(--line2)}.chx .chr{border:0;background:transparent;cursor:default;min-height:30px}
 .chlg{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--ink2);margin:6px 2px}.chlg i{display:inline-block;vertical-align:middle;margin-right:4px}
@@ -1355,7 +1355,7 @@ function cellHtml(k,i){
     case 'hb':return `<td>${hbBadge(i)}</td>`;
     case 'judge':return `<td><span class="jb j${b[0]}" title="${JD[b[0]]}">${JL[b[0]]}</span></td>`;
     case 'my':return `<td class="num my"><b>${pct(b[1])}</b>${posBadge(i)}</td>`;
-    case 'margin':{const m=marginOf(i);return `<td class="num" style="color:${m>=0?'var(--j4)':'var(--j1)'}">${m===-999?'–':(m>=0?'+':'')+fmt(m,2)}</td>`}
+    case 'margin':{const m=marginOf(i);return `<td class="num" style="color:${m>=0?'var(--ok)':'var(--j1)'}">${m===-999?'–':(m>=0?'+':'')+fmt(m,2)}</td>`}
     case 'jn':return `<td class="num">${pct(b[3])}</td>`;
     case 'yn':return `<td class="num">${pct(b[4])}</td>`;
     case 'sn':return `<td class="num">${pct(b[5])}</td>`;
@@ -1640,12 +1640,12 @@ function rBrowse(){
   const regColor=r=>r==='서울'?'#2a5bd7':(r==='경기'||r==='인천')?'#1e8a4c':'#b07a1c';
   const card=(name,list,label)=>{const c=[0,0,0,0,0];list.forEach(i=>c[B[basis][i][0]]++);
     const bj=bestJ(list),reg=!label&&list.length?(()=>{const m=new Map();list.forEach(i=>m.set(U[i][5],(m.get(U[i][5])||0)+1));return [...m].sort((a,b)=>b[1]-a[1])[0][0]||''})():'',gs=[...new Set(list.map(i=>gunOf(U[i])))].filter(g=>GUNS.includes(g));
-    const num=(j,t)=>c[j]||j!==1?`<div style="color:var(--j${j})"><b>${c[j]}</b>${t}</div>`:'';
+    const num=(j,t)=>`<div style="color:var(--j${j})"><b>${c[j]}</b>${t}</div>`;
     return `<button class="ucard" style="${bj?`--bc:var(--j${bj})`:''}" data-open-${label?'cat':'univ'}="${esc(label||name)}"><span class="utop"><span class="av" style="--ac:${label?'var(--navy2)':regColor(reg)}">${avTxt(label||name,!!label)}</span><span><b>${esc(name)}</b><span class="usub">${reg?esc(reg)+' ':''}${gs.map(g=>`<span class="${gunCls(g)}">${g}</span>`).join('')}</span></span></span>
     <div class="mini">${miniDist(list)}</div>
     <div class="unums">${num(4,'적정')}${num(3,'예상')}${num(2,'소신')}${num(1,'위험')}</div>
     <span class="ufoot"><span>모집단위 ${list.length}개</span><span>${bj?'보기 ›':'판정 가능 단위 없음'}</span></span></button>`};
-  const gsum=idxs=>{const c=[0,0,0,0,0];idxs.forEach(i=>c[B[basis][i][0]]++);return `<span class="gsum">적정 ${c[4]} · 예상 ${c[3]} · 소신 ${c[2]}</span>`};
+  const gsum=idxs=>{const c=[0,0,0,0,0];idxs.forEach(i=>c[B[basis][i][0]]++);return `<span class="gsum">적정 ${c[4]} · 예상 ${c[3]} · 소신 ${c[2]} · 위험 ${c[1]}</span>`};
   const grp=(label,sm,inner,idxs)=>{const open=!BR.col.has(label);return `<div class="gsec"><div class="gtitle gcol" data-gcol="${esc(label)}" role="button" tabindex="0" aria-expanded="${open}"><span class="car">${open?'▾':'▸'}</span><span class="gl">${label}</span>${sm}${idxs?gsum(idxs):''}</div>${open?`<div class="ugrid">${inner}</div>`:''}</div>`};
   const all=[...byU.keys()].sort((a,b)=>a.localeCompare(b,'ko'));
   const allRes=()=>BR.q?(()=>{const ws=BR.q.split(/[,\s]+/).filter(Boolean);const hit=all.filter(n=>ws.some(w=>n.includes(w)));return `<div class="status" style="margin-bottom:8px">'${esc(BR.q)}' 검색 결과 ${hit.length}개교</div><div class="ugrid">${hit.map(n=>card(n,byU.get(n))).join('')||'<div class="status">일치하는 대학이 없어요</div>'}</div>`})()
@@ -1861,7 +1861,7 @@ function chRow(label,idxs,key,sub,full){
   const rf=full&&CH_MID!=null?`<span class="rf" style="left:${l(CH_MID)}%"></span>`:'';
   const head=`<div class="chr" data-ck="${esc(key)}" title="클릭하면 모집단위별 점을 펼쳐요"><div class="chn">${open?'▾':'▸'} ${esc(label)}${sub?`<small>${esc(sub)}</small>`:''}</div>
     <div class="cht">${gl}${rf}<span class="wh" style="left:${l(s.min)}%;width:${Math.max(0,l(s.max)-l(s.min))}%"></span><span class="iq" style="left:${iqL}%;width:${Math.max(0,iqR-iqL)}%"></span><span class="md" style="left:${l(s.md)}%"></span>${s.st!=null?`<span class="st ${pos?pos[1]:''}" style="left:${l(s.st)}%" title="학생 누백 중앙값 상위 ${fmt(s.st,2)}%"></span>`:''}</div>
-    <div class="chd" title="모집단위 ${s.n}개 · 적정+예상 ${Math.round(s.ok*100)}%">${pos?`<span class="pos ${pos[1]}" title="◆(학생 누백)가 막대(적정 25~75%)의 ${pos[0]==='안정'?'왼쪽':pos[0]==='적정권'?'안':'오른쪽'}에 있어요">${pos[0]}</span>`:''}${[4,3,2,1].filter(j=>s.c[j]).map(j=>`<span class="j${j}">${JL[j]} ${s.c[j]}</span>`).join('')}</div></div>`;
+    <div class="chd" title="모집단위 ${s.n}개 · 적정+예상 ${Math.round(s.ok*100)}%">${pos?`<div class="chl"><span class="lb">대학 위치</span><span class="pos ${pos[1]}" title="◆(학생 누백)가 막대(적정 25~75%)의 ${pos[0]==='안정'?'왼쪽':pos[0]==='적정권'?'안':'오른쪽'}에 있어요">${pos[0]}</span></div>`:''}<div class="chl"><span class="lb">모집단위 판정</span>${[4,3,2,1].filter(j=>s.c[j]).map(j=>`<span class="j${j}">${JL[j]} ${s.c[j]}</span>`).join('')}</div></div></div>`;
   if(!open)return head;
   const bb=B[basis];const ids=idxs.filter(i=>bb[i][0]&&bb[i][3]!=null).sort((a,b)=>bb[a][3]-bb[b][3]);
   const dots=ids.map(i=>`<span class="dt2 j${bb[i][0]}" data-ci="${i}" data-dk="${esc(key)}" style="left:${l(bb[i][3])}%" title="${esc(U[i][0]+' '+U[i][1]+' ['+trkTxt(U[i])+'] · '+gunLabel(gunOf(U[i]))+'군 · 적정 상위 '+fmt(bb[i][3],2)+'% · 학생 상위 '+fmt(bb[i][1],2)+'% · '+JL[bb[i][0]])}"></span>`).join('');
@@ -1961,9 +1961,10 @@ function rChart(){
   <div class="chs"><div><small>비교 기준 · 모집단위(가·나·다군)</small><b>${reg.length.toLocaleString()}개</b></div>
     <div><small>적정 / 예상</small><b style="color:var(--j4)">${tot[4].toLocaleString()}</b> / <b style="color:var(--j3)">${tot[3].toLocaleString()}</b></div>
     <div><small>소신 / 위험</small><b style="color:var(--j2)">${tot[2].toLocaleString()}</b> / <b style="color:var(--j1)">${tot[1].toLocaleString()}</b></div></div>
-  <details class="chhow"><summary>ⓘ 읽는 법</summary><p class="intro">가로축은 누백(전국 응시자 중 상위 몇 %인지)이에요. <b>왼쪽일수록 상위권</b> 대학이고, 마름모(◆)가 학생 위치예요. 막대는 대학 모집단위들의 적정선 25~75% 구간이므로, <b>◆가 막대보다 왼쪽이면 학생이 그 대학 적정선 위(안정)</b>, 막대 안이면 적정권, 막대 오른쪽이면 상향이에요. 점선은 학생의 대표 누백이에요. 행을 누르면 모집단위별 점이 펼쳐지고 점을 누르면 상세가 열려요.</p></details>
+  <details class="chhow"><summary>ⓘ 읽는 법</summary><p class="intro">가로축은 누백(전국 응시자 중 상위 몇 %인지)이에요. <b>왼쪽일수록 상위권</b> 대학이고, 마름모(◆)가 학생 위치예요. 막대는 대학 모집단위들의 적정선 25~75% 구간이므로, <b>◆가 막대보다 왼쪽이면 학생이 그 대학 적정선 위(안정)</b>, 막대 안이면 적정권, 막대 오른쪽이면 상향이에요. 점선은 학생의 대표 누백이에요. 오른쪽 <b>'대학 위치'</b>는 대학 전체에서 학생의 자리(안정·적정권·상향)이고, <b>'모집단위 판정'</b>은 그 대학 학과별 판정(적정·예상·소신·위험)의 개수예요. 행을 누르면 모집단위별 점이 펼쳐지고 점을 누르면 상세가 열려요.</p></details>
   <div class="chlg"><span><i style="width:18px;height:10px;background:var(--j4s);border:1.5px solid var(--j4);border-radius:3px"></i>적정 누백 25~75%</span><span><i style="width:16px;height:2px;background:var(--j4)"></i>최소~최대</span><span><i style="width:8px;height:8px;background:var(--navy2);transform:rotate(45deg)"></i>학생 누백 중앙값</span><span><i style="height:12px;border-left:2px dashed var(--accent)"></i>학생 대표 누백</span>
-    <span><i class="dt2 j4" style="position:static;display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--j4)"></i>적정 <i style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--j3)"></i>예상 <i style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--j2)"></i>소신 <i style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--j1)"></i>위험</span></div>
+    <span><b style="color:var(--muted);font-weight:500">대학 위치</b> <b class="pos p-s" style="padding:1px 6px;border-radius:9px;font-size:11px;background:var(--pSs);color:var(--pS)">안정</b> <b style="padding:1px 6px;border-radius:9px;font-size:11px;background:var(--pAs);color:var(--pA)">적정권</b> <b style="padding:1px 6px;border-radius:9px;font-size:11px;background:var(--pUs);color:var(--pU)">상향</b></span>
+    <span><b style="color:var(--muted);font-weight:500">모집단위 판정</b> <i class="dt2 j4" style="position:static;display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--j4)"></i>적정 <i style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--j3)"></i>예상 <i style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--j2)"></i>소신 <i style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--j1)"></i>위험</span></div>
   ${body.join('')||'<div class="card empty" style="padding:30px;margin-top:12px">조건에 맞는 대학이 없어요.</div>'}`;
   bindBasis(w,rChart);
   w.querySelectorAll('[data-ctrait]').forEach(b=>b.onclick=()=>{CH.trait=b.dataset.ctrait;rChart()});
@@ -1980,7 +1981,7 @@ function rChart(){
   w.querySelectorAll('[data-ci]').forEach(d=>d.onclick=e=>{e.stopPropagation();const i=+d.dataset.ci,u=U[i];const k=d.dataset.dk;openUniv(k.startsWith('c:')?{cat:k.slice(2)}:{univ:u[0]},i)});
 }
 function chBlock(label,rows,n,full,sum){
-  const ax=`<div class="chr hd"><div>${full?'대학':esc(label)}</div><div class="cht">${CHT.filter(v=>v<100).map(v=>`<span style="left:${chX(v)}%">${v}%</span>`).join('')}</div><div>${full?'위치 · 판정 분포(모집단위 수)':'판정 분포(모집단위 수)'}</div></div>`;
+  const ax=`<div class="chr hd"><div>${full?'대학':esc(label)}</div><div class="cht">${CHT.filter(v=>v<100).map(v=>`<span style="left:${chX(v)}%">${v}%</span>`).join('')}</div><div>${full?'대학 위치 · 모집단위 판정(개수)':'판정 분포(모집단위 수)'}</div></div>`;
   if(!full)return `<section class="chg card" style="margin-top:14px;padding:8px 0 0"><h3 style="padding:0 12px">${esc(label)} <small>${n}개</small></h3>${ax}${rows}</section>`;
   const open=!CH.col.has(label);
   return `<section class="chsec"><div class="chgh" data-cg="${esc(label)}" role="button" tabindex="0" aria-expanded="${open}"><span class="car">${open?'▾':'▸'}</span><h2>${esc(label)}</h2><span class="gs">${n}개교${sum||''}</span></div>${open?`<div class="chg card" style="margin-top:0;padding:8px 0 0">${ax}${rows}</div>`:''}</section>`;
@@ -2088,7 +2089,7 @@ function rpS2(P){
   const rows=pick.map(([x,l])=>chRow(x.n,x.ids,'r:'+x.n,l)).join('').replace(/▸ /g,'');
   return rpSub('추천 구간')+`<div class="rp-tiers">${tiers}</div><p class="rp-hint">구간은 대학 모집단위 적정 누백의 중앙값 ÷ 학생 대표 누백으로 나눴어요.</p>
    ${rpSub('대학별 성적대 위치')}<div class="rp-chart">${chBlock('추천 대학 (누백 축)',rows,pick.length)}</div>
-   <p class="rp-hint">가로축은 누백(상위 몇 %)이고 왼쪽일수록 상위권이에요. 초록 막대는 대학 모집단위의 적정 누백 25~75% 구간, ◆는 학생 누백이에요. ◆가 막대보다 왼쪽이면 적정선 위, 오른쪽이면 상향이에요.</p>
+   <p class="rp-hint">가로축은 누백(상위 몇 %)이고 왼쪽일수록 상위권이에요. 파랑 막대는 대학 모집단위의 적정 누백 25~75% 구간, ◆는 학생 누백이에요. ◆가 막대보다 왼쪽이면 적정선 위, 오른쪽이면 상향이에요.</p>
    ${rpCm('s2','추천 대학 소견','추천 구간에 대한 해석, 학생 요청사항과의 연결, 지역·계열 조건 등을 적어주세요',5)}`;
 }
 function rpS3(){
@@ -2106,7 +2107,7 @@ function rpS3(){
 function rpUnitRow(i){
   const u=U[i],b=B[basis][i],k=keyOf(i),n=S.notes[k]||{},f=funkOf(i),g=gunOf(u),fin=S.finals[g]===k;
   const memo=[n.memo,n.comment].filter(x=>x&&String(x).trim()).map(rpPara).join('<br>');
-  return `<tr${fin?' class="fin"':''}><td class="l"><b>${esc(u[0])}</b> ${esc(u[1])}${fin?' <span class="jb j3">최종</span>':''}<br><small>${trkTag(u)}</small></td><td class="num">${cap(u[4])}</td><td><span class="jb j${b[0]}">${JL[b[0]]}</span></td><td class="num">${pct(b[1])}${posBadge(i)}</td><td class="num">${pct(b[3])}</td><td class="num">${pct(b[5])}</td><td>${funkHtml(f)}</td><td>${hbLab(haksaengOf(u))}</td><td class="l">${memo?`<span class="rp-user">${memo}</span>`:'<small class="dim">–</small>'}</td></tr>`;
+  return `<tr${fin?' class="fin"':''}><td class="l"><b>${esc(u[0])}</b> ${esc(u[1])}${fin?' <span class="jb inf">최종</span>':''}<br><small>${trkTag(u)}</small></td><td class="num">${cap(u[4])}</td><td><span class="jb j${b[0]}">${JL[b[0]]}</span></td><td class="num">${pct(b[1])}${posBadge(i)}</td><td class="num">${pct(b[3])}</td><td class="num">${pct(b[5])}</td><td>${funkHtml(f)}</td><td>${hbLab(haksaengOf(u))}</td><td class="l">${memo?`<span class="rp-user">${memo}</span>`:'<small class="dim">–</small>'}</td></tr>`;
 }
 function rpS4(){
   const ids=rpIds();if(!ids.length)return '<p class="rp-hint">지원희망 목록이 비어 있어요. "대학 둘러보기"·"정밀 매칭 도구"에서 모집단위를 담으면 여기 자동으로 들어와요.</p>';
